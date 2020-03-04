@@ -1,10 +1,11 @@
 <?php
 
-//load.php
+// Remember to run the calendarDB.sql script first to establish the DB
+
 
 $connect = new PDO('mysql:host=localhost;dbname=calendarDB', 'root', '');
 
-$data = array();
+$data = array(); 
 
 $query = "SELECT * FROM events ORDER BY id";
 
@@ -24,6 +25,6 @@ foreach($result as $row)
  );
 }
 
-echo json_encode($data);
+echo json_encode($data); # convert data into string format and display onto calendar plug-in
 
 ?>

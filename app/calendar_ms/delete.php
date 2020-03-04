@@ -1,6 +1,6 @@
 <?php
 
-//delete.php
+// Remember to run the calendarDB.sql script first to establish the DB
 
 if(isset($_POST["id"]))
 {

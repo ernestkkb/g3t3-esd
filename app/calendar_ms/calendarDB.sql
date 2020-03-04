@@ -1,5 +1,5 @@
 --
--- Database: `testing`
+-- Database: `calendarDB`
 --
 
 -- --------------------------------------------------------
@@ -7,6 +7,10 @@
 --
 -- Table structure for table `events`
 --
+
+DROP SCHEMA IF EXISTS calendarDB;
+
+CREATE SCHEMA calendarDB;
 
 CREATE TABLE IF NOT EXISTS `events` (
   `id` int(11) NOT NULL,

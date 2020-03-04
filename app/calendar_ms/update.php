@@ -1,6 +1,6 @@
 <?php
 
-//update.php
+// Remember to run the calendarDB.sql script first to establish the DB
 
 $connect = new PDO('mysql:host=localhost;dbname=calendarDB', 'root', '');
 

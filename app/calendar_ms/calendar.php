@@ -24,35 +24,42 @@
   <script>
   $(document).ready(function() {
    var calendar = $('#calendar').fullCalendar({ // activate full calendar plugin under the calendar divison tag at the bottom
-    editable:true,
+    editable:true, // allows drag and resize of elements in the calendar
     header:{
-     left:'prev,next today',
+        // display the elements on the left, center and right respectively
+     left:'prev,next today', 
      center:'title',
      right:'month,agendaWeek,agendaDay'
     },
-    events: 'load.php',
-    selectable:true,
-    selectHelper:true,
-    select: function(start, end, allDay)
+    events: 'load.php', // write events option, load data from load.php in feed format to see particular day on this plug-in
+    selectable:true, // allow users to highlight mutiple days or event time slot by clicking or dragging cursor
+    selectHelper:true, // draw a placeholder while user is dragging any events
+    
+
+
+    select: function(start, end, allDay) // select argument w 3 arguments. We can add more here
     {
-     var title = prompt("Enter Event Title");
+     var title = prompt("Enter Event Title"); // Upon selecting the calendar
      if(title)
      {
       var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
       var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-      $.ajax({
-       url:"insert.php",
-       type:"POST",
+      $.ajax({ // asynchronus js and XML. Used to send and retrieve data from a server in the background
+       url:"insert.php", // send the request to this page
+       type:"POST", // communication via HTTP (May need to change to accomodate AMQP)
        data:{title:title, start:start, end:end},
-       success:function()
+       success:function() // called if request is called successfully
        {
-        calendar.fullCalendar('refetchEvents');
-        alert("Added Successfully");
+        calendar.fullCalendar('refetchEvents'); // reload event data on the calendar
+        alert("Added Successfully"); // pop up message on web page
        }
       })
      }
     },
-    editable:true,
+    editable:true, // allow to edit event data
+
+
+    // reloading the calendar after resizing.  Updating is the same as inserting
     eventResize:function(event)
     {
      var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
@@ -70,6 +77,7 @@
      })
     },
 
+    // Drag and drop event from one date to another. Updating is the same as inserting
     eventDrop:function(event)
     {
      var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");

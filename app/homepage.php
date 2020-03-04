@@ -44,7 +44,7 @@ if (isset($_SESSION['access_token'])) {
                     <li><a href="#">About</a></li>
                     <li><a href="#">Portfolio</a></li>
                     <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="./calendar_ms/calendar.php">Calendar</a></li>
                     <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
                 </ul>
             </div>
