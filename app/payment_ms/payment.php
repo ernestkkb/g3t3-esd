@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 
-<!-- https://bootsnipp.com/snippets/55PbE -->
+<!-- ORIGIN https://bootsnipp.com/snippets/55PbE -->
 
 
 <html>
