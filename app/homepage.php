@@ -30,6 +30,12 @@ if (isset($_SESSION['access_token'])) {
 <html>
 <head>
     <link rel="stylesheet" href="./css/homepage.css">
+
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
 </head>
 
 <body>
@@ -43,7 +49,7 @@ if (isset($_SESSION['access_token'])) {
                 <ul class="navlinks">
                     <li><a href="#">About</a></li>
                     <li><a href="#">Portfolio</a></li>
-                    <li><a href="#">Services</a></li>
+                    <li><a href="./search_ms/search.php">Start Planning</a></li>
                     <li><a href="./calendar_ms/calendar.php">Calendar</a></li>
                     <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
                 </ul>
@@ -62,22 +68,30 @@ if (isset($_SESSION['access_token'])) {
         <!-- just to make scrolling effect possible -->
             <p class="myP" align="middle"> <img src="https://graph.facebook.com/<?php echo $user->getField('id') ?>/picture?type=large"></img>
 			<h2 class="myH2">Your planned schedule</h2>
-            
-			<p class="myP">This is a responsive fixed navbar animated on scroll</p>
+			<!-- <p class="myP">This is a responsive fixed navbar animated on scroll</p>
 			<p class="myP">I took inspiration from  ABDO STEIF (<a href="https://codepen.io/abdosteif/pen/bRoyMb?editors=1100">https://codepen.io/abdosteif/pen/bRoyMb?editors=1100</a>)
 			and Dicson <a href="https://codepen.io/dicson/pen/waKPgQ">(https://codepen.io/dicson/pen/waKPgQ)</a></p>
 			<p class="myP">I HOPE YOU FIND THIS USEFULL</p>
 			<p class="myP">Albi</p>
-				<p class="myP">
-				
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+				<p class="myP"> -->
 			</p>
+            <form>
+    <div class="form-row">
+        <div class="col-7">
+        <input type="text" class="form-control" placeholder="City">
+        </div>
+        <div class="col">
+        <input type="text" class="form-control" placeholder="State">
+        </div>
+        <div class="col">
+        <input type="text" class="form-control" placeholder="Zip">
+        </div>
+    </div>
+    </form>
+
     </div>
 
+  
 <!-- Jquery needed -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/scripts.js"></script>
