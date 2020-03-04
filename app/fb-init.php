@@ -24,7 +24,7 @@ if (isset($_GET['state'])) {
   $helper->getPersistentDataHandler()->set('state', $_GET['state']);
 }
 
-$login_url = $helper->getLoginUrl("http://localhost/g3t3/fb-login/login.php");
+$login_url = $helper->getLoginUrl("http://localhost/g3t3/app/login.php");
 
 # Uncomment this if you want to see the login_url
 // print_r($login_url);
