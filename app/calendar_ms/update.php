@@ -2,7 +2,7 @@
 
 //update.php
 
-$connect = new PDO('mysql:host=localhost;dbname=calendar_database.sql', 'root', '');
+$connect = new PDO('mysql:host=localhost;dbname=calendarDB', 'root', '');
 
 if(isset($_POST["id"]))
 {
