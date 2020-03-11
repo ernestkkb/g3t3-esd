@@ -42,15 +42,15 @@
         <h1 class="display-4">Add a Trip</h1>
         <form id="AddTripForm" method = 'POST'>
             Trip Name<br>
-            <input name="tripName" type="text" id="title" style = "width:100%"/><br>
+            <input name="tripName" type="text" id="tripname" value =<?php $tripname?> style = "width:100%"/><br>
             Start Date<br>
             <input name="startdate" type="text" id="startdate" value = <?php $startdate?> style = "width:100%"/><br>
             End Date<br>
             <input name="enddate" type="text" id="enddate" value = <?php $enddate?>  style = "width:100%"/><br>
+            City<br>
+            <input name="city" type="text" id="city" value = <?php $city?>  style = "width:100%"/></br>
             <br>
-            Places of Interest
-            <br>
-            <input class="btn btn-primary" type="submit" value="Submit">
+            <input class="btn btn-primary" type="submit" value="Find places of Interest">
         </form>
         <br><br>
     
