@@ -11,6 +11,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
+db = SQLAlchemy(app)
+CORS(app)
+
 class scheduler(db.Model):
     __tablename__ = 'scheduler'
 
@@ -32,6 +35,7 @@ class scheduler(db.Model):
     def json(self):
         return {"tripID": self.tripID, "facebookID": self.facebookID, "placesOfInterest": self.placesOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus}
 
+
 #function to get facebookID (get from session and store in database)
 #function to get all trips of a specific fb user (retrieve)
 #function (GET) places of interest from user's selected POI- placesOfInterest {POI: name, address}
@@ -40,9 +44,6 @@ class scheduler(db.Model):
 #
 
 #function to create: SEND (POST)
-
-db = SQLAlchemy(app)
-CORS(app)
 
 if __name__ == '__main__':
     app.run(port=5002, debug=True) 
