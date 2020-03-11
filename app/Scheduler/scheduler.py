@@ -38,14 +38,14 @@ class scheduler(db.Model):
 
 
 #retrieve all trips of one user
-@app.route("/scheduler/<varchar:facebookID>")
+@app.route("/scheduler/<string:facebookID>")
 def get_all_from_user(facebookID):
     trips = scheduler.query.filter_by(facebookID=facebookID).first()
     if trips:
         return jsonify(trips.json())
 
 #retrieve trip by trip id 
-@app.route("/scheduler/<integer:tripID>")
+@app.route("/scheduler/<string:tripID>")
 def find_by_tripid(tripID):
     trip = scheduler.query.filter_by(tripID=tripID).first()
     if trip:
@@ -53,7 +53,7 @@ def find_by_tripid(tripID):
     return jsonify({"message": "Trip not found."}), 404
 
 #create trip 
-@app.route("/scheduler/<integer: tripID>", methods=['POST'])
+@app.route("/scheduler/<string: tripID>", methods=['POST'])
 def create_trip(tripID):
     if (scheduler.query.filter_by(tripID=tripID).first()):
         return jsonify({"message": "A trip with tripID '{}' already exists.".format(tripID)}), 400
