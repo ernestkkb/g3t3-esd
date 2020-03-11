@@ -8,6 +8,7 @@ import os
 import random
 import datetime
 import pika
+import paypalrestsdk
 
 app = Flask(__name__)
 
@@ -96,6 +97,55 @@ def forward_tripID(tripID):
     print("Trip ID sent to Scheduler & Notification microservice.")
     # close the connection to the broker
     connection.close()
+
+############################################################################## PAYPAL API ################################################################################
+
+paypalrestsdk.configure({
+  "mode": "sandbox", # sandbox or live
+  "client_id": "AQTRgxt_BRwy1QJWpfnQxCOindU_V0JdyvcbP0XpV9da2XYk0C9V2VWhMdnFYVZ0RZU8LhDGl_zgDwDA",
+  "client_secret": "EJUcPqPO8rFvr9l8mW1bB9EOV9jRJFplhhK1uAyOmsZNoHEuytLiE1k0tegR2Ic0DLdddiYIDpO-1hoY" })
+
+@app.route('/makepayment', methods=['POST'])
+def payment():
+    payment = paypalrestsdk.Payment({
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"},
+        "redirect_urls": {
+            "return_url": "http://localhost:5003/payment/execute",
+            "cancel_url": "http://localhost:5003/"},
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "testitem",
+                    "sku": "12345",
+                    "price": "10.00",
+                    "currency": "USD",
+                    "quantity": 1}]},
+            "amount": {
+                "total": "10.00",
+                "currency": "USD"},
+            "description": "This is the payment transaction description."}]})
+
+    if payment.create():
+        print('Payment success!')
+    else:
+        print(payment.error)
+
+    return jsonify({'paymentID' : payment.id})
+
+@app.route('/execute', methods=['POST'])
+def execute():
+    success = False
+    payment = paypalrestsdk.Payment.find(request.form['paymentID'])
+
+    if payment.execute({'payer_id' : request.form['payerID']}):
+        print('Execute success!')
+        success = True
+    else:
+        print(payment.error)
+
+    return jsonify({'success' : success})
 
 
 if __name__ == '__main__':

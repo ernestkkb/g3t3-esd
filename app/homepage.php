@@ -76,6 +76,13 @@ if (isset($_SESSION['access_token'])) {
 				<p class="myP"> -->
 			</p>
             <form>
+
+
+
+
+
+
+            
     <div class="form-row">
         <div class="col-7">
         <input type="text" class="form-control" placeholder="City">

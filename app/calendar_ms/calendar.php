@@ -1,4 +1,18 @@
+<?php
+
+
+require_once 'common.php';
+require_once 'calendarDAO.php';
+require_once 'Event.php';
+require_once 'ConnectionManager.php';
+
+$calendarDAO = new calendarDAO();
+
+?>
 <!DOCTYPE html>
+
+
+
 <html>
     <head>
         <title>Jquery Fullcalandar Integration with PHP and Mysql</title>
@@ -126,5 +140,17 @@
   <div class="container">
    <div id="calendar"></div>
   </div>
+  
+  <?php
+
+
+$data = $calendarDAO->retrieveAll();
+
+// TODO: Send data over to the scheduler page <add_trip.html>
+?>
+
+
+
+
  </body>
 </html>
