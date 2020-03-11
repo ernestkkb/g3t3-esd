@@ -8,7 +8,7 @@ class ConnectionManager {
         $servername = 'localhost';
         $username = 'root';
         $password = '';
-        $dbname = 'session_test';
+        $dbname = 'calendardb';
         
         // Create connection
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);     
