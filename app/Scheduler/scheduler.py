@@ -24,6 +24,7 @@ class scheduler(db.Model):
     endDate = db.Column(db.date, nullable=False))
     paymentStatus = db.Column(db.Varchar(10))
 
+
     def __init__(self, tripID, facebookID, placesOfInterest, startDate, endDate, paymentStatus):
         self.tripID = tripID
         self.facebookID = facebookID
