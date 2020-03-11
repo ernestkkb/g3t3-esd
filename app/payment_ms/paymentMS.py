@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import update
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -52,12 +53,12 @@ def get_trip_payment_details(tripID):
 def update_trip_status(tripID):
     payment = Payment.query.filter_by(tripID=tripID).first()
     if payment:
-        stmt = Payment.update().\
-            where(Payment.tripID==payment.tripID).\
-            values(paymentStatus='paid')
-        return jsonify(payment.json())
-    return jsonify({"message": "Trip not found."}), 404
-
+        try:
+            payment.paymentStatus = 'paid'
+            db.session.commit()
+        except:
+            return jsonify({"message": "An error occurred updating the payment status."}), 500
+    return jsonify({"message": "Payment status updated."}), 201
 
 if __name__ == '__main__':
     #port=5000 - location search
