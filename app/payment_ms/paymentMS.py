@@ -2,6 +2,12 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import update
 from flask_cors import CORS
+import json
+import sys
+import os
+import random
+import datetime
+import pika
 
 app = Flask(__name__)
 
@@ -56,9 +62,41 @@ def update_trip_status(tripID):
         try:
             payment.paymentStatus = 'paid'
             db.session.commit()
+            forward_tripID(tripID)
         except:
             return jsonify({"message": "An error occurred updating the payment status."}), 500
     return jsonify({"message": "Payment status updated."}), 201
+
+def forward_tripID(tripID):
+    """inform Scheduler & Notification microservice"""
+    # default username / password to the borker are both 'guest'
+    hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
+    port = 5672 # default messaging port.
+    # connect to the broker and set up a communication channel in the connection
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+        # Note: various network firewalls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
+        # If "pika.exceptions.AMQPConnectionError" happens, may try again after disconnecting the wifi and/or disabling firewalls
+    channel = connection.channel()
+
+    # set up the exchange if the exchange doesn't exist
+    exchangename="payment_topic"
+    channel.exchange_declare(exchange=exchangename, exchange_type='topic')
+
+    # prepare the message body content
+    message = json.dumps(tripID, default=str) # convert a JSON object to a string
+
+    channel.queue_declare(queue='payment', durable=True) # make sure the queue used by the error handler exist and durable
+    channel.queue_bind(exchange=exchangename, queue='payment', routing_key='*.payment') # make sure the queue is bound to the exchange
+    channel.basic_publish(exchange=exchangename, routing_key="scheduler.payment", body=message,
+        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+    )
+    channel.basic_publish(exchange=exchangename, routing_key="notification.payment", body=message,
+        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+    )
+    print("Trip ID sent to Scheduler & Notification microservice.")
+    # close the connection to the broker
+    connection.close()
+
 
 if __name__ == '__main__':
     #port=5000 - location search
