@@ -22,9 +22,50 @@ if (isset($_SESSION['access_token'])) {
 
     } catch (Exception $e) {
       echo $e->getTraceAsString();
+      header("Location: ./logout.php");
     }
   }
 ?>
+
+
+<!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
+
+<!-- Refer to Lab 6 -- Creating a Bookstore Interface !-->
+
+
+<script>
+        // anonymous async function - using await requires the function that calls it to be async
+        $(async() => {           
+            // Change serviceURL to your own
+            var serviceURL = "http://127.0.0.1:5000/locations";
+            console.log(serviceURL);
+            try {
+                const response =
+                await fetch(
+                    serviceURL, { method: 'GET' }
+                );
+                const data = await response.json();
+                var locations = data.locations; //the arr is in data.books of the JSON data
+                // array or array.length are falsy
+                console.log(locations);
+                if (!locations || !locations.length) {
+                    console.log('Locations list empty or undefined.');
+                } else {
+                    // for loop to setup all table rows with obtained book data
+                    var locations_arr = [];
+
+                    for (const location of locations) {
+                        locations_arr.push([location[0], location[1]])
+                    }
+
+                    console.log(locations_arr);
+                }
+            } catch (error) {
+                console.trace();
+            } // error
+        });
+    </script>
+
 <!-- Starting of the HTML BODY -->
 <!DOCTYPE html>
 <html>
@@ -54,11 +95,6 @@ if (isset($_SESSION['access_token'])) {
                     <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
                 </ul>
             </div>
-            <span class="navTrigger">
-                <i></i>
-                <i></i>
-                <i></i>
-            </span>
         </div>
     </nav>
 
@@ -66,37 +102,35 @@ if (isset($_SESSION['access_token'])) {
     </section>
     <div style="height: 1000px">
         <!-- just to make scrolling effect possible -->
-            <p class="myP" align="middle"> <img src="https://graph.facebook.com/<?php echo $user->getField('id') ?>/picture?type=large"></img>
 			<h2 class="myH2">Your planned schedule</h2>
-			<!-- <p class="myP">This is a responsive fixed navbar animated on scroll</p>
-			<p class="myP">I took inspiration from  ABDO STEIF (<a href="https://codepen.io/abdosteif/pen/bRoyMb?editors=1100">https://codepen.io/abdosteif/pen/bRoyMb?editors=1100</a>)
-			and Dicson <a href="https://codepen.io/dicson/pen/waKPgQ">(https://codepen.io/dicson/pen/waKPgQ)</a></p>
-			<p class="myP">I HOPE YOU FIND THIS USEFULL</p>
-			<p class="myP">Albi</p>
-				<p class="myP"> -->
-			</p>
-            <form>
 
 
+            <div style="text-align:center">
+            
+                <form id="search_bar" method="POST" action="/retrieve_data">
+                    <font size="+2"> Country: </font> 
+                    <select style="width:150px" name="country">
+                        <option value="test"></option>
+                    </select>
+                    <font size="+2"> City: </font>
+                    <select style="width:150px" name="city">
+                        <option value="test">Test</option>
+                    </select>
+                    <input type="submit" name="submit">
+                </form>
 
-
+                <?php
 
 
             
-    <div class="form-row">
-        <div class="col-7">
-        <input type="text" class="form-control" placeholder="City">
-        </div>
-        <div class="col">
-        <input type="text" class="form-control" placeholder="State">
-        </div>
-        <div class="col">
-        <input type="text" class="form-control" placeholder="Zip">
-        </div>
-    </div>
-    </form>
 
+                ?>
+            </div>
+
+                      
     </div>
+
+
 
   
 <!-- Jquery needed -->
