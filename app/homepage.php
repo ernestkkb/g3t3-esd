@@ -27,43 +27,56 @@ if (isset($_SESSION['access_token'])) {
   }
 ?>
 
-
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
 
-<!-- Refer to Lab 6 -- Creating a Bookstore Interface !-->
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-        // anonymous async function - using await requires the function that calls it to be async
-        $(async() => {           
-            // Change serviceURL to your own
-            var serviceURL = "http://127.0.0.1:5000/locations";
-            console.log(serviceURL);
+
+        async function getData(serviceURL) {
+            let requestParam = {
+                headers: {"content-type": "charset=UTF-8"},
+                mode: 'cors',
+                method: 'GET',
+            }
+
             try {
-                const response =
-                await fetch(
-                    serviceURL, { method: 'GET' }
-                );
-                const data = await response.json();
-                var locations = data.locations; //the arr is in data.books of the JSON data
-                // array or array.length are falsy
-                console.log(locations);
-                if (!locations || !locations.length) {
-                    console.log('Locations list empty or undefined.');
-                } else {
-                    // for loop to setup all table rows with obtained book data
-                    var locations_arr = [];
-
-                    for (const location of locations) {
-                        locations_arr.push([location[0], location[1]])
-                    }
-
-                    console.log(locations_arr);
-                }
+                const response = await fetch(serviceURL, requestParam);
+                data = await response.json();
+                return data
             } catch (error) {
-                console.trace();
-            } // error
-        });
+                console.error(error);
+            }
+        }
+
+        $(document).ready(function() {
+            var serviceURL = "http://127.0.0.1:5000/locations";
+            var locations = getData(serviceURL);
+
+            locations.then((data) => { // Necessary for async programming
+                for (let i = 0; i < data.length; i++) {
+                    all_locations.shift(data);
+                }
+                // all_locations.shift(data);
+                // console.log(data);
+                // console.log(typeof(data)); // confirms that is object data type
+                
+                // console.log(data.locations);
+                
+                locations_array = data.locations
+                var all_countries = [];
+                locations_array.forEach(function(locations_array) {
+                    var country_options = locations_array['country'];
+                    var city_option = locations_array['city'];
+
+                    if (!all_countries.includes(country_options)) {
+                        $('#country').append('<option>' + country_options + '</option>')
+                        all_countries.push(country_options);
+                    }
+                    $('#city').append('<option>' + city_option + '</option>')
+                })
+            })
+        })
+        
     </script>
 
 <!-- Starting of the HTML BODY -->
@@ -71,16 +84,8 @@ if (isset($_SESSION['access_token'])) {
 <html>
 <head>
     <link rel="stylesheet" href="./css/homepage.css">
-
-
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
 </head>
-
 <body>
-
 <nav class="nav">
         <div class="container">
             <div class="logo">
@@ -98,43 +103,32 @@ if (isset($_SESSION['access_token'])) {
         </div>
     </nav>
 
-    <section class="home">
-    </section>
+    <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
+
+
     <div style="height: 1000px">
         <!-- just to make scrolling effect possible -->
-			<h2 class="myH2">Your planned schedule</h2>
+        <h2 class="myH2">Your planned schedule</h2>
 
+        <div style="text-align:center">
+        
+            <form id="search_bar" method="POST" action="/retrieve_data">
 
-            <div style="text-align:center">
-            
-                <form id="search_bar" method="POST" action="/retrieve_data">
-                    <font size="+2"> Country: </font> 
-                    <select style="width:150px" name="country">
-                        <option value="test"></option>
-                    </select>
-                    <font size="+2"> City: </font>
-                    <select style="width:150px" name="city">
-                        <option value="test">Test</option>
-                    </select>
-                    <input type="submit" name="submit">
-                </form>
+                <font size="+2"> Country: </font> 
+                <select style="width:150px" name="country" id="country">
+                <!-- Values are filled from the script portion above !-->
+                </select>
 
-                <?php
-
-
-            
-
-                ?>
-            </div>
-
-                      
+                <font size="+2"> City: </font>
+                <select style="width:150px" name="city" id="city">
+                <!-- Values are filled from the script portion above !-->
+                </select>
+                <input type="submit" name="submit">
+            </form>
+        </div>                      
     </div>
 
-
-
-  
 <!-- Jquery needed -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/scripts.js"></script>
 
 <!-- Function used to shrink nav bar removing paddings and adding black background -->
