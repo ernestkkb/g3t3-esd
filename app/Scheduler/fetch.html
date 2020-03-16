@@ -11,6 +11,17 @@
 
 <body>
     <p id="display">Display POI</p>
+    <table id="POITable" class='table table-striped' border='1'>
+        <thead class='thead-dark'>
+            <tr>
+                <th>Name</th>
+                <th>Photos</th>
+                <th>Rating</th>
+                <th>Description</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+    </table>
     <script>
     
     // Fetch a service
@@ -29,8 +40,23 @@
                 $("#display").text("Error in retrieving Places of Interest data");
             } else {
                 // success
-                const POI = await response.json();
-                console.log(POI);
+                const fullpage = await response.json();
+                const POI = fullpage.results
+                var rows = "";
+                    
+                for (i=0; i < POI.length; i++) {
+                    eachRow =
+                        "<td>" + POI.name + "</td>" +
+                        "<td>" + POI.photos + "</td>" +
+                        "<td>" + POI.rating+ "</td>" +
+                        "<td>" + POI.id + "</td>";
+                        <"td>" + POI.formatted_address + "</td>"
+                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                }
+
+                    // add all the rows to the table
+                $('#POITable').append(rows);
+                
             }
 
         } catch (error) {
