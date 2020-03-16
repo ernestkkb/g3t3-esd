@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <p id="display">Display POI</p>
+    <script>
+    
+    // Fetch a service
+    // $() jQuery syntax, this means that the document has to be loaded before this gets executed
+    $(async () => {
+        var serviceURL = "http://localhost:5000/placesapi";
+
+        try {
+            const response =
+                await fetch(
+                    serviceURL, { method: 'GET' }
+                );
+            
+            if (!response.ok) {
+                // print some error
+                $("#display").text("Error in retrieving Places of Interest data");
+            } else {
+                // success
+                const POI = await response.json();
+                console.log(POI);
+            }
+
+        } catch (error) {
+            // error, print something
+            $("#display").text("Error in calling the service, "+error);
+        }
+    });
+
+    </script>
+</body>
+
+</html>
