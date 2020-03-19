@@ -23,8 +23,6 @@ def get_waypoints_list(waypoints_dict):
         store.append(new_string)
     return store
 
-waypoint_string = get_waypoints_list(waypoints_dict)[0]
-
 def url_create(origin, destination, waypoint_string, API_KEY):
     from urllib.parse import urlencode
     mydict = {'origin': origin , 'destination': destination }
@@ -32,6 +30,8 @@ def url_create(origin, destination, waypoint_string, API_KEY):
     url = GMAPS_URL + urlencode(mydict, doseq=True) 
     url = url +  '&waypoints=optimize:true' + waypoint_string + '&key=' + API_KEY
     return url
+
+waypoint_string = get_waypoints_list(waypoints_dict)
 
 url = url_create(origin, destination, waypoint_string, API_KEY)
 response = urllib.urlopen(url)
