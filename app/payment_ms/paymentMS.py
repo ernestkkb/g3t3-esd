@@ -9,6 +9,7 @@ import random
 import datetime
 import pika
 import paypalrestsdk
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -105,8 +106,26 @@ paypalrestsdk.configure({
   "client_id": "AQTRgxt_BRwy1QJWpfnQxCOindU_V0JdyvcbP0XpV9da2XYk0C9V2VWhMdnFYVZ0RZU8LhDGl_zgDwDA",
   "client_secret": "EJUcPqPO8rFvr9l8mW1bB9EOV9jRJFplhhK1uAyOmsZNoHEuytLiE1k0tegR2Ic0DLdddiYIDpO-1hoY" })
 
+
 @app.route('/makepayment', methods=['POST'])
-def payment():
+
+def payment(triplist=[{
+                    "name": "Travel Package A",
+                    "sku": "Trip ID: 1",
+                    "price": "100",
+                    "currency": "USD",
+                    "quantity": 2}, 
+                    {"name": "Travel Package B",
+                    "sku": "Trip ID: 2",
+                    "price": "200",
+                    "currency": "USD",
+                    "quantity": 1}]):
+    total=0
+    for dict1 in triplist:
+        for key in dict1:
+            if key=="price":
+                total+=int(dict1["price"])*int(dict1["quantity"])
+    
     payment = paypalrestsdk.Payment({
         "intent": "sale",
         "payer": {
@@ -116,14 +135,9 @@ def payment():
             "cancel_url": "http://localhost:5003/"},
         "transactions": [{
             "item_list": {
-                "items": [{
-                    "name": "testitem",
-                    "sku": "12345",
-                    "price": "10.00",
-                    "currency": "USD",
-                    "quantity": 1}]},
+                "items": triplist},
             "amount": {
-                "total": "10.00",
+                "total": str(total),
                 "currency": "USD"},
             "description": "This is the payment transaction description."}]})
 
@@ -133,6 +147,9 @@ def payment():
         print(payment.error)
 
     return jsonify({'paymentID' : payment.id})
+
+@app.route('/makepayment', methods=['POST'])
+
 
 @app.route('/execute', methods=['POST'])
 def execute():

@@ -41,36 +41,10 @@ def get_all():
     all_package = {"package_recomendation": [package_recommendation.json() for package_recommendation in Package_recommendation.query.all()]}
     return jsonify(all_package)
 
-# @app.route("/payment/<string:tripID>", methods=['POST'])
-# def get_trip_payment_details(tripID):
-#     if (Payment.query.filter_by(tripID=tripID).first()):
-#         return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripID)}), 400
 
-#     data = request.get_json()
-#     payment = Payment(tripID, **data)
-
-#     try:
-#         db.session.add(payment)
-#         db.session.commit()
-#     except:
-#         return jsonify({"message": "An error occurred creating the trip payment."}), 500
-
-#     return jsonify(payment.json()), 201
-
-# @app.route("/payment/update/<string:tripID>")
-# def update_trip_status(tripID):
-#     payment = Payment.query.filter_by(tripID=tripID).first()
-#     if payment:
-#         try:
-#             payment.paymentStatus = 'paid'
-#             db.session.commit()
-#             forward_tripID(tripID)
-#         except:
-#             return jsonify({"message": "An error occurred updating the payment status."}), 500
-#     return jsonify({"message": "Payment status updated."}), 201
 @app.route("/package_recommendation/forward")
 def forward_packageID():
-    all_package1 ={"package_recomendation": [package_recommendation.json() for package_recommendation in Package_recommendation.query.all()]}
+    all_package1 ={"package_recomendation": [package_recommendation.json() for package_recommendation in Package_recommendation.query.filterby(packageID=packageID).first()]}
 
     """inform Scheduler microservice"""
     # default username / password to the borker are both 'guest'
