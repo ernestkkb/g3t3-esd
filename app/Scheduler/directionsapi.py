@@ -1,8 +1,9 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import requests
-import urllib, json
-
+import urllib
+import urllib.request
+import json
 app = Flask(__name__)
 CORS(app)
 
@@ -34,8 +35,9 @@ def url_create(origin, destination, waypoint_string, API_KEY):
 waypoint_string = get_waypoints_list(waypoints_dict)
 
 url = url_create(origin, destination, waypoint_string, API_KEY)
-response = urllib.urlopen(url)
+response = urllib.request.urlopen(url)
 data = json.loads(response.read())
-print data
+
+
 
 
