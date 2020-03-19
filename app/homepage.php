@@ -3,28 +3,28 @@
 require './fb-init.php';
 ?>
 
-<?php require "fb-init.php";?>
+<?php # require "fb-init.php";?>
 
-<?php if (isset($_SESSION['access_token'])): ?>
+<?php # if (isset($_SESSION['access_token'])): ?>
     
-<?php else: ?>
-    <a href="<?php echo $login_url;?>">Login With Facebook</a>
-<?php endif; ?>
+<?php # else: ?>
+    <!-- <a href="<?php # echo $login_url;?>">Login With Facebook</a> -->
+<?php # endif; ?>
 
 <?php
-if (isset($_SESSION['access_token'])) {
+// if (isset($_SESSION['access_token'])) {
 
-    try {
-      $fb->setDefaultAccesstoken($_SESSION['access_token']);
+//     try {
+//       $fb->setDefaultAccesstoken($_SESSION['access_token']);
 
-      $response = $fb->get('/me?fields=id,name,picture,last_name', $_SESSION['access_token']);
-      $user = $response->getGraphUser();
+//       $response = $fb->get('/me?fields=id,name,picture,last_name', $_SESSION['access_token']);
+//       $user = $response->getGraphUser();
 
-    } catch (Exception $e) {
-      echo $e->getTraceAsString();
-      header("Location: ./logout.php");
-    }
-  }
+//     } catch (Exception $e) {
+//       echo $e->getTraceAsString();
+//       header("Location: ./logout.php");
+//     }
+//   }
 ?>
 
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
@@ -89,11 +89,11 @@ if (isset($_SESSION['access_token'])) {
 <nav class="nav">
         <div class="container">
             <div class="logo">
-                <a href="#">Welcome back, <?php echo $user->getField('last_name') ?> </a>
+                <a href="#">Welcome back, <?php # echo $user->getField('last_name') ?> </a>
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
-                    <li><a href="#">About</a></li>
+                    <li><a href="./notifications.php">Email</a></li>
                     <li><a href="./payment_ms/payment.php">Payment</a></li>
                     <li><a href="./search_ms/search.php">Start Planning</a></li>
                     <li><a href="./calendar_ms/calendar.php">Calendar</a></li>
@@ -112,17 +112,20 @@ if (isset($_SESSION['access_token'])) {
 
         <div style="text-align:center">
         
-            <form id="search_bar" method="POST" action="/retrieve_data">
+            <form id="search_bar" method="POST" action="./Scheduler/add_trip.php">
 
                 <font size="+2"> Country: </font> 
                 <select style="width:150px" name="country" id="country">
+                <option selected disabled='true' >Select Country</option>
                 <!-- Values are filled from the script portion above !-->
                 </select>
 
                 <font size="+2"> City: </font>
                 <select style="width:150px" name="city" id="city">
+                    <option selected disabled='true'>Select City</option>
                 <!-- Values are filled from the script portion above !-->
                 </select>
+
                 <input type="submit" name="submit">
             </form>
         </div>                      

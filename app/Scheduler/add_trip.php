@@ -1,3 +1,11 @@
+<?php
+if (isset($_POST['country']) && isset($_POST['city'])) {
+    $country = $_POST['country'];
+    $city = $_POST['city'];
+    var_dump($country);
+    var_dump($city);
+}
+?>
 <!DOCTYPE html>
 <html>
 
