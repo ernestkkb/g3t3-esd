@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -75,17 +74,33 @@
     <b>Waypoints:</b> <br>
     <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br>
     <select multiple id="waypoints">
-      <option value="Downtown, Singapore">Downtown Singapore</option>
-      <option value="2 Cox Terrace, Singapore 179622">2 Cox Terrace, Singapore 179622</option>
-      <option value="8 Sentosa Gateway, Singapore 098269">Sentosa Gateway</option>
     </select>
+
+    <script>
+    var data2 = ["Siloso Rd, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
+    $(document).ready(function(){
+      for (let i = 0; i < data2.length; i++) {
+      var one_data = data2[i];
+      // console.log(one_data);
+      $('#waypoints').append('<option value="' +  one_data  + '">' + one_data + '</option>');
+    }
+    })
+    </script>
+
     <br>
     <b>End:</b>
     <select id="end">
-      <option value="Downtown, Singapore">Downtown Singapore</option>
-      <option value="2 Cox Terrace, Singapore 179622">2 Cox Terrace, Singapore 179622</option>
-      <option value="8 Sentosa Gateway, Singapore 098269">Sentosa Gateway</option>
     </select>
+    <script>
+    var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
+    $(document).ready(function(){
+      for (let i = 0; i < datas.length; i++) {
+      var one_data = datas[i];
+      // console.log(one_data);
+      $('#end').append('<option value="' +  one_data  + '">' + one_data + '</option>');
+    }
+    })
+    </script>
     <br>
       <input type="submit" id="submit">
     </div>

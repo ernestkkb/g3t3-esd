@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +14,7 @@
         <table id="POITable" class='table table-striped' border='1'>
             <thead class='thead-dark'>
                 <tr>
+                    <th>POI S.N.</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Photos</th>
@@ -56,17 +56,39 @@
                 data = await response.json();
                 console.log(data);
                 var rows = "";
-                for (const poi of data) {
-                    eachRow =
-                        "<td>" + poi[0] + "</td>" +
-                        "<td>" + poi[1] + "</td>" +
-                        "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
-                        "<td>" + poi[3] + "</td>" + 
-                        "<td>" + 
-                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                rowcounts = data.length;
+                counter = 1;
+                for (const poi of data){
+                    if (counter == 1){
+                        row = 
+                            "<tr><td>" + counter + "</td>" + 
+                            "<td>" + poi[0] + "</td>" +
+                            "<td>" + poi[1] + "</td>" +
+                            "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
+                            "<td>" + poi[3] + "</td>" + 
+                            "<td rowspan=" + '"' + rowcounts + '"' + ">" + 
+                                "POI S.N.:<input type ='text' name = 'poino'/><br>" + 
+                                "DAY CHOSEN:<input type ='text' name = 'day'/>" + 
+                                "<input type='submit' name='add' value='Add'><br>" + 
+                                "<input type='submit' name='confirm' value='Confirm'></td></tr>";
+                        $('#POITable').append(row);
+                        counter += 1;
+                    }
+                    else{
+                        eachRow =
+                            "<td>" + counter + "</td>" +
+                            "<td>" + poi[0] + "</td>" +
+                            "<td>" + poi[1] + "</td>" +
+                            "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
+                            "<td>" + poi[3] + "</td>";
+                        rows += "<tr>" + eachRow + "</tr>";
+                        counter += 1;
+                    }
                 }
                 // add all the rows to the table
                 $('#POITable').append(rows);
+                
+            
 
             } catch (error) {
                 console.error(error);
@@ -74,6 +96,16 @@
         }
 
 </script>
+
+<script>
+    var add_to_db = function() {
+        
+    }
+</script>
+
+
+
+
 </body>
 
 </html>
