@@ -1,6 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import update
 from flask_cors import CORS
+import json
+import sys
+import os
+import random
+import datetime
+import pika
+import paypalrestsdk
 
 app = Flask(__name__)
 
@@ -17,12 +25,12 @@ CORS(app)
 class scheduler(db.Model):
     __tablename__ = 'scheduler'
 
-    tripID = db.Column(db.Integer(4), primary_key=True)
-    facebookID = db.Column(db.Varchar(20), nullable=False)
-    placesOfInterest = db.Column(db.json, nullable=False)
-    startDate = db.Column(db.date, nullable=False)
-    endDate = db.Column(db.date, nullable=False))
-    paymentStatus = db.Column(db.Varchar(10))
+    tripID = db.Column(db.Integer(), primary_key=True)
+    facebookID = db.Column(db.String(20), nullable=False)
+    placesOfInterest = db.Column(db.JSON, nullable=False)
+    startDate = db.Column(db.Date, nullable=False)
+    endDate = db.Column(db.Date, nullable=False)
+    paymentStatus = db.Column(db.String(10))
 
 
     def __init__(self, tripID, facebookID, placesOfInterest, startDate, endDate, paymentStatus):
@@ -55,7 +63,7 @@ def find_by_tripid(tripID):
     return jsonify({"message": "Trip not found."}), 404
 
 #create trip - POST
-@app.route("/scheduler/<string: tripID>", methods=['POST'])
+@app.route("/scheduler/<string:tripID>", methods=['POST'])
 def create_trip(tripID):
     if (scheduler.query.filter_by(tripID=tripID).first()):
         return jsonify({"message": "A trip with tripID '{}' already exists.".format(tripID)}), 400
@@ -72,13 +80,21 @@ def create_trip(tripID):
     return jsonify(trip.json()), 201
 
 @app.route('/makepayment', methods=['POST'])
-def forward_trip(tripName,tripID,price,currency,quantity):
-    triplist=[{
-                    "name": tripName,
-                    "sku": "Trip ID: "+tripID,
-                    "price": price,
-                    "currency": currency,
-                    "quantity": quantity}]
+def forward_trip():
+    print("FK")
+    if request.is_json:
+        triplist = request.get_json()
+    else:
+        triplist = request.get_data()
+        replymessage = json.dumps({"message": "Order should be in JSON", "data": triplist}, default=str)
+        return replymessage, 400 # Bad Request
+
+    # triplist=[{
+    #                 "name": tripName,
+    #                 "sku": "Trip ID: "+tripID,
+    #                 "price": price,
+    #                 "currency": currency,
+    #                 "quantity": quantity}]
 
     """inform Payment microservice"""
     # default username / password to the broker are both 'guest'
@@ -102,12 +118,10 @@ def forward_trip(tripName,tripID,price,currency,quantity):
     channel.basic_publish(exchange=exchangename, routing_key="payment.scheduler", body=message,
         properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
     )
-    channel.basic_publish(exchange=exchangename, routing_key="notification.payment", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
-    )
     print("Trip details sent to Payment microservice.")
     # close the connection to the broker
     connection.close()
+    return 
 
 
 
