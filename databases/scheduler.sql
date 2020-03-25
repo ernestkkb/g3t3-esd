@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 25, 2020 at 11:24 AM
+-- Generation Time: Mar 25, 2020 at 11:32 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `scheduler`
 --
+CREATE DATABASE IF NOT EXISTS `scheduler` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `scheduler`;
 
 -- --------------------------------------------------------
 
