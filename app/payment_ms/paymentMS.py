@@ -1,6 +1,3 @@
-# from common import *
-# importStuff()
-
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import update
@@ -14,7 +11,6 @@ import pika
 import paypalrestsdk
 
 app = Flask(__name__)
-app.app_context()
 #change link to own database directory
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/payment'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -38,36 +34,6 @@ class Payment(db.Model):
     def json(self):
         return {"tripID": self.tripID, "price": self.price, "paymentStatus": self.paymentStatus}
 
-#checkout trip for payment - step 1: consume trip details from scheduler MS 
-@app.route('/receiveTrip', methods=['POST'])
-def receiveTripDetails():
-    print("receiveTripDetails function triggered")
-    hostname = "localhost" # default host
-    port = 5672 # default port
-    # connect to the broker and set up a communication channel in the connection
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-    channel = connection.channel()
-
-    # set up the exchange if the exchange doesn't exist
-    exchangename="exchange_topic"
-    channel.exchange_declare(exchange=exchangename, exchange_type='topic')
-
-    # prepare a queue for receiving messages
-    channelqueue = channel.queue_declare(queue='scheduler', durable=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
-        # If no need durability of the messages, no need durable queues, and can use such temp random queues.
-    queue_name = channelqueue.method.queue
-    channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.scheduler') # bind the queue to the exchange via the key
-        # any routing_key would be matched
-
-    # set up a consumer and start to wait for coming messages
-    channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
-    channel.start_consuming() # an implicit loop waiting to receive messages; it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
-
-def callback(channel, method, properties, body): # required signature for the callback; no return
-    print("Received an Trip details")
-    #print(json.loads(body))
-    payment(json.loads(body))
-    print() # print a new line feed
 
 paypalrestsdk.configure({
   "mode": "sandbox", # sandbox or live
@@ -103,7 +69,17 @@ def payment(triplist):
         print('Payment success!')
         status=update_trip_status(triplist[0]["sku"])
         if status[1] == 201: 
-            forward_tripID(triplist[0]["sku"])
+            hostname = "localhost"
+            port = 5672 
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+            channel = connection.channel()
+            exchangename="exchange_topic"
+            channel.exchange_declare(exchange=exchangename, exchange_type='topic')
+            channel.queue_declare(queue='payment.reply', durable=True) # make sure the queue used by the error handler exist and durable
+            channel.queue_bind(exchange=exchangename, queue='payment.reply', routing_key='*.reply') # make sure the queue is bound to the exchange
+            channel.basic_publish(exchange=exchangename, routing_key="*.error", body=triplist[0]['sku'],
+            properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+        )
         else:
             return jsonify({"message": "An error occurred updating the trip status."}), 500
             
@@ -127,7 +103,7 @@ def execute():
     return jsonify({'success' : success})
 
 #checkout trip for payment - step 3: update payment status in DB to "paid" once payment is successful  
-@app.route("/payment/update/<string:tripID>")
+# @app.route("/payment/update/<string:tripID>")
 def update_trip_status(tripID):
     print("update_trip_status function triggered")
     payment = Payment.query.filter_by(tripID=tripID).first()
@@ -138,41 +114,6 @@ def update_trip_status(tripID):
             return ("message: Payment status updated.",201)
         except:
              return ("message: An error occurred updating the payment status.",500)
-
-
-#checkout trip for payment - step 4: Inform notification MS and scheduler MS upon completion
-@app.route("/payment/forward/<string:tripID>")
-def forward_tripID(tripID):
-    print("forward_tripID function triggered")
-    """inform Scheduler & Notification microservice"""
-    # default username / password to the borker are both 'guest'
-    hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
-    port = 5672 # default messaging port.
-    # connect to the broker and set up a communication channel in the connection
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-        # Note: various network firew
-        # alls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
-        # If "pika.exceptions.AMQPConnectionError" happens, may try again after disconnecting the wifi and/or disabling firewalls
-    channel = connection.channel()
-
-    # set up the exchange if the exchange doesn't exist
-    exchangename="exchange_topic"
-    channel.exchange_declare(exchange=exchangename, exchange_type='topic')
-
-    # prepare the message body content
-    message = json.dumps(tripID, default=str) # convert a JSON object to a string
-
-    channel.queue_declare(queue='payment', durable=True) # make sure the queue used by the error handler exist and durable
-    channel.queue_bind(exchange=exchangename, queue='payment', routing_key='*.payment') # make sure the queue is bound to the exchange
-    channel.basic_publish(exchange=exchangename, routing_key="scheduler.payment", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
-    )
-    channel.basic_publish(exchange=exchangename, routing_key="notification.payment", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
-    )
-    print("Trip ID sent to Scheduler & Notification microservice.")
-    # close the connection to the broker
-    connection.close()
 
 @app.route("/payment")
 def get_all():
@@ -194,7 +135,6 @@ def get_trip_payment_details(tripID):
         return jsonify({"message": "An error occurred creating the trip payment."}), 500
 
     return jsonify(payment.json()), 201
-############################################################################## PAYPAL API ################################################################################
 
 if __name__ == '__main__':
     #port=5000 - location search
@@ -202,8 +142,8 @@ if __name__ == '__main__':
     #port=5002 - scheduler
     #port=5003 - payment
     #port=5004 - notifications
-    # app.run(port=5003, debug=True) 
-    receiveTripDetails() #invoke the consume function 
+    app.run(port=5003, debug=True) 
+    #receiveTripDetails() #invoke the consume function 
     #with app.run it will allow the system call the name without required flask
     #with __name__ == '__main__' it will start flask to listen to request
     # we specify the port to use is 5000 (which is the default port anyway) and set debug to True, 
