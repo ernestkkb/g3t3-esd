@@ -37,9 +37,21 @@ url = "https://maps.googleapis.com/maps/api/directions/json?origin=Adelaide,SA&d
 #url = url_create(origin, destination, waypoint_string, API_KEY)
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
+route = data['routes']
 
-print(data)
+def print_api_trip_route(routes):
+    routes = route[0]['legs'] 
+    address_list = []
+    for ways in routes:
+        start_address = ways['start_address']
+        distance = ways['distance']['text']
+        duration = ways['duration']['text']
+        end_address = ways['end_address']
+        print(start_address) 
+        print(distance)
+        print(duration)
 
+print_api_trip_route(route)
 
 
 
