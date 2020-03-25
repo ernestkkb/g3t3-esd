@@ -94,8 +94,6 @@ def add_POI():
     
     return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
-if name == 'main':
-    app.run(port=5000, debug=True)
 
 @app.route('/makepayment', methods=['POST'])
 def forward_trip():

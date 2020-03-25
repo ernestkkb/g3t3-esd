@@ -41,27 +41,26 @@ def receiveTripDetails():
     channel.start_consuming() # an implicit loop waiting to receive messages; it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
 
 def callback(channel, method, properties, body): # required signature for the callback; no return
-    print("Received an Trip details")
-    #print(json.loads(body))
-
-    request.post(paymentURL,json=json.loads(body))
+    print("Received Trip details")
+    print(json.loads(body))
+    requests.post(paymentURL,json=json.loads(body))
     print() # print a new line feed
 
 #checkout trip for payment - step 4: Inform notification MS and scheduler MS upon completion
 def receivePaymentSuccess():
-    replyqueuename="payment.reply"
-    channel.queue_declare(queue=replyqueuename, durable=True) # make sure the queue used for "reply_to" is durable for reply messages
-    channel.queue_bind(exchange=exchangename, queue=replyqueuename, routing_key=replyqueuename) # make sure the reply_to queue is bound to the exchange
+    channelqueue = channel.queue_declare(queue='payment.reply', durable=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
+        # If no need durability of the messages, no need durable queues, and can use such temp random queues.
+    queue_name = channelqueue.method.queue
+    channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.reply') # bind the queue to the exchange via the key
+    # any routing_key would be matched
+
     # set up a consumer and start to wait for coming messages
-    channel.basic_qos(prefetch_count=1) # The "Quality of Service" setting makes the broker distribute only one message to a consumer if the consumer is available (i.e., having finished processing and acknowledged all previous messages that it receives)
-    channel.basic_consume(queue=replyqueuename,
-            on_message_callback=reply_callback, # set up the function called by the broker to process a received message
-    ) # prepare the reply_to receiver
+    channel.basic_consume(queue=queue_name, on_message_callback=reply_callback, auto_ack=True)
     channel.start_consuming() # an implicit loop waiting to receive messages; it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
 
 def reply_callback(channel, method, properties, body): # required signature for the callback; no return
     print("Received an Trip ID")
-    forward_tripID(body)
+    print(body)
     print() # print a new line feed
 
 def forward_tripID(tripID):
