@@ -28,24 +28,24 @@ class scheduler(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     tripID = db.Column(db.Integer())
     facebookID = db.Column(db.String(20), nullable=True)
-    placesOfInterest = db.Column(db.JSON, nullable=True)
+    placeOfInterest = db.Column(db.JSON, nullable=True)
     startDate = db.Column(db.Date, nullable=True)
-    endDate = db.Column(db.Date, nnullable=True)
+    endDate = db.Column(db.Date, nullable=True)
     paymentStatus = db.Column(db.String(10))
     day = db.Column(db.Integer())
 
-    def __init__(self, id, tripID, facebookID, placesOfInterest, startDate, endDate, paymentStatus):
+    def __init__(self, id, tripID, facebookID, placeOfInterest, startDate, endDate, paymentStatus,day):
         self.id = id
         self.tripID = tripID
         self.facebookID = facebookID
-        self.placesOfInterest = placesOfInterest
+        self.placeOfInterest = placeOfInterest
         self.startDate = startDate
         self.endDate = endDate
         self.paymentStatus = paymentStatus
         self.day = day
 
     def json(self):
-        return {"id": self.id, "tripID": self.tripID, "facebookID": self.facebookID, "placesOfInterest": self.placesOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day}
+        return {"id": self.id, "tripID": self.tripID, "facebookID": self.facebookID, "placeOfInterest": self.placeOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day}
 
 
 #retrieve all trips of one user - GET
@@ -80,16 +80,17 @@ def create_trip(tripID):
         return jsonify({"message": "A trip with tripID '{}' already exists.".format(tripID)}), 400
 
 #add poi to db
-@app.route("/addPOI/<string:poino>/<string:day>", methods=['POST']) # specify HTTP methods when necessary
-def add_POI():
-    data = request.get_json() # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
+@app.route("/addPOI/<int:day>") # specify HTTP methods when necessary
+def add_POI(day):
+    data = {"id":"5", "tripID": 8,"facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     # we have imported the request object in line 1
-    book = scheduler(, **data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
+    book = scheduler(**data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
 
     try:
         db.session.add(book) # db.session provided by SQLAlchemy. 
         db.session.commit()
-    except:
+    except Exception as e:
+        print(e) 
         return jsonify({"message": "An error occurred creating the book."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
     
     return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
@@ -143,7 +144,7 @@ def forward_trip():
 
 #function to get facebookID (get from session and store in database)
 #function to get all trips of a specific fb user (retrieve)
-#function (GET) places of interest from user's selected POI- placesOfInterest {POI: name, address}
+#function (GET) places of interest from user's selected POI- placeOfInterest {POI: name, address}
 #function (GET) start date & end date - calendar startDate, endDate
 #Create trip into scheduler database and POST TO UI 
 
