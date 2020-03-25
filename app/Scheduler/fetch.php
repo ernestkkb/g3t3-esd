@@ -10,7 +10,7 @@
 
 <body>
     <p id="display">Display POI</p>
-    <form method="POST" action=>
+    <form method="POST" id = "POIform">
         <table id="POITable" class='table table-striped' border='1'>
             <thead class='thead-dark'>
                 <tr>
@@ -51,14 +51,16 @@
                 mode: 'cors', // allow cross-origin resource sharing
                 method: 'GET',
             }
-            try {
+            try {
                 const response = await fetch(serviceURL, requestParam);
                 data = await response.json();
-                console.log(data);
+        //         console.log(data);
                 var rows = "";
                 rowcounts = data.length;
                 counter = 1;
+                var places_dict = {};
                 for (const poi of data){
+                    places_dict[counter] = poi;
                     if (counter == 1){
                         row = 
                             "<tr><td>" + counter + "</td>" + 
@@ -67,10 +69,10 @@
                             "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
                             "<td>" + poi[3] + "</td>" + 
                             "<td rowspan=" + '"' + rowcounts + '"' + ">" + 
-                                "POI S.N.:<input type ='text' name = 'poino'/><br>" + 
-                                "DAY CHOSEN:<input type ='text' name = 'day'/>" + 
-                                "<input type='submit' name='add' value='Add'><br>" + 
-                                "<input type='submit' name='confirm' value='Confirm'></td></tr>";
+                                "POI S.N.:<input type ='text' name='poino' id = 'shit'/><br>" + 
+                                "DAY CHOSEN:<input type ='text' name='day'/>" + 
+                                // "<button name='add' value='Add' id='add'>Add</button><br>" + 
+                                "<input type='submit' name='confirm' value='Confirm' id='confirm'></td></tr>";
                         $('#POITable').append(row);
                         counter += 1;
                     }
@@ -85,24 +87,70 @@
                         counter += 1;
                     }
                 }
+
+                var test = "<input type='text' id='test'>"
+                var test2 = "<button name='add' value='Add' id='test2'>Add</button><br>"
+
+                $('#POITable').append(test);
+                $('#POITable').append(test2);
                 // add all the rows to the table
                 $('#POITable').append(rows);
-                
-            
-
+                // console.log(places_dict);
             } catch (error) {
                 console.error(error);
             }
         }
-
 </script>
 
 <script>
-    var add_to_db = function() {
-        var serviceURL = "http://127.0.0.1:5002/addPOI/"+ poino + "/" + day;
-        var day = 
+  
+
+
+    $('#test2').click(function() {
+        alert("LOL");
+        console.log($("#shit").val());
+        var $inputs = $('#POIform : input');
+        var values = {};
+        $inputs.each(function() {
+            values[this.name] = $(this).val();
+        })
+    });
+
+    console.log($inputs);
+
+    // // $('#add').click(console.log('hello'));
+    // $('#add').click(async (event) => {
+    //     event.preventDefault();
+    //     var day = $('#day').val();
+    //     var serviceURL = "http://127.0.0.1:5002/addPOI/" + day;
         
-    }
+    //     var poino = $('#poino').val();
+    //     var places = places_dict[poino];
+    //     var name = places[0];
+    //     var address = places[1];
+
+    //     console.log(places);
+    //     try {
+    //         const response = 
+    //             await fetch(
+    //                 serviceURL, {
+    //                 method: 'POST',
+    //                 headers: {'Content-Type': "application/json"},
+    //                 body: JSON.stringify({ name: name, address: address})
+    //             })
+    //         const data = await response.json();
+    //         if (response.ok) {
+    //             console.log("Success");
+    //         } else {
+    //             console.log("Fail");
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }); 
+
+
+
 </script>
 
 

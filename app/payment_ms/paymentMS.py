@@ -42,7 +42,13 @@ paypalrestsdk.configure({
 
 #checkout trip for payment - step 2: invoke paypal API with tripdetails 
 @app.route('/makepayment', methods=['POST'])
-def payment(triplist):
+def payment():
+    if request.is_json:
+        triplist = request.get_json()
+    else:
+        triplist = request.get_data()
+        
+    print(triplist)
     print("payment function triggered")
     total=0
     for dict1 in triplist:
@@ -73,12 +79,13 @@ def payment(triplist):
             port = 5672 
             connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
             channel = connection.channel()
+            replymessage = json.dumps({"ID":triplist[0]['sku'] }, default=str)
             exchangename="exchange_topic"
             channel.exchange_declare(exchange=exchangename, exchange_type='topic')
             channel.queue_declare(queue='payment.reply', durable=True) # make sure the queue used by the error handler exist and durable
             channel.queue_bind(exchange=exchangename, queue='payment.reply', routing_key='*.reply') # make sure the queue is bound to the exchange
-            channel.basic_publish(exchange=exchangename, routing_key="*.error", body=triplist[0]['sku'],
-            properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+            channel.basic_publish(exchange=exchangename, routing_key="payment.reply", body=replymessage,
+            properties=pika.BasicProperties(delivery_mode = 2)
         )
         else:
             return jsonify({"message": "An error occurred updating the trip status."}), 500

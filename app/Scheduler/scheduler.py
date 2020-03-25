@@ -27,14 +27,14 @@ class scheduler(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     tripID = db.Column(db.Integer())
-    facebookID = db.Column(db.String(20), nullable=False)
-    placeOfInterest = db.Column(db.JSON, nullable=False)
-    startDate = db.Column(db.Date, nullable=False)
-    endDate = db.Column(db.Date, nullable=False)
+    facebookID = db.Column(db.String(20), nullable=True)
+    placeOfInterest = db.Column(db.JSON, nullable=True)
+    startDate = db.Column(db.Date, nullable=True)
+    endDate = db.Column(db.Date, nullable=True)
     paymentStatus = db.Column(db.String(10))
     day = db.Column(db.Integer())
 
-    def __init__(self, id, tripID, facebookID, placeOfInterest, startDate, endDate, paymentStatus):
+    def __init__(self, id, tripID, facebookID, placeOfInterest, startDate, endDate, paymentStatus,day):
         self.id = id
         self.tripID = tripID
         self.facebookID = facebookID
@@ -81,17 +81,18 @@ def create_trip(tripID):
         return jsonify({"message": "A trip with tripID '{}' already exists.".format(tripID)}), 400
 
 #add poi to db
-# @app.route("/addPOI/<string:poino>/<string:day>", methods=['POST']) # specify HTTP methods when necessary
-# def add_POI():
-#     data = request.get_json() # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
-#     # we have imported the request object in line 1
-#     # book = scheduler(, **data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
+@app.route("/addPOI/<int:day>") # specify HTTP methods when necessary
+def add_POI(day):
+    data = {"id":"5", "tripID": 8,"facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
+    # we have imported the request object in line 1
+    book = scheduler(**data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
 
-#     try:
-#         db.session.add(book) # db.session provided by SQLAlchemy. 
-#         db.session.commit()
-#     except:
-#         return jsonify({"message": "An error occurred creating the book."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
+    try:
+        db.session.add(book) # db.session provided by SQLAlchemy. 
+        db.session.commit()
+    except Exception as e:
+        print(e) 
+        return jsonify({"message": "An error occurred creating the book."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
     
 #     return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
@@ -144,7 +145,7 @@ def forward_trip():
 
 #function to get facebookID (get from session and store in database)
 #function to get all trips of a specific fb user (retrieve)
-#function (GET) places of interest from user's selected POI- placesOfInterest {POI: name, address}
+#function (GET) places of interest from user's selected POI- placeOfInterest {POI: name, address}
 #function (GET) start date & end date - calendar startDate, endDate
 #Create trip into scheduler database and POST TO UI 
 
