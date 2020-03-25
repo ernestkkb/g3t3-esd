@@ -1,7 +1,58 @@
 <!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<?php
+  $tripID = "";
+  if(isset($_GET['tripId'])){
+    $tripID = $_GET['tripId'];
+    $facebookID = $_GET['facebookID'];
+    $day = $_GET['day'];
+  }
+  echo " 
+  <input type='hidden' id = 'tripID'>$tripID</input>
+  ";
+?> 
+
 <html>
   <head>
+    <script> 
+    $(async() => {           
+        // Change serviceURL to your own
+        var serviceURL = "http://127.0.0.1:5000/scheduler/";
+ 
+        try {
+            const response =
+             await fetch(
+               serviceURL, { method: 'GET' }
+            );
+            const data = await response.json();
+            var trip = data.trip; //the arr is in data.books of the JSON data
+ 
+            // array or array.length are falsy
+            if (!books || !books.length) {
+                showError('Books list empty or undefined.')
+            } else {
+                // for loop to setup all table rows with obtained book data
+                var rows = "";
+                for (const book of books) {
+                    eachRow =
+                        "<td>" + book.title + "</td>" +
+                        "<td>" + book.isbn13 + "</td>" +
+                        "<td>" + book.price + "</td>" +
+                        "<td>" + book.availability + "</td>";
+                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                }
+                // add all the rows to the table
+                $('#booksTable').append(rows);
+            }
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            showError
+            ('There is a problem retrieving books data, please try again later.<br />'+error);
+            } // error
+        });
+    </script> 
+
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Waypoints in Directions</title>

@@ -28,24 +28,24 @@ class scheduler(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     tripID = db.Column(db.Integer())
     facebookID = db.Column(db.String(20), nullable=False)
-    placesOfInterest = db.Column(db.JSON, nullable=False)
+    placeOfInterest = db.Column(db.JSON, nullable=False)
     startDate = db.Column(db.Date, nullable=False)
     endDate = db.Column(db.Date, nullable=False)
     paymentStatus = db.Column(db.String(10))
     day = db.Column(db.Integer())
 
-    def __init__(self, id, tripID, facebookID, placesOfInterest, startDate, endDate, paymentStatus):
+    def __init__(self, id, tripID, facebookID, placeOfInterest, startDate, endDate, paymentStatus):
         self.id = id
         self.tripID = tripID
         self.facebookID = facebookID
-        self.placesOfInterest = placesOfInterest
+        self.placeOfInterest = placeOfInterest
         self.startDate = startDate
         self.endDate = endDate
         self.paymentStatus = paymentStatus
         self.day = day
 
     def json(self):
-        return {"id": self.id, "tripID": self.tripID, "facebookID": self.facebookID, "placesOfInterest": self.placesOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day}
+        return {"id": self.id, "tripID": self.tripID, "facebookID": self.facebookID, "placeOfInterest": self.placeOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day}
 
 
 #retrieve all trips of one user - GET
@@ -70,7 +70,7 @@ def find_by_tripid(tripID):
 def find_for_routing(tripID, facebookID, day):
     trip = scheduler.query.filter_by(tripID=tripID, facebookID=facebookID, day=day)
     if trip:
-        return jsonify(trip.json())
+        return jsonify(trip)
     return jsonify({"message": "Trip not found."}), 404
 
 #create trip - POST
