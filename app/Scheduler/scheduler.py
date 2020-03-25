@@ -8,7 +8,7 @@ import os
 import random
 import datetime
 import pika
-import paypalrestsdk
+
 
 app = Flask(__name__)
 
@@ -25,24 +25,27 @@ CORS(app)
 class scheduler(db.Model):
     __tablename__ = 'scheduler'
 
-    tripID = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
+    tripID = db.Column(db.Integer())
     facebookID = db.Column(db.String(20), nullable=False)
     placesOfInterest = db.Column(db.JSON, nullable=False)
     startDate = db.Column(db.Date, nullable=False)
     endDate = db.Column(db.Date, nullable=False)
     paymentStatus = db.Column(db.String(10))
+    day = db.Column(db.Integer())
 
-
-    def __init__(self, tripID, facebookID, placesOfInterest, startDate, endDate, paymentStatus):
+    def __init__(self, id, tripID, facebookID, placesOfInterest, startDate, endDate, paymentStatus):
+        self.id = id
         self.tripID = tripID
         self.facebookID = facebookID
         self.placesOfInterest = placesOfInterest
         self.startDate = startDate
         self.endDate = endDate
         self.paymentStatus = paymentStatus
+        self.day = day
 
     def json(self):
-        return {"tripID": self.tripID, "facebookID": self.facebookID, "placesOfInterest": self.placesOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus}
+        return {"id": self.id, "tripID": self.tripID, "facebookID": self.facebookID, "placesOfInterest": self.placesOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day}
 
 
 #retrieve all trips of one user - GET
@@ -58,6 +61,14 @@ def get_all_from_user(facebookID):
 @app.route("/scheduler/<string:tripID>")
 def find_by_tripid(tripID):
     trip = scheduler.query.filter_by(tripID=tripID).first()
+    if trip:
+        return jsonify(trip.json())
+    return jsonify({"message": "Trip not found."}), 404
+
+#retrieve trip by tripid, facebookID, day. This function is to get data for google directions
+@app.route("/scheduler/<string:tripID>/<string:facebookID>/<string:day>")
+def find_for_routing(tripID, facebookID, day):
+    trip = scheduler.query.filter_by(tripID=tripID, facebookID=facebookID, day=day)
     if trip:
         return jsonify(trip.json())
     return jsonify({"message": "Trip not found."}), 404
@@ -81,7 +92,6 @@ def create_trip(tripID):
 
 @app.route('/makepayment', methods=['POST'])
 def forward_trip():
-    print("FK")
     if request.is_json:
         triplist = request.get_json()
     else:
