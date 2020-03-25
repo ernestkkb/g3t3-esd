@@ -32,11 +32,13 @@ def url_create(origin, destination, waypoint_string, API_KEY):
     url = url +  '&waypoints=optimize:true' + waypoint_string + '&key=' + API_KEY
     return url
 
-waypoint_string = get_waypoints_list(waypoints_dict)
-
-url = url_create(origin, destination, waypoint_string, API_KEY)
+#waypoint_string = get_waypoints_list(waypoints_dict)
+url = "https://maps.googleapis.com/maps/api/directions/json?origin=Adelaide,SA&destination=Adelaide,SA&waypoints=optimize:true%7CBarossa+Valley,SA%7CClare,SA%7CConnawarra,SA%7CMcLaren+Vale,SA&key=AIzaSyCVh6H9I5mG7Y3nXkLzjRwKogIhhBhjVkw"
+#url = url_create(origin, destination, waypoint_string, API_KEY)
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
+
+print(data)
 
 
 
