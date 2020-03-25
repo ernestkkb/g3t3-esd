@@ -46,73 +46,21 @@ if (isset($_POST['country']) && isset($_POST['city'])) {
     crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="main-container" class="container">
-        <h1 class="display-4">Add a Trip</h1>
-        <form id="AddTripForm" method = 'POST'>
+    <form method="GET" action="fetch.php">
             Trip Name<br>
             <input name="tripName" type="text" id="tripname" value =<?php $tripname?> style = "width:100%"/><br>
-            Start Date<br>
+            <!-- Start Date<br>
             <input name="startdate" type="text" id="startdate" value = <?php $startdate?> style = "width:100%"/><br>
             End Date<br>
-            <input name="enddate" type="text" id="enddate" value = <?php $enddate?>  style = "width:100%"/><br>
+            <input name="enddate" type="text" id="enddate" value = <?php $enddate?>  style = "width:100%"/><br> -->
+            Number of days<br>
+            <input name="days" type="text" id="days" style = "width:100%"/></br>
             City<br>
-            <input name="city" type="text" id="city" value = <?php $city?>  style = "width:100%"/></br>
+            <input name="city" type="text" id="city" value = "Singapore" style = "width:100%"/></br>
             <br>
-            <input class="btn btn-primary" type="submit" value="Find places of Interest">
-        </form>
-        <br><br>
+            <input type="submit" name="submit" value="Find Places of Interest"/>
+    </form>
     
-    </div>
-    <script>
-        // Helper function to display error message
-        function showError(message) {
-            // Hide the table and button in the event of error
-            $('#tripsTable').hide();
-            $('#addTripBtn').hide();
-    
-            // Display an error under the main container
-            $('#main-container')
-                .append("<label>"+message+"</label>");
-        }
-    
-        // anonymous async function 
-        // - using await requires the function that calls it to be async
-        $("#AddTripForm").submit(async() => {     
-            event.preventDefault();      
-            // Change serviceURL to your own
-            var tripName = $('#tripName').val();
-            var startDate = $("startDate").val();
-            var endDate = $("endDate").val();
-            var placesOfInterest = $("placesOfInterest").val()
-            var serviceURL = "http://127.0.0.1:5002/scheduler"+"/"+tripName;
-    
-            try {   
-                const response =
-                 await fetch(
-                    serviceURL, { 
-                    method: 'POST', 
-                    headers:{"Content-Type": "application/json"},
-                    body: JSON.stringify({tripName:tripName, startDate:startDate, endDate:endDate, placesOfInterest:placesOfInterest})}
-                );
-
-                const data = await response.json();
-                // var books = data.trips; //the arr is in data.books of the JSON data
-            
-                // array or array.length are false
-                if (!data) {
-                    showError('Add trip failed.')
-                } else {
-                    window.location = 'http://localhost/Scheduler/route_trip.php';
-                }
-            } catch (error) {
-                // Errors when calling the service; such as network error, 
-                // service offline, etc
-                showError
-              ('There is a problem retrieving trips data, please try again later.<br />'+error);
-               
-            } // error
-        });
-    </script>
 </body>
 </html>
 

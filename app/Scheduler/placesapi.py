@@ -11,7 +11,45 @@ CORS(app)
 API_KEY = "AIzaSyCc4-LbdsmzRIHaqyO5fmAg0ew6HuC1eL4"
 
 #definecity (retrieved from add_trip.php)
-city = "singapore"
+# city = "singapore"
+
+@app.route("/city/<string:city>")
+def processAndGetItems(city):
+    final_url = full_POI_url(city,API_KEY)
+    response = urllib.request.urlopen(final_url)
+    data = json.loads(response.read())
+
+    #post this results data either back to add_trip.php / to fetch.html
+    #retrieve place_ids to get the full info out 
+    full_list = data['results']
+    place_ids= []
+    for each_place in full_list:
+        place_ids.append(each_place['place_id'])
+
+    ALL = []
+    for pid in place_ids:
+        details_list = []
+        full_ans = filtered_POI_url(pid, API_KEY)
+        response = urllib.request.urlopen(full_ans)
+        data = json.loads(response.read())
+        results = data['result']
+        formatted_address = results['formatted_address']
+        name = results['name']
+        if 'photos' in results:
+            maxwidth = 400
+            photos_full = results['photos']
+            photos_links = []
+            for info in photos_full:
+                photo_ref = info['photo_reference']
+                link = photos_url(API_KEY, photo_ref, maxwidth)
+                photos_links.append(link)
+        rating = results['rating']
+        details_list.append(name)
+        details_list.append(formatted_address)
+        details_list.append(photos_links[0])
+        details_list.append(rating)
+        ALL.append(details_list)
+    return json.dumps(ALL)
 
 def full_POI_url(city, API_KEY):
     from urllib.parse import urlencode
@@ -37,44 +75,10 @@ def photos_url(API_KEY, photo_reference, maxwidth):
     url = photos_URL + urlencode(mydict, doseq=True) 
     return url
 
-final_url = full_POI_url(city,API_KEY)
-response = urllib.request.urlopen(final_url)
-data = json.loads(response.read())
 
-#post this results data either back to add_trip.php / to fetch.html
-#retrieve place_ids to get the full info out 
-full_list = data['results']
-place_ids= []
-for each_place in full_list:
-    place_ids.append(each_place['place_id'])
+if __name__ == "__main__":
+    app.run(port='5008', debug=True)
 
-ALL = []
-compiled_address = [] 
-for pid in place_ids:
-    details_list = []
-    full_ans = filtered_POI_url(pid, API_KEY)
-    response = urllib.request.urlopen(full_ans)
-    data = json.loads(response.read())
-    results = data['result']
-    formatted_address = results['formatted_address']
-    name = results['name']
-    if 'photos' in results:
-        maxwidth = 400
-        photos_full = results['photos']
-        photos_links = []
-        for info in photos_full:
-            photo_ref = info['photo_reference']
-            link = photos_url(API_KEY, photo_ref, maxwidth)
-            photos_links.append(link)
-    rating = results['rating']
-    details_list.append(name)
-    details_list.append(formatted_address)
-    compiled_address.append(formatted_address)
-    details_list.append(photos_links[0])
-    details_list.append(rating)
-    ALL.append(details_list)
-
-print(ALL)
 
 
         
