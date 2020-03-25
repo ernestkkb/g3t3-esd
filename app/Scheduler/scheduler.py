@@ -68,9 +68,10 @@ def find_by_tripid(tripID):
 #retrieve trip by tripid, facebookID, day. This function is to get data for google directions
 @app.route("/scheduler/<string:tripID>/<string:facebookID>/<string:day>")
 def find_for_routing(tripID, facebookID, day):
-    trip = scheduler.query.filter_by(tripID=tripID, facebookID=facebookID, day=day)
-    if trip:
-        return jsonify(trip)
+    trips = scheduler.query.filter_by(tripID=tripID, facebookID=facebookID, day=day).all()
+    tripToReturn = {"trips" : [trip.json() for trip in trips]}
+    if trips:
+        return jsonify(tripToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
 #create trip - POST
@@ -80,19 +81,19 @@ def create_trip(tripID):
         return jsonify({"message": "A trip with tripID '{}' already exists.".format(tripID)}), 400
 
 #add poi to db
-@app.route("/addPOI/<string:poino>/<string:day>", methods=['POST']) # specify HTTP methods when necessary
-def add_POI():
-    data = request.get_json() # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
-    # we have imported the request object in line 1
-    book = scheduler(, **data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
+# @app.route("/addPOI/<string:poino>/<string:day>", methods=['POST']) # specify HTTP methods when necessary
+# def add_POI():
+#     data = request.get_json() # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
+#     # we have imported the request object in line 1
+#     # book = scheduler(, **data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
 
-    try:
-        db.session.add(book) # db.session provided by SQLAlchemy. 
-        db.session.commit()
-    except:
-        return jsonify({"message": "An error occurred creating the book."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
+#     try:
+#         db.session.add(book) # db.session provided by SQLAlchemy. 
+#         db.session.commit()
+#     except:
+#         return jsonify({"message": "An error occurred creating the book."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
     
-    return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
+#     return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
 
 @app.route('/makepayment', methods=['POST'])
