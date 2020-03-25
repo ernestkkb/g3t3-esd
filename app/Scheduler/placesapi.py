@@ -49,6 +49,7 @@ for each_place in full_list:
     place_ids.append(each_place['place_id'])
 
 ALL = []
+compiled_address = [] 
 for pid in place_ids:
     details_list = []
     full_ans = filtered_POI_url(pid, API_KEY)
@@ -68,6 +69,7 @@ for pid in place_ids:
     rating = results['rating']
     details_list.append(name)
     details_list.append(formatted_address)
+    compiled_address.append(formatted_address)
     details_list.append(photos_links)
     details_list.append(rating)
     ALL.append(details_list)
