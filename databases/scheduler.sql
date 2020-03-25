@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 11, 2020 at 07:13 AM
+-- Generation Time: Mar 25, 2020 at 09:51 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -32,13 +32,14 @@ USE `scheduler`;
 
 DROP TABLE IF EXISTS `scheduler`;
 CREATE TABLE IF NOT EXISTS `scheduler` (
-  `tripName` varchar(50) NOT NULL,
   `tripID` int(4) NOT NULL,
   `facebookID` varchar(20) NOT NULL,
   `placesOfInterest` json NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
-  `paymentStatus` varchar(10) NOT NULL
+  `paymentStatus` varchar(10) NOT NULL,
+  `day` int(99) NOT NULL,
+  PRIMARY KEY (`tripID`,`facebookID`,`day`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 COMMIT;
 
