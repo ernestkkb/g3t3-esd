@@ -84,8 +84,7 @@ def create_trip(tripID):
 def add_POI():
     data = request.get_json() # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     # we have imported the request object in line 1
-    book = scheduler(, **data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
-
+    #book = scheduler(,**data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
     try:
         db.session.add(book) # db.session provided by SQLAlchemy. 
         db.session.commit()

@@ -35,8 +35,19 @@ def receiveTripDetails():
     queue_name = channelqueue.method.queue
     channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.scheduler') # bind the queue to the exchange via the key
         # any routing_key would be matched
+    
+    # set up a consumer and start to wait for coming messages
+    
+
+    channelqueue2 = channel.queue_declare(queue='payment.reply', durable=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
+        # If no need durability of the messages, no need durable queues, and can use such temp random queues.
+    queue_name2 = channelqueue2.method.queue
+    channel.queue_bind(exchange=exchangename, queue=queue_name2, routing_key='*.reply') # bind the queue to the exchange via the key
+    # any routing_key would be matched
 
     # set up a consumer and start to wait for coming messages
+    channel.basic_consume(queue=queue_name2, on_message_callback=reply_callback, auto_ack=True)
+
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
     channel.start_consuming() # an implicit loop waiting to receive messages; it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
 
@@ -46,21 +57,11 @@ def callback(channel, method, properties, body): # required signature for the ca
     requests.post(paymentURL,json=json.loads(body))
     print() # print a new line feed
 
-#checkout trip for payment - step 4: Inform notification MS and scheduler MS upon completion
-def receivePaymentSuccess():
-    channelqueue = channel.queue_declare(queue='payment.reply', durable=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
-        # If no need durability of the messages, no need durable queues, and can use such temp random queues.
-    queue_name = channelqueue.method.queue
-    channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.reply') # bind the queue to the exchange via the key
-    # any routing_key would be matched
-
-    # set up a consumer and start to wait for coming messages
-    channel.basic_consume(queue=queue_name, on_message_callback=reply_callback, auto_ack=True)
-    channel.start_consuming() # an implicit loop waiting to receive messages; it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
-
+    
 def reply_callback(channel, method, properties, body): # required signature for the callback; no return
-    print("Received an Trip ID")
-    print(body)
+    print("Received a Trip ID")
+    string1=json.loads(body)
+    forward_tripID(string1["ID"])
     print() # print a new line feed
 
 def forward_tripID(tripID):
