@@ -38,29 +38,8 @@ class Payment(db.Model):
     def json(self):
         return {"tripID": self.tripID, "price": self.price, "paymentStatus": self.paymentStatus}
 
-
-@app.route("/payment")
-def get_all():
-    return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
-
-#Add to cart
-@app.route("/payment/<string:tripID>", methods=['POST'])
-def get_trip_payment_details(tripID):
-    if (Payment.query.filter_by(tripID=tripID).first()):
-        return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripID)}), 400
-
-    data = request.get_json()
-    payment = Payment(tripID, **data)
-
-    try:
-        db.session.add(payment)
-        db.session.commit()
-    except:
-        return jsonify({"message": "An error occurred creating the trip payment."}), 500
-
-    return jsonify(payment.json()), 201
-
 #checkout trip for payment - step 1: consume trip details from scheduler MS 
+@app.route('/receiveTrip', methods=['POST'])
 def receiveTripDetails():
     print("receiveTripDetails function triggered")
     hostname = "localhost" # default host
@@ -122,13 +101,10 @@ def payment(triplist):
 
     if payment.create():
         print('Payment success!')
-        status=update_trip_status(triplist[0]["sku"])[1]
-        print(status)
-        if status == 201: 
-            print("ernest")
+        status=update_trip_status(triplist[0]["sku"])
+        if status[1] == 201: 
             forward_tripID(triplist[0]["sku"])
         else:
-            
             return jsonify({"message": "An error occurred updating the trip status."}), 500
             
     else:
@@ -159,13 +135,13 @@ def update_trip_status(tripID):
         try:
             payment.paymentStatus = 'paid'
             db.session.commit()
-        except:
             return ("message: Payment status updated.",201)
-    return ("message: An error occurred updating the payment status.",500)
+        except:
+             return ("message: An error occurred updating the payment status.",500)
 
 
 #checkout trip for payment - step 4: Inform notification MS and scheduler MS upon completion
-
+@app.route("/payment/forward/<string:tripID>")
 def forward_tripID(tripID):
     print("forward_tripID function triggered")
     """inform Scheduler & Notification microservice"""
@@ -174,7 +150,8 @@ def forward_tripID(tripID):
     port = 5672 # default messaging port.
     # connect to the broker and set up a communication channel in the connection
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-        # Note: various network firewalls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
+        # Note: various network firew
+        # alls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
         # If "pika.exceptions.AMQPConnectionError" happens, may try again after disconnecting the wifi and/or disabling firewalls
     channel = connection.channel()
 
@@ -197,6 +174,26 @@ def forward_tripID(tripID):
     # close the connection to the broker
     connection.close()
 
+@app.route("/payment")
+def get_all():
+    return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
+
+#Add to cart
+@app.route("/payment/<string:tripID>", methods=['POST'])
+def get_trip_payment_details(tripID):
+    if (Payment.query.filter_by(tripID=tripID).first()):
+        return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripID)}), 400
+
+    data = request.get_json()
+    payment = Payment(tripID, **data)
+
+    try:
+        db.session.add(payment)
+        db.session.commit()
+    except:
+        return jsonify({"message": "An error occurred creating the trip payment."}), 500
+
+    return jsonify(payment.json()), 201
 ############################################################################## PAYPAL API ################################################################################
 
 if __name__ == '__main__':
