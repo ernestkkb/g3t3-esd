@@ -121,7 +121,7 @@ def forward_trip():
     print("Trip details sent to Payment microservice.")
     # close the connection to the broker
     connection.close()
-    return 
+    return ""
 
 
 
