@@ -70,7 +70,7 @@ def find_by_tripid(tripID):
 def find_for_routing(tripID, facebookID, day):
     trip = scheduler.query.filter_by(tripID=tripID, facebookID=facebookID, day=day)
     if trip:
-        return jsonify(trip.json())
+        return jsonify(trip)
     return jsonify({"message": "Trip not found."}), 404
 
 #create trip - POST
