@@ -124,7 +124,7 @@ def payment(triplist=[{
     for dict1 in triplist:
         for key in dict1:
             if key=="price":
-                total+=int(dict1["price"])*int(dict1["quantity"])
+                total+=float(dict1["price"])*int(dict1["quantity"])
     
     payment = paypalrestsdk.Payment({
         "intent": "sale",
