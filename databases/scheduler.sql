@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 25, 2020 at 09:51 AM
+-- Generation Time: Mar 25, 2020 at 11:24 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `scheduler`
 --
-CREATE DATABASE IF NOT EXISTS `scheduler` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `scheduler`;
 
 -- --------------------------------------------------------
 
@@ -32,14 +30,15 @@ USE `scheduler`;
 
 DROP TABLE IF EXISTS `scheduler`;
 CREATE TABLE IF NOT EXISTS `scheduler` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tripID` int(4) NOT NULL,
   `facebookID` varchar(20) NOT NULL,
-  `placesOfInterest` json NOT NULL,
+  `placeOfInterest` json NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date NOT NULL,
   `paymentStatus` varchar(10) NOT NULL,
   `day` int(99) NOT NULL,
-  PRIMARY KEY (`tripID`,`facebookID`,`day`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 COMMIT;
 
