@@ -71,6 +71,47 @@ def create_trip(tripID):
 
     return jsonify(trip.json()), 201
 
+@app.route('/makepayment', methods=['POST'])
+def forward_trip(tripName,tripID,price,currency,quantity):
+    triplist=[{
+                    "name": tripName,
+                    "sku": "Trip ID: "+tripID,
+                    "price": price,
+                    "currency": currency,
+                    "quantity": quantity}]
+
+    """inform Payment microservice"""
+    # default username / password to the broker are both 'guest'
+    hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
+    port = 5672 # default messaging port.
+    # connect to the broker and set up a communication channel in the connection
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+        # Note: various network firewalls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
+        # If "pika.exceptions.AMQPConnectionError" happens, may try again after disconnecting the wifi and/or disabling firewalls
+    channel = connection.channel()
+
+    # set up the exchange if the exchange doesn't exist
+    exchangename="exchange_topic"
+    channel.exchange_declare(exchange=exchangename, exchange_type='topic')
+
+    # prepare the message body content
+    message = json.dumps(triplist, default=str) # convert a JSON object to a string
+
+    channel.queue_declare(queue='scheduler', durable=True) # make sure the queue used by the error handler exist and durable
+    channel.queue_bind(exchange=exchangename, queue='scheduler', routing_key='*.scheduler') # make sure the queue is bound to the exchange
+    channel.basic_publish(exchange=exchangename, routing_key="payment.scheduler", body=message,
+        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+    )
+    channel.basic_publish(exchange=exchangename, routing_key="notification.payment", body=message,
+        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+    )
+    print("Trip details sent to Payment microservice.")
+    # close the connection to the broker
+    connection.close()
+
+
+
+
 #function to get facebookID (get from session and store in database)
 #function to get all trips of a specific fb user (retrieve)
 #function (GET) places of interest from user's selected POI- placesOfInterest {POI: name, address}

@@ -36,10 +36,36 @@ class Payment(db.Model):
     def json(self):
         return {"tripID": self.tripID, "price": self.price, "paymentStatus": self.paymentStatus}
 
+def receiveTripDetails():
+    hostname = "localhost" # default host
+    port = 5672 # default port
+    # connect to the broker and set up a communication channel in the connection
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+    channel = connection.channel()
+
+    # set up the exchange if the exchange doesn't exist
+    exchangename="exchange_topic"
+    channel.exchange_declare(exchange=exchangename, exchange_type='topic')
+
+    # prepare a queue for receiving messages
+    channelqueue = channel.queue_declare(queue='scheduler', exclusive=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
+        # If no need durability of the messages, no need durable queues, and can use such temp random queues.
+    queue_name = channelqueue.method.queue
+    channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.scheduler') # bind the queue to the exchange via the key
+        # any routing_key would be matched
+
+    # set up a consumer and start to wait for coming messages
+    channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+    channel.start_consuming() # an implicit loop waiting to receive messages; it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
+
+def callback(channel, method, properties, body): # required signature for the callback; no return
+    print("Received an Trip details by " + file)
+    payment(json.loads(body))
+    print() # print a new line feed
+
 @app.route("/payment")
 def get_all():
     return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
-
 
 @app.route("/payment/<string:tripID>", methods=['POST'])
 def get_trip_payment_details(tripID):
@@ -81,7 +107,7 @@ def forward_tripID(tripID):
     channel = connection.channel()
 
     # set up the exchange if the exchange doesn't exist
-    exchangename="payment_topic"
+    exchangename="exchange_topic"
     channel.exchange_declare(exchange=exchangename, exchange_type='topic')
 
     # prepare the message body content
@@ -109,22 +135,12 @@ paypalrestsdk.configure({
 
 @app.route('/makepayment', methods=['POST'])
 
-def payment(triplist=[{
-                    "name": "Travel Package A",
-                    "sku": "Trip ID: 1",
-                    "price": "100",
-                    "currency": "USD",
-                    "quantity": 2}, 
-                    {"name": "Travel Package B",
-                    "sku": "Trip ID: 2",
-                    "price": "200",
-                    "currency": "USD",
-                    "quantity": 1}]):
+def payment(triplist):
     total=0
     for dict1 in triplist:
         for key in dict1:
             if key=="price":
-                total+=int(dict1["price"])*int(dict1["quantity"])
+                total+=float(dict1["price"])*int(dict1["quantity"])
     
     payment = paypalrestsdk.Payment({
         "intent": "sale",
@@ -147,8 +163,6 @@ def payment(triplist=[{
         print(payment.error)
 
     return jsonify({'paymentID' : payment.id})
-
-@app.route('/makepayment', methods=['POST'])
 
 
 @app.route('/execute', methods=['POST'])
