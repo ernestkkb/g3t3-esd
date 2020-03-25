@@ -99,6 +99,7 @@
 
 <script>
     var add_to_db = function() {
+        var serviceURL = "http://127.0.0.1:5002/addPOI"+"/"+ poino + "/" + day;
         
     }
 </script>

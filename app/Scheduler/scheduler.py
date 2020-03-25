@@ -62,22 +62,24 @@ def find_by_tripid(tripID):
         return jsonify(trip.json())
     return jsonify({"message": "Trip not found."}), 404
 
-#create trip - POST
-@app.route("/scheduler/<string:tripID>", methods=['POST'])
-def create_trip(tripID):
-    if (scheduler.query.filter_by(tripID=tripID).first()):
-        return jsonify({"message": "A trip with tripID '{}' already exists.".format(tripID)}), 400
 
-    data = request.get_json()
-    trip = scheduler(tripID, **data)
+#add poi to db
+@app.route("/addPOI/<string:poino>/<string:day>", methods=['POST']) # specify HTTP methods when necessary
+def add_POI():
+    data = request.get_json() # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
+    # we have imported the request object in line 1
+    book = Book(isbn13, **data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
 
     try:
-        db.session.add(trip)
+        db.session.add(book) # db.session provided by SQLAlchemy. 
         db.session.commit()
     except:
-        return jsonify({"message": "An error occurred creating the trip."}), 500
+        return jsonify({"message": "An error occurred creating the book."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
+    
+    return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
-    return jsonify(trip.json()), 201
+if name == 'main':
+    app.run(port=5000, debug=True)
 
 @app.route('/makepayment', methods=['POST'])
 def forward_trip():
