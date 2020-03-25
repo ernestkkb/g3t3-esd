@@ -70,7 +70,7 @@ for pid in place_ids:
     details_list.append(name)
     details_list.append(formatted_address)
     compiled_address.append(formatted_address)
-    details_list.append(photos_links)
+    details_list.append(photos_links[0])
     details_list.append(rating)
     ALL.append(details_list)
 
