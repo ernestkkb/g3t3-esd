@@ -23,11 +23,18 @@ def full_POI_url(city, API_KEY):
 
 def filtered_POI_url(place_id, API_KEY):
     from urllib.parse import urlencode
-    fields = "name,formatted_address,geometry,rating,photos[]"
+    fields = "name,formatted_address,photos,rating"
     mydict = {'place_id': place_id}
-    POI_URL = "//maps.googleapis.com/maps/api/place/details/json?"
+    POI_URL = "https://maps.googleapis.com/maps/api/place/details/json?"
     url = POI_URL + urlencode(mydict, doseq=True) 
     url = url + "&fields=" + fields + '&key=' + API_KEY
+    return url
+
+def photos_url(API_KEY, photo_reference, maxwidth):
+    from urllib.parse import urlencode
+    mydict = {'maxwidth': maxwidth, 'photoreference':photo_reference, 'key':API_KEY}
+    photos_URL = "https://maps.googleapis.com/maps/api/place/photo?"
+    url = photos_URL + urlencode(mydict, doseq=True) 
     return url
 
 final_url = full_POI_url(city,API_KEY)
@@ -39,14 +46,41 @@ data = json.loads(response.read())
 full_list = data['results']
 place_ids= []
 for each_place in full_list:
-    place_ids.append(each_place['id'])
+    place_ids.append(each_place['place_id'])
 
-details_list = []
+ALL = []
+compiled_address = [] 
 for pid in place_ids:
+    details_list = []
     full_ans = filtered_POI_url(pid, API_KEY)
-    response = urllib.request.urlopen(final_url)
+    response = urllib.request.urlopen(full_ans)
     data = json.loads(response.read())
-    
+    results = data['result']
+    formatted_address = results['formatted_address']
+    name = results['name']
+    if 'photos' in results:
+        maxwidth = 400
+        photos_full = results['photos']
+        photos_links = []
+        for info in photos_full:
+            photo_ref = info['photo_reference']
+            link = photos_url(API_KEY, photo_ref, maxwidth)
+            photos_links.append(link)
+    rating = results['rating']
+    details_list.append(name)
+    details_list.append(formatted_address)
+    compiled_address.append(formatted_address)
+    details_list.append(photos_links[0])
+    details_list.append(rating)
+    ALL.append(details_list)
+
+print(ALL)
+
+
+        
+            
+        
+
     
 
 

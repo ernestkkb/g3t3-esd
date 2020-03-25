@@ -33,13 +33,24 @@ def url_create(origin, destination, waypoint_string, API_KEY):
     return url
 
 #waypoint_string = get_waypoints_list(waypoints_dict)
-url = "https://maps.googleapis.com/maps/api/directions/json?origin=Adelaide,SA&destination=Adelaide,SA&waypoints=optimize:true%7CBarossa+Valley,SA%7CClare,SA%7CConnawarra,SA%7CMcLaren+Vale,SA&key=AIzaSyCVh6H9I5mG7Y3nXkLzjRwKogIhhBhjVkw"
+url = "https://maps.googleapis.com/maps/api/directions/json?origin=Downtown,Singapore&destination=Downtown,Singapore&waypoints=optimize:true%2Cox+Terrace%Sentosa+Gateway&key=AIzaSyCVh6H9I5mG7Y3nXkLzjRwKogIhhBhjVkw"
 #url = url_create(origin, destination, waypoint_string, API_KEY)
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
+route = data['routes']
 
-print(data)
+def print_api_trip_route(routes):
+    routes = route[0]['legs'] 
+    address_list = []
+    for ways in routes:
+        start_address = ways['start_address']
+        distance = ways['distance']['text']
+        duration = ways['duration']['text']
+        end_address = ways['end_address']
+        print(start_address) 
+        print(distance)
+        print(duration)
 
-
+print_api_trip_route(route)
 
 
