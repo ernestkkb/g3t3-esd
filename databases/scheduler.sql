@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 25, 2020 at 11:32 AM
+-- Generation Time: Mar 26, 2020 at 10:02 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -33,7 +33,7 @@ USE `scheduler`;
 DROP TABLE IF EXISTS `scheduler`;
 CREATE TABLE IF NOT EXISTS `scheduler` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tripID` int(4) NOT NULL,
+  `tripName` text NOT NULL,
   `facebookID` varchar(20) NOT NULL,
   `placeOfInterest` json NOT NULL,
   `startDate` date NOT NULL,

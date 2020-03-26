@@ -26,7 +26,7 @@ class scheduler(db.Model):
     __tablename__ = 'scheduler'
 
     id = db.Column(db.Integer(), primary_key=True)
-    tripID = db.Column(db.Integer())
+    tripName = db.Column(db.String(44))
     facebookID = db.Column(db.String(20), nullable=True)
     placeOfInterest = db.Column(db.JSON, nullable=True)
     startDate = db.Column(db.Date, nullable=True)
@@ -34,9 +34,9 @@ class scheduler(db.Model):
     paymentStatus = db.Column(db.String(10))
     day = db.Column(db.Integer())
 
-    def __init__(self, id, tripID, facebookID, placeOfInterest, startDate, endDate, paymentStatus,day):
+    def __init__(self, id, tripName, facebookID, placeOfInterest, startDate, endDate, paymentStatus,day):
         self.id = id
-        self.tripID = tripID
+        self.tripName = tripName
         self.facebookID = facebookID
         self.placeOfInterest = placeOfInterest
         self.startDate = startDate
@@ -45,7 +45,7 @@ class scheduler(db.Model):
         self.day = day
 
     def json(self):
-        return {"id": self.id, "tripID": self.tripID, "facebookID": self.facebookID, "placeOfInterest": self.placeOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day}
+        return {"id": self.id, "tripName": self.tripName, "facebookID": self.facebookID, "placeOfInterest": self.placeOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day}
 
 
 #retrieve all trips of one user - GET
@@ -65,20 +65,14 @@ def find_by_tripid(tripID):
         return jsonify(trip.json())
     return jsonify({"message": "Trip not found."}), 404
 
-#retrieve trip by tripid, facebookID, day. This function is to get data for google directions
-@app.route("/scheduler/<string:tripID>/<string:facebookID>/<string:day>")
-def find_for_routing(tripID, facebookID, day):
-    trips = scheduler.query.filter_by(tripID=tripID, facebookID=facebookID, day=day).all()
+#retrieve trip by tripName, facebookID, day. This function is to get data for google directions
+@app.route("/scheduler/<string:tripName>/<string:facebookID>/<string:day>")
+def find_for_routing(tripName, facebookID, day):
+    trips = scheduler.query.filter_by(tripName=tripName, facebookID=facebookID, day=day).all()
     tripToReturn = {"trips" : [trip.json() for trip in trips]}
     if trips:
         return jsonify(tripToReturn)
     return jsonify({"message": "Trip not found."}), 404
-
-#create trip - POST
-@app.route("/scheduler/<string:tripID>", methods=['POST'])
-def create_trip(tripID):
-    if (scheduler.query.filter_by(tripID=tripID).first()):
-        return jsonify({"message": "A trip with tripID '{}' already exists.".format(tripID)}), 400
 
 #add poi to db
 @app.route("/addPOI/<int:day>") # specify HTTP methods when necessary
