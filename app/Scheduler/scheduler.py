@@ -77,7 +77,7 @@ def find_for_routing(tripName, facebookID, day):
 #add poi to db
 @app.route("/addPOI/<int:day>") # specify HTTP methods when necessary
 def add_POI(day):
-    data = {"id":"5", "tripID": 8,"facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
+    data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     # we have imported the request object in line 1
     book = scheduler(**data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
 
@@ -86,7 +86,7 @@ def add_POI(day):
         db.session.commit()
     except Exception as e:
         print(e) 
-        return jsonify({"message": "An error occurred creating the book."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
+        return jsonify({"message": "An error occurred adding the POI."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
     
 #     return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 

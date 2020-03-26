@@ -10,20 +10,18 @@
 
 <body>
     <p id="display">Display POI</p>
-    <form method="POST" id = "POIform">
-        <table id="POITable" class='table table-striped' border='1'>
-            <thead class='thead-dark'>
-                <tr>
-                    <th>POI S.N.</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Photos</th>
-                    <th>Rating</th>
-                    <th>Day Chosen</th>
-                </tr>
-            </thead>
-        </table>
-    </form> 
+    <table id="POITable" class='table table-striped' border='1'>
+        <thead class='thead-dark'>
+            <tr>
+                <th>POI S.N.</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Photos</th>
+                <th>Rating</th>
+                <th>Day Chosen</th>
+            </tr>
+        </thead>
+    </table>
 
 <script>
         // Helper function to display error message
@@ -69,9 +67,9 @@
                             "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
                             "<td>" + poi[3] + "</td>" + 
                             "<td rowspan=" + '"' + rowcounts + '"' + ">" + 
-                                "POI S.N.:<input type ='text' name='poino' id = 'shit'/><br>" + 
+                                "<form method = 'POST' id = 'POIform'>POI S.N.:<input type ='text' name='poino' id = 'poino'/><br>" + 
                                 "DAY CHOSEN:<input type ='text' name='day'/>" + 
-                                // "<button name='add' value='Add' id='add'>Add</button><br>" + 
+                                "<button name='add' value='Add' id='add'>Add</button><br></form>" + 
                                 "<input type='submit' name='confirm' value='Confirm' id='confirm'></td></tr>";
                         $('#POITable').append(row);
                         counter += 1;
@@ -88,35 +86,42 @@
                     }
                 }
 
-                var test = "<input type='text' id='test'>"
-                var test2 = "<button name='add' value='Add' id='test2'>Add</button><br>"
+                // var test = "<input type='text' id='test'>"
+                // var test2 = "<button name='add' value='Add' id='test2'>Add</button><br>"
+                // $('#POITable').append(test);
+                // $('#POITable').append(test2);
 
-                $('#POITable').append(test);
-                $('#POITable').append(test2);
                 // add all the rows to the table
                 $('#POITable').append(rows);
-                // console.log(places_dict);
+
+                //console.log(places_dict);
+
+
             } catch (error) {
                 console.error(error);
             }
         }
-</script>
+    
+        $('#add').click(function() {
+                alert("LOL");
+                console.log("HELLO");
+                console.log($("#poino").val());
+                var $inputs = $('#POIform : input');
+                console.log($inputs);
+                var values = {};
+                $inputs.each(function() {
+                    values[this.name] = $(this).val();
+                })
+        });
 
-<script>
-  
+        // var addpoiURL = "http://127.0.0.1:5008/addPOI"+"/"+day;
+        // var data = addPoi(addpoiURL);
 
+        // function addPoi(addpoiURL){
+        //     // 1. manipulate the poino received to get name, address
+        //     // 2. send to scheduler.py the name, address, day 
+        // }
 
-    $('#test2').click(function() {
-        alert("LOL");
-        console.log($("#shit").val());
-        var $inputs = $('#POIform : input');
-        var values = {};
-        $inputs.each(function() {
-            values[this.name] = $(this).val();
-        })
-    });
-
-    console.log($inputs);
 
     // // $('#add').click(console.log('hello'));
     // $('#add').click(async (event) => {
