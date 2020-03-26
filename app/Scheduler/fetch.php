@@ -18,11 +18,19 @@
                 <th>Address</th>
                 <th>Photos</th>
                 <th>Rating</th>
-                <th>Day Chosen</th>
             </tr>
         </thead>
     </table>
-
+    <form method='GET' id='POIform'>
+            POI S.N.:<input type ='text' name='poino' id = 'poino'/>
+            <br>
+            DAY CHOSEN:<input type ='text' name='day' id = 'day'/>
+            <br>
+            <button name='add' value='Add' id='add'>Add</button>
+            <br>
+    </form> 
+    
+    <input type='submit' name='confirm' value='Confirm' id='confirm'>
 <script>
         // Helper function to display error message
         function showError(message) {
@@ -59,40 +67,23 @@
                 var places_dict = {};
                 for (const poi of data){
                     places_dict[counter] = poi;
-                    if (counter == 1){
-                        row = 
-                            "<tr><td>" + counter + "</td>" + 
-                            "<td>" + poi[0] + "</td>" +
-                            "<td>" + poi[1] + "</td>" +
-                            "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
-                            "<td>" + poi[3] + "</td>" + 
-                            "<td rowspan=" + '"' + rowcounts + '"' + ">" + 
-                                "<form method = 'POST' id = 'POIform'>POI S.N.:<input type ='text' name='poino' id = 'poino'/><br>" + 
-                                "DAY CHOSEN:<input type ='text' name='day'/>" + 
-                                "<button name='add' value='Add' id='add'>Add</button><br></form>" + 
-                                "<input type='submit' name='confirm' value='Confirm' id='confirm'></td></tr>";
-                        $('#POITable').append(row);
-                        counter += 1;
-                    }
-                    else{
-                        eachRow =
-                            "<td>" + counter + "</td>" +
-                            "<td>" + poi[0] + "</td>" +
-                            "<td>" + poi[1] + "</td>" +
-                            "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
-                            "<td>" + poi[3] + "</td>";
-                        rows += "<tr>" + eachRow + "</tr>";
-                        counter += 1;
-                    }
+                    eachRow =
+                        "<td>" + counter + "</td>" +
+                        "<td>" + poi[0] + "</td>" +
+                        "<td>" + poi[1] + "</td>" +
+                        "<td>" + "<img src =" + "'" +  poi[2] + "'>" + "</td>" +
+                        "<td>" + poi[3] + "</td>";
+                    rows += "<tr>" + eachRow + "</tr>";
+                    counter += 1;
                 }
+                
+                // add all the rows to the table
+                $('#POITable').append(rows);
 
                 // var test = "<input type='text' id='test'>"
                 // var test2 = "<button name='add' value='Add' id='test2'>Add</button><br>"
                 // $('#POITable').append(test);
                 // $('#POITable').append(test2);
-
-                // add all the rows to the table
-                $('#POITable').append(rows);
 
                 //console.log(places_dict);
 
@@ -101,17 +92,21 @@
                 console.error(error);
             }
         }
+
+</script>
+
+<script>
     
         $('#add').click(function() {
-                alert("LOL");
-                console.log("HELLO");
-                console.log($("#poino").val());
-                var $inputs = $('#POIform : input');
-                console.log($inputs);
-                var values = {};
-                $inputs.each(function() {
-                    values[this.name] = $(this).val();
-                })
+            alert("LOL");
+            console.log("HELLO");
+            console.log($("#poino").val());
+            var $inputs = $('#POIform : input');
+            console.log($inputs);
+            var values = {};
+            $inputs.each(function() {
+                values[this.name] = $(this).val();
+            })
         });
 
         // var addpoiURL = "http://127.0.0.1:5008/addPOI"+"/"+day;
