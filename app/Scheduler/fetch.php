@@ -83,26 +83,31 @@
                 // $('#POITable').append(test);
                 // $('#POITable').append(test2);
 
-                //console.log(places_dict);
-
 
             } catch (error) {
                 console.error(error);
             }
         }
     
-        $(document).ready(function() {
-            $('#add').click(function() {
-                event.preventDefault();
-                var day = $('#day').val();
-                var poino = $('#poino').val();
-                var details = places_dict[poino];
-                var name_poi = details[0];
-                //console.log(name_poi);
-                var address_poi = details[1];
-                //console.log(address_poi);
-                // data to send over to scheduler: name, address, day
-                var addpoiURL = "http://127.0.0.1:5008/addPOI"+"/"+ day; 
+        $('#add').click(async() => {
+            event.preventDefault();
+            var day = $('#day').val();
+            var poino = $('#poino').val();
+            var details = places_dict[poino];
+            var poi_dict = {};
+            var name_poi = details[0];
+            //console.log(name_poi);
+            var address_poi = details[1];
+            poi_dict['name'] = name_poi;
+            poi_dict['address'] = address_poi;
+            // data to send over to scheduler: name, address, day
+            var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day; 
+            await fetch(
+                addpoiURL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { "Content-Type": "application/json" },
+                //body: JSON.stringify({})
             });
         });
 
