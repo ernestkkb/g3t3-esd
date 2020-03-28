@@ -8,6 +8,7 @@ import os
 import random
 import datetime
 import pika
+import requests
 
 
 app = Flask(__name__)
@@ -77,19 +78,17 @@ def find_for_routing(tripName, facebookID, day):
 #add poi to db
 @app.route("/addPOI/<int:day>", methods= ['POST']) # specify HTTP methods when necessary
 def add_POI(day):
-    data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
-    # we have imported the request object in line 1
-    #data = request.get_json()
+    #data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
+    data = request.get_json()
     addnewpoi = scheduler(**data)
 
     try:
         db.session.add(addnewpoi) # db.session provided by SQLAlchemy. 
         db.session.commit()
-    except Exception as e:
-        print(e) 
+    except:
         return jsonify({"message": "An error occurred adding the POI."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
     
-#     return jsonify(book.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
+    return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
 
 @app.route('/makepayment', methods=['POST'])

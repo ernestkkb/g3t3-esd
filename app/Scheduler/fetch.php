@@ -46,7 +46,8 @@
         // anonymous async function 
         // - using await requires the function that calls it to be async
 
-        var city = 'Singapore';
+        var city = '<?php echo $_POST['city'] ?>';
+        var tripName = '<?php echo $_POST['tripName'] ?>';
         var serviceURL = "http://127.0.0.1:5008/city"+"/"+city;
         var data = getData(serviceURL);
         var places_dict = {};
@@ -78,11 +79,6 @@
                 // add all the rows to the table
                 $('#POITable').append(rows);
 
-                // var test = "<input type='text' id='test'>"
-                // var test2 = "<button name='add' value='Add' id='test2'>Add</button><br>"
-                // $('#POITable').append(test);
-                // $('#POITable').append(test2);
-
 
             } catch (error) {
                 console.error(error);
@@ -100,15 +96,18 @@
             var address_poi = details[1];
             poi_dict['name'] = name_poi;
             poi_dict['address'] = address_poi;
+            var data = {"id":"5", "tripName": tripName,"facebookID":"1", "placeOfInterest":poi_dict, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day};
             // data to send over to scheduler: name, address, day
-            var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day; 
+            var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day;
             await fetch(
                 addpoiURL, {
                 method: 'POST',
                 mode: 'cors',
-                headers: { "Content-Type": "application/json" },
-                //body: JSON.stringify({})
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(data)
             });
+
+            
         });
 
 
