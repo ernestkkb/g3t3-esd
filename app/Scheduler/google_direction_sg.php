@@ -103,6 +103,10 @@
 
     <script>
     var data2 = ["Siloso Rd, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
+    console.log(data2);
+    var dataPOST = '<?php $things =base64_decode($_POST['data']); echo $things?>';
+    var data2 = dataPOST.split(",")
+    console.log(data2);
     $(document).ready(function(){
       for (let i = 0; i < data2.length; i++) {
       var one_data = data2[i];
@@ -118,6 +122,7 @@
     </select>
     <script>
     var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
+
     $(document).ready(function(){
       for (let i = 0; i < datas.length; i++) {
       var one_data = datas[i];

@@ -75,11 +75,23 @@ def find_for_routing(tripName, facebookID, day):
         return jsonify(tripToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
+@app.route("/retrieveAll/<string:facebookID>")
+def retrieveAll(facebookID):
+    details = scheduler.query.filter_by(facebookID=facebookID).all()
+    print(details)
+    detailsToReturn = {"details" : [detail.json() for detail in details]}
+    print(detailsToReturn)
+    if detailsToReturn:
+        print(jsonify(detailsToReturn))
+        return jsonify(detailsToReturn)
+    return jsonify({"message": "Trip not found."}), 404
+
 #add poi to db
 @app.route("/addPOI/<int:day>", methods= ['POST']) # specify HTTP methods when necessary
 def add_POI(day):
     #data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     data = request.get_json()
+    print(data)
     addnewpoi = scheduler(**data)
 
     try:
