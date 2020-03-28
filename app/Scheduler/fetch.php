@@ -45,8 +45,8 @@
     
         // anonymous async function 
         // - using await requires the function that calls it to be async
-        var city = '<?php echo$_GET['city'];?>';
-        var days = '<?php echo$_GET['days'];?>';
+
+        var city = 'Singapore';
         var serviceURL = "http://127.0.0.1:5008/city"+"/"+city;
         var data = getData(serviceURL);
         
@@ -60,7 +60,6 @@
             try {
                 const response = await fetch(serviceURL, requestParam);
                 data = await response.json();
-        //         console.log(data);
                 var rows = "";
                 rowcounts = data.length;
                 counter = 1;
@@ -92,30 +91,29 @@
                 console.error(error);
             }
         }
-
-</script>
-
-<script>
     
-        $('#add').click(function() {
-            alert("LOL");
-            console.log("HELLO");
-            console.log($("#poino").val());
-            var $inputs = $('#POIform : input');
-            console.log($inputs);
-            var values = {};
-            $inputs.each(function() {
-                values[this.name] = $(this).val();
-            })
+        $(document).ready(function() {
+            $('#add').click(function() {
+                event.preventDefault();
+                var day = $('#day').val();
+                console.log(day);
+                var poino = $('#poino').val();
+                console.log(poino);
+                var addpoiURL = "http://127.0.0.1:5008/addPOI"+"/"+ day; 
+                // const response =
+                //     fetch(
+                //         addpoiURL, { 
+                //         method: 'POST', 
+                //         headers:{"Content-Type": "application/json"},
+                //         body: JSON.stringify({day:day})
+                //     });
+
+                // const data = response.json();
+
+            });
         });
 
-        // var addpoiURL = "http://127.0.0.1:5008/addPOI"+"/"+day;
-        // var data = addPoi(addpoiURL);
 
-        // function addPoi(addpoiURL){
-        //     // 1. manipulate the poino received to get name, address
-        //     // 2. send to scheduler.py the name, address, day 
-        // }
 
 
     // // $('#add').click(console.log('hello'));

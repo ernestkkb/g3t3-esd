@@ -79,10 +79,11 @@ def find_for_routing(tripName, facebookID, day):
 def add_POI(day):
     data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     # we have imported the request object in line 1
-    book = scheduler(**data) # create an instance of a book using isbn13 and the attributes in the request (**data).  means arbitary number of arguments to a function.
+    #data = request.get_json()
+    #addnewpoi = scheduler(**data)
 
     try:
-        db.session.add(book) # db.session provided by SQLAlchemy. 
+        db.session.add(addnewpoi) # db.session provided by SQLAlchemy. 
         db.session.commit()
     except Exception as e:
         print(e) 
