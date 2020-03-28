@@ -42,7 +42,15 @@
             $('#main-container')
                 .append("<label>"+message+"</label>");
         }
-    
+        function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+        }
         // anonymous async function 
         // - using await requires the function that calls it to be async
 
@@ -62,6 +70,7 @@
                 const response = await fetch(serviceURL, requestParam);
                 data = await response.json();
                 var rows = "";
+                console.log(data)
                 rowcounts = data.length;
                 counter = 1;
                 for (const poi of data){
@@ -89,6 +98,7 @@
             event.preventDefault();
             var day = $('#day').val();
             var poino = $('#poino').val();
+            var id = makeid(10);
             var details = places_dict[poino];
             var poi_dict = {};
             var name_poi = details[0];
@@ -96,7 +106,7 @@
             var address_poi = details[1];
             poi_dict['name'] = name_poi;
             poi_dict['address'] = address_poi;
-            var data = {"id":"5", "tripName": tripName,"facebookID":"1", "placeOfInterest":poi_dict, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day};
+            var data = {"id":id, "tripName": tripName,"facebookID":"1", "placeOfInterest":poi_dict, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day};
             // data to send over to scheduler: name, address, day
             var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day;
             await fetch(
