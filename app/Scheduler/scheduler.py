@@ -75,7 +75,7 @@ def find_for_routing(tripName, facebookID, day):
     return jsonify({"message": "Trip not found."}), 404
 
 #add poi to db
-@app.route("/addPOI/<int:day>") # specify HTTP methods when necessary
+@app.route("/addPOI/<int:day>", methods= ['POST']) # specify HTTP methods when necessary
 def add_POI(day):
     data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     # we have imported the request object in line 1
