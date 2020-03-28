@@ -56,7 +56,7 @@ def full_POI_url(city, API_KEY):
     mydict = {'query': city}
     POI_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
     url = POI_URL + urlencode(mydict, doseq=True) 
-    url = url + "point+of+interest&language=en&key=" + API_KEY
+    url = url + "+point+of+interest&language=en&key=" + API_KEY
     return url
 
 def filtered_POI_url(place_id, API_KEY):
