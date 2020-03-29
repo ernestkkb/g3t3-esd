@@ -85,10 +85,12 @@
     <select id="start">
     </select>
     <script>
-    var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
+    var dataPOST = '<?php $things =base64_decode($_POST['data']); echo $things?>';
+    var data1 = dataPOST.split(",")
+    //var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
     $(document).ready(function(){
-      for (let i = 0; i < datas.length; i++) {
-      var one_data = datas[i];
+      for (let i = 0; i < data1.length; i++) {
+      var one_data = data1[i];
       // console.log(one_data);
       $('#start').append('<option value="' +  one_data  + '">' + one_data + '</option>');
     }
@@ -102,7 +104,7 @@
     </select>
 
     <script>
-    var data2 = ["Siloso Rd, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
+    //var data2 = ["Siloso Rd, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
     console.log(data2);
     var dataPOST = '<?php $things =base64_decode($_POST['data']); echo $things?>';
     var data2 = dataPOST.split(",")
@@ -121,11 +123,12 @@
     <select id="end">
     </select>
     <script>
-    var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
-
+    //var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
+    var dataPOST = '<?php $things =base64_decode($_POST['data']); echo $things?>';
+    var data3 = dataPOST.split(",")
     $(document).ready(function(){
-      for (let i = 0; i < datas.length; i++) {
-      var one_data = datas[i];
+      for (let i = 0; i < data3.length; i++) {
+      var one_data = data3[i];
       // console.log(one_data);
       $('#end').append('<option value="' +  one_data  + '">' + one_data + '</option>');
     }
