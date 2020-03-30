@@ -172,7 +172,7 @@ require './fb-init.php';
                     each_trip_deets = dictionaryOfData[trip_name];
                     rowspan = each_trip_deets.length;
                     //console.log(each_trip_deets);
-                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<button id='paypal-button"+count+"'> </button>" + "</td>";
+                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<button type='button' name='paypalbutton' id='paypal-button"+count+"'> </button>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
@@ -216,25 +216,20 @@ require './fb-init.php';
             }
 
 
-        }
-
-        // $('#pay').click(async() => {
-        //     event.preventDefault();
-        //     var tripName = 
-        //     var tripID = 
-        //     var data = {"tripName": , "tripID":};
-        //     // data to send over to scheduler.py: the tripname, trip id
-        //     var addpoiURL = "http://127.0.0.1:5002/makePayment";
-        //     await fetch(
-        //         addpoiURL, {
-        //         method: 'POST',
-        //         mode: 'cors',
-        //         headers: { "Content-Type": "application/json"},
-        //         body: JSON.stringify(data)
-        //     });
-
-            
-        // });
+            }
+            $(":paypalbutton").click(function(){
+                var addpoiURL = "http://localhost:5002/makepayment";
+                tripID=2;
+                var triplist=[{
+                "name": tripName,
+                "sku":  tripID,
+                "price": "20",
+                "currency": "SGD",
+                "quantity": 1}];
+                postData(serviceURL,triplist);
+                event.preventDefault();
+                // data to send over to scheduler.py: the tripname, trip id, price, currency & quantity
+            });
     </script>
 
 </body>
