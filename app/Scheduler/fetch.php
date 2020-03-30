@@ -6,6 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+    <script src="push.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -118,21 +125,21 @@
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify(data)
             });
-
-            
         });
 
-
-
-
-
-
+        $("#add").click(function(){
+            Push.create("POI Added!",{
+            body: "You have added your places of interest for the day.",
+            icon: 'Logo_small.png',
+            timeout: 2000,
+            onClick: function () {
+                window.focus();
+                this.close();
+            }
+            });
+        });
 
 </script>
-
-
-
-
 </body>
 
 </html>
