@@ -133,8 +133,8 @@ def get_all():
     return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
 
 @app.route("/paymentHistory/<string:userID>")
-def paymentHistory():
-    return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.all()]})
+def paymentHistory(userID):
+    return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.filter_by(userID=userID).all()]})
 
 #Add to cart
 @app.route("/payment/<string:tripID>", methods=['POST'])

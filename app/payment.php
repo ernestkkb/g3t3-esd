@@ -99,10 +99,9 @@
             }
         });
         
-        var facebookID = 1;
+        var facebookID = $user;
         var serviceURL = "http://127.0.0.1:5003/paymentHistory/"+facebookID;
         var data = getData(serviceURL);
-        var places_dict = {};
 
         async function getData(serviceURL) {
             let requestParam = {
@@ -118,20 +117,7 @@
                 //console.log(data);
                 rowcounts = data.length;
                 counter = 1;
-                var dictionaryOfData = {};
-                for (const poi of data){
-                    //console.log(poi);
-                    var tripDetails = poi.placeOfInterest;
-                    var day = poi.day;
-                    //console.log(tripDetails);
-                    var tripName = poi.tripName;
-                    if(!dictionaryOfData[tripName]){
-                        dictionaryOfData[tripName] = [[tripDetails.name,day]];
-                    }
-                    else{
-                        dictionaryOfData[tripName].push([tripDetails.name,day]);
-                    }
-                }
+
                 //console.log(dictionaryOfData);
                 count = 1;
                 for (const trip_name in dictionaryOfData){
