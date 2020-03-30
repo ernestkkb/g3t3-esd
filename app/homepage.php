@@ -21,6 +21,9 @@ if (isset($_SESSION['access_token'])) {
       $response = $fb->get('/me?fields=id,name,picture,last_name', $_SESSION['access_token']);
       $user = $response->getGraphUser();
       $_SESSION['user'] = [$user['id'], $user['last_name']];
+      echo(($_SESSION['user'][0]));
+
+    
 
     //   print_r( $_SESSION['user']);
       

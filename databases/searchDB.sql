@@ -23,20 +23,13 @@ CREATE TABLE IF NOT EXISTS `country_city` (
 INSERT INTO `country_city`(`country`, `city`) VALUES 
 
 ("Singapore","Singapore"),
-("Japan","Tokyo"),
-("Japan","Nagoya"),
-("Japan","Fukuoka"),
-("Japan","Sapporo"),
-("Japan","Sendai"),
-("Japan","Hiroshima"),
 ("Malaysia","George Town"),
 ("Malaysia","Kuala Lumpur"),
 ("Malaysia","Klang"),
 ("Malaysia","Johor Bahru"),
 ("Malaysia","Melaka"),
 ("Malaysia","Ipoh"),
-("Taiwan","Taipei"),
-("Taiwan","Kaohsiung"),
-("Taiwan","Taichung"),
-("Taiwan","Tainan"),
-("Taiwan","Zhongli");
+("France", "Paris"),
+("France", "Nice"),
+("France", "Lyon"),
+("Italy", "Venice")
