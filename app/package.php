@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Pricing Table</title>
@@ -7,8 +8,31 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 <link rel="stylesheet" href="temp.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="./css/homepage.css">
 </head>
 <body>
+  
+<nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="#">Welcome back, <?php # echo $user->getField('last_name') ?> </a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="./notifications.php">Email</a></li>
+                    <li><a href="./payment_ms/payment.php">Payment</a></li>
+                    <li><a href="./search_ms/search.php">Start Planning</a></li>
+                    <li><a href="./calendar_ms/calendar.php">Calendar</a></li>
+                    <li><a href="summary.php">Summary</a>
+                    <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
+    
 <section>
   <div class="container-fluid">
     <div class="container">
@@ -17,17 +41,18 @@
           <div class="card text-center">
             <div class="title">
               <i class="fa fa-paper-plane" aria-hidden="true"></i>
-              <h2>Basic</h2>
+              <h2>Japan</h2>
             </div>
             <div class="price">
-              <h4><sup>$</sup>25</h4>
+              <h4><sup>$</sup>321</h4>
             </div>
             <div class="option">
               <ul>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> 10 GB Space </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> 3 Domain Names </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> 20 Email Address </li>
-              <li> <i class="fa fa-times" aria-hidden="true"></i> Live Support </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Osaka </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Tokyo </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Okinawa </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Hokkaido </li>
+              <!-- <li> <i class="fa fa-times" aria-hidden="true"></i> Japan, Hokkaido </li> -->
               </ul>
             </div>
             <a href="#">Order Now </a>
@@ -38,17 +63,18 @@
           <div class="card text-center">
             <div class="title">
               <i class="fa fa-plane" aria-hidden="true"></i>
-              <h2>Standard</h2>
+              <h2>Singapore</h2>
             </div>
             <div class="price">
-              <h4><sup>$</sup>50</h4>
+              <h4><sup>$</sup>350</h4>
             </div>
             <div class="option">
               <ul>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> 50 GB Space </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> 5 Domain Names </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Unlimited Email Address </li>
-              <li> <i class="fa fa-times" aria-hidden="true"></i> Live Support </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Merlion Park </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Gardens by the Bay </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Cloud Forest </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> Singapore Zoo </li>
+              <!-- <li> <i class="fa fa-times" aria-hidden="true"></i> Singapore Zoo </li> -->
               </ul>
             </div>
             <a href="#">Order Now </a>
