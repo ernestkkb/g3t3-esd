@@ -35,11 +35,11 @@
             <br>
             DAY CHOSEN:<input type ='text' name='day' id = 'day'/>
             <br>
-            <button name='add' value='Add' id='add'>Add</button>
+            <button name='add' value='Add' id='add'>Add POI</button>
             <br>
     </form> 
     
-    <input type='submit' name='confirm' value='Confirm' id='confirm'>
+    <button name='confirm' value='Confirm' id='confirm'>Add Trip</button>
 <script>
         // Helper function to display error message
         function showError(message) {
@@ -137,6 +137,12 @@
                 this.close();
             }
             });
+        });
+
+        $('#confirm').click(async() => {
+            event.preventDefault();
+            window.location.href = "../summary.php";
+        
         });
 
 </script>
