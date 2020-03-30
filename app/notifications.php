@@ -39,6 +39,7 @@ require './fb-init.php';
                     <li><a href="./payment_ms/payment.php">Payment</a></li>
                     <li><a href="./search_ms/search.php">Start Planning</a></li>
                     <li><a href="./calendar_ms/calendar.php">Calendar</a></li>
+                    <li><a href="summary.php">Summary</a>
                     <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
                 </ul>
             </div>
