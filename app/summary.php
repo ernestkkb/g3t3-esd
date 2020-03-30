@@ -138,7 +138,7 @@
             }
         });
         
-        var facebookID = 1;
+        var facebookID = '<?php echo $user[0]?>';
         var serviceURL = "http://127.0.0.1:5002/retrieveAll/"+facebookID;
         var data = getData(serviceURL);
         var places_dict = {};
