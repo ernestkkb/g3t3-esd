@@ -10,6 +10,8 @@
 
 <body>
     <p id="display">Display POI</p>
+    <p>Trip Name: <?php echo $_POST['tripName'] ?></p>
+    <br><br>
     <table id="POITable" class='table table-striped' border='1'>
         <thead class='thead-dark'>
             <tr>
