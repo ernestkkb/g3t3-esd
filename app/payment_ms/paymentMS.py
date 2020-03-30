@@ -48,7 +48,13 @@ def payment():
     else:
         triplist = request.get_data()
         
-    print(triplist)
+    triplist= [{
+                    "name": "Travel Package A",
+                    "sku": 1,
+                    "price": "100",
+                    "currency": "USD",
+                    "quantity": 2} ] 
+                    
     print("payment function triggered")
     total=0
     for dict1 in triplist:
