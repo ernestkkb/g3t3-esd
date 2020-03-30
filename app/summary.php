@@ -72,8 +72,8 @@ require './fb-init.php';
             <tr class = 'table100 ver2'>
                 <th>Trip Name</th>
                 <th>Pay</th>
-                <th>Places Of Interest</th>
                 <th>Day</th>
+                <th>Places Of Interest</th>
                 <th>View Route</th>
             </tr>
         </thead>
