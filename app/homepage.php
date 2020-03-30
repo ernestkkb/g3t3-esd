@@ -3,28 +3,33 @@
 require './fb-init.php';
 ?>
 
-<?php # require "fb-init.php";?>
+<?php  require "fb-init.php";?>
 
-<?php # if (isset($_SESSION['access_token'])): ?>
+<?php  if (isset($_SESSION['access_token'])): ?>
     
-<?php # else: ?>
-    <!-- <a href="<?php # echo $login_url;?>">Login With Facebook</a> -->
-<?php # endif; ?>
+<?php  else: ?>
+    <a href="<?php # echo $login_url;?>">Login With Facebook</a>
+<?php  endif; ?>
 
 <?php
-// if (isset($_SESSION['access_token'])) {
+if (isset($_SESSION['access_token'])) {
 
-//     try {
-//       $fb->setDefaultAccesstoken($_SESSION['access_token']);
+    try {
+      $fb->setDefaultAccesstoken($_SESSION['access_token']);
 
-//       $response = $fb->get('/me?fields=id,name,picture,last_name', $_SESSION['access_token']);
-//       $user = $response->getGraphUser();
 
-//     } catch (Exception $e) {
-//       echo $e->getTraceAsString();
-//       header("Location: ./logout.php");
-//     }
-//   }
+      $response = $fb->get('/me?fields=id,name,picture,last_name', $_SESSION['access_token']);
+      $user = $response->getGraphUser();
+      $_SESSION['user'] = [$user['id'], $user['last_name']];
+
+    //   print_r( $_SESSION['user']);
+      
+
+    } catch (Exception $e) {
+      echo $e->getTraceAsString();
+      header("Location: ./logout.php");
+    }
+  }
 ?>
 
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
