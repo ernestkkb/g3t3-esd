@@ -124,6 +124,7 @@ require './fb-init.php';
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
+                    <li><a href="homepage.php">Home</a></li>
                     <li><a href="./notifications.php">Email</a></li>
                     <li><a href="./payment_ms/payment.php">Payment</a></li>
                     <li><a href="./search_ms/search.php">Start Planning</a></li>
@@ -138,9 +139,11 @@ require './fb-init.php';
     <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
 
 
-    <div style="height: 1000px">
+    <div style="height: 50px">
         <!-- just to make scrolling effect possible -->
-        <h2 class="myH2">Your planned schedule</h2>
+        <h2 class="myH2">Customise your schedule</h2>
+        <div style="text-align:center">
+        <h3 class="myH3"> Start by choosing your desired Country & City </h3>
 
         <div style="text-align:center">
         
@@ -151,17 +154,21 @@ require './fb-init.php';
                 <option selected disabled='true' >Select Country</option>
                 <!-- Values are filled from the script portion above !-->
                 </select>
-
+                <br>
                 <font size="+2"> City: </font>
                 <select style="width:150px" name="city" id="city">
                     <option selected disabled='true'>Select City</option>
                 <!-- Values are filled from the script portion above !-->
                 </select>
-
+                <br>
+                </br>
                 <input type="submit" name="submit">
             </form>
-        </div>                      
+        </div>         
+        <br></br><br></br>
+        <h2 class="myH2">Or pick a package below!</h2>
     </div>
+
 
 <!-- Jquery needed -->
     <script src="js/scripts.js"></script>
@@ -179,4 +186,9 @@ require './fb-init.php';
     </script>
 
 </body>
+
+<?php
+    require 'package_nonav.php';
+?>
+
 </html>

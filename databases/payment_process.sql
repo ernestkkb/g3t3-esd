@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 25, 2020 at 05:17 AM
--- Server version: 5.7.26
--- PHP Version: 7.2.18
+-- Generation Time: Mar 30, 2020 at 09:20 AM
+-- Server version: 5.7.23
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,19 +30,22 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `payment_process`;
 CREATE TABLE IF NOT EXISTS `payment_process` (
+  `userid` varchar(100) NOT NULL,
   `tripID` int(4) NOT NULL,
   `price` float NOT NULL,
-  `paymentStatus` varchar(10) NOT NULL
+  `paymentStatus` varchar(10) NOT NULL,
+  PRIMARY KEY (`userid`,`tripID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `payment_process`
 --
 
-INSERT INTO `payment_process` (`tripID`, `price`, `paymentStatus`) VALUES
-(1, 888, 'paid'),
-(2, 666, 'paid'),
-(3, 333.5, 'paid');
+INSERT INTO `payment_process` (`userid`, `tripID`, `price`, `paymentStatus`) VALUES
+('1', 1, 888, 'paid'),
+('1', 2, 666, 'paid'),
+('1', 3, 333.5, 'unpaid'),
+('2', 1, 100.1, 'unpaid');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
