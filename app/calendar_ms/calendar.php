@@ -10,13 +10,11 @@ $calendarDAO = new calendarDAO();
 
 ?>
 <!DOCTYPE html>
-
-
-
 <html>
     <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <title>Jquery Fullcalandar Integration with PHP and Mysql</title>
-
+        <link rel="stylesheet" href="../css/homepage.css">
   <!-- full calendar stylesheet URL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
   
@@ -134,6 +132,25 @@ $calendarDAO = new calendarDAO();
   </script>
  </head>
  <body>
+ <nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="#">Welcome back, <?php # echo $user->getField('last_name') ?> </a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="./notifications.php">Email</a></li>
+                    <li><a href="./payment_ms/payment.php">Payment</a></li>
+                    <li><a href="./search_ms/search.php">Start Planning</a></li>
+                    <li><a href="calendar.php">Calendar</a></li>
+                    <li><a href="../summary.php">Summary</a>
+                    <li><a href="../logout.php">Logout</a> <!-- Logout and destroy the session -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
+    
   <br />
   <h2 align="center"><a href="#">Jquery Fullcalandar Integration with PHP and Mysql</a></h2>
   <br />
@@ -148,9 +165,5 @@ $data = $calendarDAO->retrieveAll();
 
 // TODO: Send data over to the scheduler page <add_trip.html>
 ?>
-
-
-
-
  </body>
 </html>
