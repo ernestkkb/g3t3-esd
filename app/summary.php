@@ -27,6 +27,43 @@ require './fb-init.php';
 //   }
 ?>
 
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+    var CREATE_PAYMENT_URL  = 'http://127.0.0.1:5003/makepayment';
+    var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:5003/execute';
+    var list1=[];
+    for(i=1;i<=100;i++){
+        list1.push("#paypal-button"+i)
+    }
+    list1.forEach(function(selector) {
+    paypal.Button.render({
+
+        env: 'sandbox', // Or 'sandbox'
+
+        commit: true, // Show a 'Pay Now' button
+
+        payment: function() {
+            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+                return data.paymentID;
+            });
+        },
+
+        onAuthorize: function(data) {
+            return paypal.request.post(EXECUTE_PAYMENT_URL, {
+                paymentID: data.paymentID,
+                payerID:   data.payerID
+            }).then(function(res) {
+
+                console.log(res.success)
+                // The payment is complete!
+                // You can now show a confirmation message to the customer
+                
+            });
+        }
+
+    }, selector); })
+</script>
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
