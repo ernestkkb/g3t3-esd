@@ -1,3 +1,12 @@
+<?php  
+    require "../fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }
+    else{
+        header("Location: ./login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

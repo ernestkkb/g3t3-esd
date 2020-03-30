@@ -1,3 +1,13 @@
+<?php  
+    require "../fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }
+    else{
+        header("Location: ./login.php");
+    }
+?>
+
 <?php
 if (isset($_POST['country']) && isset($_POST['city'])) {
     $country = $_POST['country'];
