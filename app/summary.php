@@ -73,8 +73,8 @@ require './fb-init.php';
                 <th>Trip Name</th>
                 <th>Pay</th>
                 <th>Places Of Interest</th>
-                <th>View Route</th>
                 <th>Day</th>
+                <th>View Route</th>
             </tr>
         </thead>
     </table>
@@ -134,19 +134,23 @@ require './fb-init.php';
                     rowspan = each_trip_deets.length;
                     //console.log(each_trip_deets);
                     eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<form method='POST' id='paymentForm'><button type='submit' name='pay' id='pay'>Pay here</button></form>"  + "</td>";
-                    day_store = [];
+                    names_by_day = {};
                     for (const event of each_trip_deets){
-                        if (day_store.includes(event[1])==false){
-                            day_store.push(event[1]);
+                        if (!names_by_day[event[1]]){
+                            names_by_day[event[1]] = [event[0]];
+                        }
+                        else{
+                            names_by_day[event[1]].push(event[0])
                         }
                     }
+                    console.log(names_by_day);
                     //console.log(day_store);
                     for (const event of each_trip_deets){
                         //console.log(event);
                         
                         toadd = "<td>" + event[1] + "</td>" +
                         "<td>" + event[0] + "</td>" + 
-                        "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(event[1])+">View Route</button> </form>" + "</td></tr>";
+                        "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_by_day[event[1]])+">View Route</button> </form>" + "</td></tr>";
                         eachRow +=toadd;
                     }
                     
