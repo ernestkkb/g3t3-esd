@@ -35,7 +35,6 @@
             <br>
             <button name='add' value='Add' id='add'>Add</button>
             <br>
-            <button id="clear-button">Clear All Notification!</button>
     </form> 
     
     <input type='submit' name='confirm' value='Confirm' id='confirm'>
@@ -136,10 +135,6 @@
                 this.close();
             }
             });
-        });
-
-        $("#clear-button").click(function(){ 
-           Push.clear();
         });
 
 </script>
