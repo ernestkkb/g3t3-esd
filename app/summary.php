@@ -72,10 +72,10 @@ require './fb-init.php';
         <table id="summaryTable" class='table100 ver2' style="margin-left:auto;margin-right:auto;" border=1>
             <tr class = 'table100 ver2'>
                 <th>Trip Name</th>
-                <th>Pay</th>
-                <th>Day</th>
-                <th>Places Of Interest</th>
+                <th>Payment</th>
                 <th>View Route</th>
+                <th>Day</th>
+                <th>Places of Interest</th>
             </tr>
         </thead>
     </table>
@@ -96,7 +96,7 @@ require './fb-init.php';
             }
         });
         
-        var facebookID = 1
+        var facebookID = 1;
         var serviceURL = "http://127.0.0.1:5002/retrieveAll/"+facebookID;
         var data = getData(serviceURL);
         var places_dict = {};
@@ -130,11 +130,12 @@ require './fb-init.php';
                     }
                 }
                 //console.log(dictionaryOfData);
+                count = 1;
                 for (const trip_name in dictionaryOfData){
                     each_trip_deets = dictionaryOfData[trip_name];
                     rowspan = each_trip_deets.length;
                     //console.log(each_trip_deets);
-                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<form method='POST' id='paymentForm'><button type='submit' name='pay' id='pay'>Pay here</button></form>"  + "</td>";
+                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<button id='paypal-button"+count+"'>Checkout</button>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
@@ -146,20 +147,26 @@ require './fb-init.php';
                     }
                     //console.log(names_by_day);
                     //console.log(day_store);
-                    for (const daynumber in names_by_day){
-                        //console.log(daynumber);
-                        placelists = names_by_day[daynumber];
-                        length_of_place = placelists.length;
-                        //console.log(placelists);
-                        // toadd = "<td rowspan=" + >" + event[1] + "</td>" 
-                        // "<td>" + event[0] + "</td>" + 
-                        // "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_by_day[event[1]])+">View Route</button> </form>" + "</td></tr>";
-                        // eachRow +=toadd;
+                    for (const day_thingy in names_by_day){
+                        //console.log(event);
+                        names_of_place = names_by_day[day_thingy];
+                        console.log(names_of_place);
+                        length = names_of_place.length;
+
+                        eachRow += "<td rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_of_place)+">View Route</button> </form>" + "</td>" +
+                        "<td rowspan =" +length +">" + day_thingy + "</td>";
+                        for (places of names_of_place){
+                            //console.log(places);
+                            eachRow += "<td>" + places + "</td></tr>";
+                            
+                        }
+                        
                     }
                     
                     rows += eachRow;
                     
                     counter += 1;
+                    count+=1;
                 }
                 
                 // add all the rows to the table
