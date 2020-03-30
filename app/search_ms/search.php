@@ -29,11 +29,12 @@
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
+                    <li><a href="../homepage.php">Home</a></li>
                     <li><a href="../notifications.php">Email</a></li>
                     <li><a href="../payment_ms/payment.php">Payment</a></li>
                     <li><a href="search.php">Start Planning</a></li>
                     <li><a href="../calendar_ms/calendar.php">Calendar</a></li>
-                    <li><a href="summary.php">Summary</a>
+                    <li><a href="../summary.php">Summary</a>
                     <li><a href="../logout.php">Logout</a> <!-- Logout and destroy the session -->
                 </ul>
             </div>
@@ -41,7 +42,16 @@
     </nav>
 
     <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
-
+    <script>
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > 50) {
+                $('.nav').addClass('affix');
+                console.log("OK");
+            } else {
+                $('.nav').removeClass('affix');
+            }
+        });
+    </script>
 
   <br /><br />
   <div class="container" style="width:900px;">

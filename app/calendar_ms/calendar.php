@@ -139,6 +139,7 @@ $calendarDAO = new calendarDAO();
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
+                    <li><a href="../homepage.php">Home</a></li>
                     <li><a href="../notifications.php">Email</a></li>
                     <li><a href="../payment_ms/payment.php">Payment</a></li>
                     <li><a href="../search_ms/search.php">Start Planning</a></li>
@@ -150,7 +151,16 @@ $calendarDAO = new calendarDAO();
         </div>
     </nav>
     <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
-    
+    <script>
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > 50) {
+                $('.nav').addClass('affix');
+                console.log("OK");
+            } else {
+                $('.nav').removeClass('affix');
+            }
+        });
+    </script>
   <br />
   <h2 align="center"><a href="#">Jquery Fullcalandar Integration with PHP and Mysql</a></h2>
   <br />
@@ -165,5 +175,6 @@ $data = $calendarDAO->retrieveAll();
 
 // TODO: Send data over to the scheduler page <add_trip.html>
 ?>
+ 
  </body>
 </html>

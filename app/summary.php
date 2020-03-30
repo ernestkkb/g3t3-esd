@@ -49,6 +49,7 @@ require './fb-init.php';
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
+                    <li><a href="homepage.php">Home</a></li>
                     <li><a href="./notifications.php">Email</a></li>
                     <li><a href="./payment_ms/payment.php">Payment</a></li>
                     <li><a href="./search_ms/search.php">Start Planning</a></li>
