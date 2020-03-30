@@ -71,10 +71,10 @@ require './fb-init.php';
         <table id="summaryTable" class='table100 ver2' style="margin-left:auto;margin-right:auto;" border=1>
             <tr class = 'table100 ver2'>
                 <th>Trip Name</th>
-                <th>Day</th>
+                <th>Pay</th>
                 <th>Places Of Interest</th>
                 <th>View Route</th>
-                <th>Pay</th>
+                <th>Day</th>
             </tr>
         </thead>
     </table>
@@ -110,33 +110,54 @@ require './fb-init.php';
                 const response = await fetch(serviceURL, requestParam);
                 items = await response.json();
                 var rows = "";
-                // console.log(items);
                 data = items.details;
+                //console.log(data);
                 rowcounts = data.length;
                 counter = 1;
                 var dictionaryOfData = {};
                 for (const poi of data){
+                    //console.log(poi);
                     var tripDetails = poi.placeOfInterest;
-                    if(!dictionaryOfData[poi.day]){
-                        dictionaryOfData[poi.day] = [];
+                    var day = poi.day;
+                    //console.log(tripDetails);
+                    var tripName = poi.tripName;
+                    if(!dictionaryOfData[tripName]){
+                        dictionaryOfData[tripName] = [[tripDetails.name,day]];
                     }
-                    dictionaryOfData[poi.day].push(tripDetails.name);
+                    else{
+                        dictionaryOfData[tripName].push([tripDetails.name,day]);
+                    }
                 }
-                console.log((dictionaryOfData[1]).length);
-                for (const poi of data){
-                    tripStuff = poi.placeOfInterest;
-                    eachRow =
-                        "<td>" + poi.tripName + "</td>" +
-                        "<td>" + poi.day + "</td>" +
-                        "<td>" + tripStuff.name + "</td>" +
-                        "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(dictionaryOfData[poi.day])+">View Route</button> </form>" + "</td>" +
-                        "<td>" + "<form method='post'><button type='submit' name='pay' id='pay'>Pay here</button></form>" + "</td>";
-                    rows += "<tr>" + eachRow + "</tr>";
+                //console.log(dictionaryOfData);
+                for (const trip_name in dictionaryOfData){
+                    each_trip_deets = dictionaryOfData[trip_name];
+                    rowspan = each_trip_deets.length;
+                    //console.log(each_trip_deets);
+                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<form method='POST' id='paymentForm'><button type='submit' name='pay' id='pay'>Pay here</button></form>"  + "</td>";
+                    day_store = [];
+                    for (const event of each_trip_deets){
+                        if (day_store.includes(event[1])==false){
+                            day_store.push(event[1]);
+                        }
+                    }
+                    //console.log(day_store);
+                    for (const event of each_trip_deets){
+                        //console.log(event);
+                        
+                        toadd = "<td>" + event[1] + "</td>" +
+                        "<td>" + event[0] + "</td>" + 
+                        "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(event[1])+">View Route</button> </form>" + "</td></tr>";
+                        eachRow +=toadd;
+                    }
+                    
+                    rows += eachRow;
+                    
                     counter += 1;
                 }
                 
                 // add all the rows to the table
                 $('#summaryTable').append(rows);
+
 
 
             } catch (error) {
