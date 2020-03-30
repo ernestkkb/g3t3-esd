@@ -1,3 +1,13 @@
+<?php  
+    require "../fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    
+    }
+    else{
+        header("Location: ./login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,6 +76,7 @@
         var city = '<?php echo $_POST['city'] ?>';
         var tripName = '<?php echo $_POST['tripName'] ?>';
         var serviceURL = "http://127.0.0.1:5008/city"+"/"+city;
+        var tripID = makeid(10);
         var data = getData(serviceURL);
         var places_dict = {};
         
@@ -104,18 +115,20 @@
         }
     
         $('#add').click(async() => {
+            var facebookID = '<?php echo $user[0];?>';
+            console.log(facebookID);
             event.preventDefault();
             var day = $('#day').val();
             var poino = $('#poino').val();
-            var id = makeid(10);
             var details = places_dict[poino];
+            var id = makeid(10);
             var poi_dict = {};
             var name_poi = details[0];
             //console.log(name_poi);
             var address_poi = details[1];
             poi_dict['name'] = name_poi;
             poi_dict['address'] = address_poi;
-            var data = {"id":id, "tripName": tripName,"facebookID":"1", "placeOfInterest":poi_dict, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day};
+            var data = {"tripID":tripID, "tripName": tripName,"facebookID":facebookID, "placeOfInterest":poi_dict, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day, "id":id};
             // data to send over to scheduler: name, address, day
             var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day;
             await fetch(

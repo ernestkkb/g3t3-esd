@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 28, 2020 at 09:41 PM
+-- Generation Time: Mar 30, 2020 at 02:04 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -40,18 +40,20 @@ CREATE TABLE IF NOT EXISTS `scheduler` (
   `endDate` date NOT NULL,
   `paymentStatus` varchar(10) NOT NULL,
   `day` int(99) NOT NULL,
-  PRIMARY KEY (`id`)
+  `tripID` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`,`facebookID`,`tripID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `scheduler`
 --
 
-INSERT INTO `scheduler` (`id`, `tripName`, `facebookID`, `placeOfInterest`, `startDate`, `endDate`, `paymentStatus`, `day`) VALUES
-('F2ph83qSXF', '', '1', '{\"name\": \"Helix Bridge\", \"address\": \"Singapore\"}', '2020-03-12', '2020-03-15', 'paid', 1),
-('hgjsOfBfjf', '', '1', '{\"name\": \"Cloud Forest\", \"address\": \"18 Marina Gardens Dr, Singapore 018953\"}', '2020-03-12', '2020-03-15', 'paid', 1),
-('QIpjua6l^M', 'Japan', '1', '{\"name\": \"Temple of the Six Banyan Trees\", \"address\": \"87 Liurong Rd, Zhong Shan Liu Lu, Yuexiu Qu, Guangzhou Shi, Guangdong Sheng, China, 510000\"}', '2020-03-12', '2020-03-15', 'paid', 3),
-('qWpnIU6A7#', '', '1', '{\"name\": \"Singapore Botanic Gardens\", \"address\": \"1 Cluny Rd, Singapore 259569\"}', '2020-03-12', '2020-03-15', 'paid', 1);
+INSERT INTO `scheduler` (`id`, `tripName`, `facebookID`, `placeOfInterest`, `startDate`, `endDate`, `paymentStatus`, `day`, `tripID`) VALUES
+('F2ph83qSXF', '', '1', '{\"name\": \"Helix Bridge\", \"address\": \"Singapore\"}', '2020-03-12', '2020-03-15', 'paid', 1, ''),
+('hgjsOfBfjf', '', '1', '{\"name\": \"Cloud Forest\", \"address\": \"18 Marina Gardens Dr, Singapore 018953\"}', '2020-03-12', '2020-03-15', 'paid', 1, ''),
+('QIpjua6l^M', 'Japan', '1', '{\"name\": \"Temple of the Six Banyan Trees\", \"address\": \"87 Liurong Rd, Zhong Shan Liu Lu, Yuexiu Qu, Guangzhou Shi, Guangdong Sheng, China, 510000\"}', '2020-03-12', '2020-03-15', 'paid', 3, ''),
+('qWpnIU6A7#', '', '1', '{\"name\": \"Singapore Botanic Gardens\", \"address\": \"1 Cluny Rd, Singapore 259569\"}', '2020-03-12', '2020-03-15', 'paid', 1, ''),
+('xJBAOCreFe', 'Japan123', '10213812115971973', '{\"name\": \"Tokyo Skytree\", \"address\": \"1-chōme-1-2 Oshiage, Sumida City, Tōkyō-to 131-8634, Japan\"}', '2020-03-12', '2020-03-15', 'paid', 5, '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

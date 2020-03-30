@@ -1,6 +1,12 @@
 <!-- Validations -->
-<?php
-require './fb-init.php';
+<?php  
+    require "fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }
+    else{
+        header("Location: login.php");
+    }
 ?>
 
 <?php  require "fb-init.php";?>
@@ -128,7 +134,7 @@ if (isset($_SESSION['access_token'])) {
 <nav class="nav">
         <div class="container">
             <div class="logo">
-                <a href="#">Welcome back, <?php # echo $user->getField('last_name') ?> </a>
+                <a href="#">Welcome back, <?php echo $user['last_name']; ?> </a>
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">

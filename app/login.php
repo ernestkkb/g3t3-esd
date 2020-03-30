@@ -1,6 +1,6 @@
-<?php 
-require './fb-init.php';
-?>
+<?php  
+    require "fb-init.php";
+   ?>
 
 
 

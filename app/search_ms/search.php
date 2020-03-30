@@ -1,3 +1,13 @@
+<?php  
+    require "../fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }
+    else{
+        header("Location: ./login.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html>
  <head>
@@ -25,7 +35,7 @@
  <nav class="nav">
         <div class="container">
             <div class="logo">
-                <a href="#">Welcome back, <?php # echo $user->getField('last_name') ?> </a>
+                <a href="#">Welcome back, <?php echo $user[1]; ?> </a>
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">

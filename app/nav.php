@@ -6,7 +6,7 @@
 <nav class="nav">
         <div class="container">
             <div class="logo">
-                <a href="#">Welcome back, <?php # echo $user->getField('last_name') ?> </a>
+                <a href="#">Welcome back, <?php echo $user[1]; ?> </a>
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
