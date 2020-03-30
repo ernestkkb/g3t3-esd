@@ -143,15 +143,17 @@ require './fb-init.php';
                             names_by_day[event[1]].push(event[0])
                         }
                     }
-                    console.log(names_by_day);
+                    //console.log(names_by_day);
                     //console.log(day_store);
-                    for (const event of each_trip_deets){
-                        //console.log(event);
-                        
-                        toadd = "<td>" + event[1] + "</td>" +
-                        "<td>" + event[0] + "</td>" + 
-                        "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_by_day[event[1]])+">View Route</button> </form>" + "</td></tr>";
-                        eachRow +=toadd;
+                    for (const daynumber in names_by_day){
+                        //console.log(daynumber);
+                        placelists = names_by_day[daynumber];
+                        length_of_place = placelists.length;
+                        //console.log(placelists);
+                        // toadd = "<td rowspan=" + >" + event[1] + "</td>" 
+                        // "<td>" + event[0] + "</td>" + 
+                        // "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_by_day[event[1]])+">View Route</button> </form>" + "</td></tr>";
+                        // eachRow +=toadd;
                     }
                     
                     rows += eachRow;
