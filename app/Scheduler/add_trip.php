@@ -55,7 +55,7 @@ if (isset($_POST['country']) && isset($_POST['city'])) {
             Number of days<br>
             <input name="days" type="text" id="days" style = "width:100%"/></br>
             City<br>
-            <input name="city" type="text" id="city" value = "Singapore" style = "width:100%"/></br>
+            <input name="city" type="text" id="city" value=<?php echo $_POST['city']; ?> style = "width:100%"/></br>
             <br>
             <input type="submit" name="submit" value="Find Places of Interest"/>
     </form>

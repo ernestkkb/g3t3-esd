@@ -60,23 +60,53 @@ require './fb-init.php';
                 // console.log(data);
                 // console.log(typeof(data)); // confirms that is object data type
                 
-                // console.log(data.locations);
-                
-                locations_array = data.locations
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // locations_array = data.locations;
+                // var locations_dict = {};
+                // locations_array.forEach(function(locations_array){
+                //     if (!locations_array['country'] in locations_dict){
+                //         locations_dict[locations_array['country']]=[locations_array['city']];
+                //     }else{
+                //         locations_dict[locations_array['country']].push(locations_array['city']);
+                        
+                //     }
+                // console.log(locations_dict);
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                console.log(data.locations);
+                locations_array = data.locations;
                 var all_countries = [];
-                locations_array.forEach(function(locations_array) {
+                locations_array.forEach(function(locations_array){
                     var country_options = locations_array['country'];
                     var city_option = locations_array['city'];
 
                     if (!all_countries.includes(country_options)) {
-                        $('#country').append('<option>' + country_options + '</option>')
-                        all_countries.push(country_options);
+                        $('#country').append('<option value =' + country_options + '>'+ country_options+'</option>')
+                        all_countries.push(country_options);   
                     }
-                    $('#city').append('<option>' + city_option + '</option>')
+                })
+
+                // locations_array.forEach(function(locations_array){
+                //     var country_options = locations_array['country'];
+                //     var city_option = locations_array['city'];
+
+                //     if (!all_countries.includes(country_options)) {
+                //         $('#country').append('<option>' + country_options + '</option>')
+                //         all_countries.push(country_options);
+                //     }
+                //     $('#city').append('<option>' + city_option + '</option>')
+                // })
+                
+                $('#country').change(function(){
+                        let selected_country = $('#country').val();
+                        $('#city').empty();
+                        locations_array.forEach(function(locations_array){
+                            if (locations_array['country']==selected_country){
+                                $('#city').append('<option>' + locations_array['city'] + '</option>');
+                            }
+                        })
                 })
             })
         })
-        
     </script>
 
 <!-- Starting of the HTML BODY -->
