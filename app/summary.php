@@ -172,7 +172,7 @@ require './fb-init.php';
                     each_trip_deets = dictionaryOfData[trip_name];
                     rowspan = each_trip_deets.length;
                     //console.log(each_trip_deets);
-                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<button id='paypal-button"+count+"'>Checkout</button>" + "</td>";
+                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<button id='paypal-button"+count+"'> </button>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
