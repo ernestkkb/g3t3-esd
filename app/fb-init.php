@@ -6,8 +6,8 @@ if(!session_id()) {
 }
 
 $fb = new \Facebook\Facebook([
-  'app_id' => '1260712480786665',
-  'app_secret' => '335e5b94a75711f8e01baf852a992fff',
+  'app_id' => '255849488773149',
+  'app_secret' => '6a82047616759945f1a68f27a0fbaa7f',
   'default_graph_version' => 'v2.10',
   //'default_access_token' => '{access-token}', // optional
 ]);
