@@ -132,6 +132,10 @@ def update_trip_status(tripID):
 def get_all():
     return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
 
+@app.route("/paymentHistory/<string:userID>")
+def paymentHistory():
+    return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.all()]})
+
 #Add to cart
 @app.route("/payment/<string:tripID>", methods=['POST'])
 def get_trip_payment_details(tripID):
