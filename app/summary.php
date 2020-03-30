@@ -149,8 +149,8 @@ require './fb-init.php';
         //     var tripName = 
         //     var tripID = 
         //     var data = {"tripName": , "tripID":};
-        //     // data to send over to scheduler: name, address, day
-        //     var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day;
+        //     // data to send over to scheduler.py: the tripname, trip id
+        //     var addpoiURL = "http://127.0.0.1:5002/makePayment";
         //     await fetch(
         //         addpoiURL, {
         //         method: 'POST',
