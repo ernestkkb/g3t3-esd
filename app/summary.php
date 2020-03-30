@@ -120,7 +120,7 @@ require './fb-init.php';
                     }
                     dictionaryOfData[poi.day].push(tripDetails.name);
                 }
-                // console.log(btoa(dictionaryOfData[2]));
+                console.log((dictionaryOfData[1]).length);
                 for (const poi of data){
                     tripStuff = poi.placeOfInterest;
                     eachRow =
@@ -128,7 +128,7 @@ require './fb-init.php';
                         "<td>" + poi.day + "</td>" +
                         "<td>" + tripStuff.name + "</td>" +
                         "<td>" +"<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(dictionaryOfData[poi.day])+">View Route</button> </form>" + "</td>" +
-                        "<td>" + "Pay here" + "</td>";
+                        "<td>" + "<form method='post'><button type='submit' name='pay' id='pay'>Pay here</button></form>" + "</td>";
                     rows += "<tr>" + eachRow + "</tr>";
                     counter += 1;
                 }
@@ -140,7 +140,27 @@ require './fb-init.php';
             } catch (error) {
                 console.error(error);
             }
+
+
         }
+
+        // $('#pay').click(async() => {
+        //     event.preventDefault();
+        //     var tripName = 
+        //     var tripID = 
+        //     var data = {"tripName": , "tripID":};
+        //     // data to send over to scheduler: name, address, day
+        //     var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day;
+        //     await fetch(
+        //         addpoiURL, {
+        //         method: 'POST',
+        //         mode: 'cors',
+        //         headers: { "Content-Type": "application/json"},
+        //         body: JSON.stringify(data)
+        //     });
+
+            
+        // });
     </script>
 
 </body>

@@ -47,7 +47,7 @@ if (isset($_POST['country']) && isset($_POST['city'])) {
 <body>
     <form method="POST" action="fetch.php">
             Trip Name<br>
-            <input name="tripName" type="text" id="tripname" value ="" style = "width:100%"/><br>
+            <input name="tripName" type="text" id="tripName" value ="" style = "width:100%"/><br>
             <!-- Start Date<br>
             <input name="startdate" type="text" id="startdate" value = <?php $startdate?> style = "width:100%"/><br>
             End Date<br>

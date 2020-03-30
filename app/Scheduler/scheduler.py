@@ -112,12 +112,12 @@ def forward_trip():
         replymessage = json.dumps({"message": "Order should be in JSON", "data": triplist}, default=str)
         return replymessage, 400 # Bad Request
 
-    # triplist=[{
-    #                 "name": tripName,
-    #                 "sku": "Trip ID: "+tripID,
-    #                 "price": price,
-    #                 "currency": currency,
-    #                 "quantity": quantity}]
+    triplist=[{
+        "name": tripName,
+        "sku": "Trip ID: " + tripID,
+        "price": 20,
+        "currency": "SGD",
+        "quantity": 1}]
 
     """inform Payment microservice"""
     # default username / password to the broker are both 'guest'
