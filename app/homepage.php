@@ -101,7 +101,8 @@ require './fb-init.php';
                         $('#city').empty();
                         locations_array.forEach(function(locations_array){
                             if (locations_array['country']==selected_country){
-                                $('#city').append('<option>' + locations_array['city'] + '</option>');
+                                var here = String(locations_array['city']);
+                                $('#city').append("<option value ='" + here+ "'>" + here + '</option>');
                             }
                         })
                 })
