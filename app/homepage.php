@@ -1,30 +1,44 @@
 <!-- Validations -->
-<?php
-require './fb-init.php';
+<?php  
+    require "fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }
+    else{
+        header("Location: login.php");
+    }
 ?>
 
-<?php # require "fb-init.php";?>
+<?php  require "fb-init.php";?>
 
-<?php # if (isset($_SESSION['access_token'])): ?>
+<?php  if (isset($_SESSION['access_token'])): ?>
     
-<?php # else: ?>
-    <!-- <a href="<?php # echo $login_url;?>">Login With Facebook</a> -->
-<?php # endif; ?>
+<?php  else: ?>
+    <a href="<?php # echo $login_url;?>">Login With Facebook</a>
+<?php  endif; ?>
 
 <?php
-// if (isset($_SESSION['access_token'])) {
+if (isset($_SESSION['access_token'])) {
 
-//     try {
-//       $fb->setDefaultAccesstoken($_SESSION['access_token']);
+    try {
+      $fb->setDefaultAccesstoken($_SESSION['access_token']);
 
-//       $response = $fb->get('/me?fields=id,name,picture,last_name', $_SESSION['access_token']);
-//       $user = $response->getGraphUser();
 
-//     } catch (Exception $e) {
-//       echo $e->getTraceAsString();
-//       header("Location: ./logout.php");
-//     }
-//   }
+      $response = $fb->get('/me?fields=id,name,picture,last_name', $_SESSION['access_token']);
+      $user = $response->getGraphUser();
+      $_SESSION['user'] = [$user['id'], $user['last_name']];
+      echo(($_SESSION['user'][0]));
+
+    
+
+    //   print_r( $_SESSION['user']);
+      
+
+    } catch (Exception $e) {
+      echo $e->getTraceAsString();
+      header("Location: ./logout.php");
+    }
+  }
 ?>
 
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
@@ -120,7 +134,7 @@ require './fb-init.php';
 <nav class="nav">
         <div class="container">
             <div class="logo">
-                <a href="#">Welcome back, <?php # echo $user->getField('last_name') ?> </a>
+                <a href="#">Welcome back, <?php echo $user['last_name']; ?> </a>
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">

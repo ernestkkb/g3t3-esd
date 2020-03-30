@@ -1,3 +1,12 @@
+<?php  
+    require "../fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }
+    else{
+        header("Location: ./login.php");
+    }
+?>
 <!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <html>

@@ -28,6 +28,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `package_recommendation`
 --
 
+DROP SCHEMA IF EXISTS package_recommendation;
+CREATE SCHEMA package_recommendation;
+USE package_recommendation;
+
+
 DROP TABLE IF EXISTS `package_recommendation`;
 CREATE TABLE IF NOT EXISTS `package_recommendation` (
   `packageID` int(4) NOT NULL,
