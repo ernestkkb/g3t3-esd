@@ -180,7 +180,7 @@ if (isset($_SESSION['access_token'])) {
 </body>
 
 <?php
-    require 'package_nonav.php';
+    require 'package/package_nonav.php';
 ?>
 
 </html>

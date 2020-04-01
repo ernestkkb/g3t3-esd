@@ -66,7 +66,6 @@
 
                                     payment: function() {
                                         return paypal.request({ method: 'post', url: CREATE_PAYMENT_URL,json: triplist }).then(function(data) {
-                                            console.log("Hello");
                                             return data.paymentID;
                                     })
                                 },

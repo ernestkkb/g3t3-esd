@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import update
 from flask_cors import CORS
@@ -112,10 +112,13 @@ def execute():
     if payment.execute({'payer_id' : request.form['payerID']}):
         print('Execute success!')
         success = True
+        
     else:
         print(payment.error)
 
-    return jsonify({'success' : success})
+    # return success
+    # return jsonify({'success' : success})
+    return render_template('payment.php',data=success)
 
 #checkout trip for payment - step 3: update payment status in DB to "paid" once payment is successful  
 # @app.route("/payment/update/<string:tripID>")
