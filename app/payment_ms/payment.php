@@ -188,8 +188,8 @@
         <!-- just to make scrolling effect possible -->
         <h2 class="myH2">Your payment history</h2>
     
-        <table id="paymentTable" class='table100 ver2' style="margin-left:auto;margin-right:auto;" border=1>
-            <tr class = 'table100 ver2'>
+        <table id="paymentTable" class="table table-dark" style="text-align: center;" border=1>
+            <tr>
                 <th>Trip ID</th>
                 <th>Price</th>
                 <th>Payment Status</th>
@@ -206,8 +206,8 @@
     <script>
 
         
-        // var facebookID = '<?php echo $user[0]?>';
-        var serviceURL = "http://127.0.0.1:5003/paymentHistory/1";
+        var facebookID = '<?php echo $user[0]?>';
+        var serviceURL = "http://127.0.0.1:5003/paymentHistory/" + facebookID;
         // var serviceURL = "http://127.0.0.1:5003/payment";
         var data = getData(serviceURL);
         async function getData(serviceURL) {
