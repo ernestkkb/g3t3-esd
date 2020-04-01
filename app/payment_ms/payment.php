@@ -99,37 +99,41 @@
             }
         });
         
-        var facebookID = '<?php echo $user?>';
+        var facebookID = '<?php echo $user[0]?>';
         // var serviceURL = "http://127.0.0.1:5003/paymentHistory/"+facebookID;
-        var serviceURL = "http://127.0.0.1:5003/payment/";
+        var serviceURL = "http://127.0.0.1:5003/payment";
         var data = getData(serviceURL);
         async function getData(serviceURL) {
             let requestParam = {
-            headers: { "content-type": "charset=UTF-8" },
-            mode: 'cors', // allow cross-origin resource sharing
-            method: 'GET',
-            }
+                headers: { "content-type": "charset=UTF-8" },
+                mode: 'cors', // allow cross-origin resource sharing
+                method: 'GET',
+            }
             try {   
                 const response = await fetch(serviceURL, requestParam);
                 items = await response.json();
-                data = items.details;
+                data = items.payment_process;
+    
                 // var books = data.books; //the arr is in data.books of the JSON data
                 console.log(data)
                 // array or array.length are falsy
                 if (!data) {
                     showError('Payment History list empty or undefined.')
                 } else {
-                    var rows = "";
-                    console.log("test2")
                     $("#paymentTable td").remove(); 
-                        eachRow =
-                            "<td>" + data.tripID + "</td>" +
-                            "<td>" + data.price + "</td>" +
-                            "<td>" + data.paymentStatus + "</td>";
-                        rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+
+                    for (const poi of data){
+                        var rows = "";
+                            eachRow =
+                                "<td>" + poi.tripID + "</td>" +
+                                "<td>" + poi.price + "</td>" +
+                                "<td>" + poi.paymentStatus + "</td>";
+                            rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                    
                     
                     // add all the rows to the table
                     $('#paymentTable').append(rows);
+                    }
                     //#paymentTable tbody: select unique table & a particular body (‘tbody’)
                     ///$(‘tbody’).append(rows) //only works if there is only one table
                     //The <tbody> tag is used to group the body content in an HTML table. 
