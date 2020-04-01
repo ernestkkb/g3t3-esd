@@ -32,43 +32,6 @@
 //   }
 ?>
 
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-
-<script>
-    var CREATE_PAYMENT_URL  = 'http://127.0.0.1:5003/makepayment';
-    var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:5003/execute';
-    var list1=[];
-    for(i=1;i<=100;i++){
-        list1.push("#paypal-button"+i)
-    }
-    list1.forEach(function(selector) {
-    paypal.Button.render({
-
-        env: 'sandbox', // Or 'sandbox'
-
-        commit: true, // Show a 'Pay Now' button
-
-        payment: function() {
-            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
-                return data.paymentID;
-            });
-        },
-
-        onAuthorize: function(data) {
-            return paypal.request.post(EXECUTE_PAYMENT_URL, {
-                paymentID: data.paymentID,
-                payerID:   data.payerID
-            }).then(function(res) {
-
-                console.log(res.success)
-                // The payment is complete!
-                // You can now show a confirmation message to the customer
-                
-            });
-        }
-
-    }, selector); })
-</script>
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -173,11 +136,12 @@
                 }
                 //console.log(dictionaryOfData);
                 count = 1;
+                tripID=2; //hardcode trip ID first
                 for (const trip_name in dictionaryOfData){
                     each_trip_deets = dictionaryOfData[trip_name];
                     rowspan = each_trip_deets.length;
                     //console.log(each_trip_deets);
-                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<button type='button' name='paypalbutton' id='paypal-button"+count+"'> </button>" + "</td>";
+                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<a href='./payment_ms/paymentdisplay.php?tripID="+tripID+"&tripName="+trip_name+"'> Click Here to View Payment Details </a>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
@@ -222,19 +186,6 @@
 
 
             }
-            $(":paypalbutton").click(function(){
-                var addpoiURL = "http://localhost:5002/makepayment";
-                tripID=2;
-                var triplist=[{
-                "name": tripName,
-                "sku":  tripID,
-                "price": "20",
-                "currency": "SGD",
-                "quantity": 1}];
-                postData(serviceURL,triplist);
-                event.preventDefault();
-                // data to send over to scheduler.py: the tripname, trip id, price, currency & quantity
-            });
     </script>
 
 </body>
