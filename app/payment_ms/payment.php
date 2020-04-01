@@ -10,6 +10,9 @@
     if(isset($_GET['tripName'])&& isset($_GET['tripID'])){
         $tripName=$_GET['tripName'];
         $tripID=$_GET['tripID'];
+        $checkout="true";
+    }else{
+        $checkout="false";
     }
 ?>
 
@@ -40,7 +43,7 @@
 
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
 
-
+<!-----------------------------------------------------------[START] PAYPAL ------------------------------------------------------------------------>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -60,7 +63,8 @@
 
 </head>
 <body>
-
+<!-----------------------------------------------------------[Start] NAVBAR ------------------------------------------------------------------------>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <nav class="nav">
         <div class="container">
             <div class="logo">
@@ -80,23 +84,35 @@
             </div>
         </div>
     </nav>
+
     <script>
         $(window).scroll(function() {
             if ($(document).scrollTop() > 50) {
                 $('.nav').addClass('affix');
-                console.log("OK");
             } else {
                 $('.nav').removeClass('affix');
             }
         });
     </script>
-
     <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
-
+<!-----------------------------------------------------------[END] NAVBAR ------------------------------------------------------------------------>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <div style="height: 1000px">
     <h2 class="myH2">Checkout</h2>
     <div class="bs-example">
-            <table class="table table-dark">
+    <script>
+                $(document).ready(function(){
+                    var checkout1 = '<?php echo $checkout; ?>';
+                    // var checkoutsuccessful = {data};
+                    // console.log(checkoutsuccessful);
+                    if(checkout1==="false"){
+                        $("#paypal").hide();
+
+                    }
+                });
+
+    </script>
+            <table id='paypal' class="table table-dark">
                 <thead>
                     <tr>
                         <th scope="#">#</th>
@@ -139,7 +155,6 @@
 
                                     payment: function() {
                                         return paypal.request({ method: 'post', url: CREATE_PAYMENT_URL,json: triplist }).then(function(data) {
-                                            console.log("Hello");
                                             return data.paymentID;
                                     })
                                 },
@@ -160,6 +175,8 @@
             </tbody>
         </table>
     </div>
+    <!-----------------------------------------------------------[END] PAYPAL ------------------------------------------------------------------------>
+    <!-----------------------------------------------------------[START] Payment Transaction History ------------------------------------------------------------------------>
     <div style="height: 1000px">
         <!-- just to make scrolling effect possible -->
         <h2 class="myH2">Your payment history</h2>
@@ -198,7 +215,7 @@
                 data = items.paymentHistory;
     
                 // var books = data.books; //the arr is in data.books of the JSON data
-                console.log(data)
+                // console.log(data)
                 // array or array.length are falsy
                 if (!data) {
                     console.log('Payment History list empty or undefined.')
@@ -230,7 +247,6 @@
             } // error
         };
     </script>
-    
-
+<!-----------------------------------------------------------[END] Payment Transaction History ------------------------------------------------------------------------>
 </body>
 </html>
