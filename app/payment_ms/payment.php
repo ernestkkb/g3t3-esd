@@ -1,3 +1,4 @@
+
 <?php  
     require "../fb-init.php";
     if(isset($_SESSION['user'])){
@@ -15,6 +16,44 @@
         $checkout="false";
     }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href = "../css/main.css">
+
+</head>
+<body>
+
+<nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="#">Welcome back, <?php echo $user[1]; ?> </a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="../homepage.php">Home</a></li>
+                    <li><a href="../notifications.php">Email</a></li>
+                    <li><a href="../payment_ms/payment.php">Payment</a></li>
+                    <li><a href="../summary.php">Summary</a>
+                    <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
+
+    <script>
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > 50) {
+                $('.nav').addClass('affix');
+                console.log("OK");
+            } else {
+                $('.nav').removeClass('affix');
+            }
+        });
+    </script>
 
 <?php # require "fb-init.php";?>
 
