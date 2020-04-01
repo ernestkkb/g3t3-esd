@@ -99,25 +99,28 @@
             }
         });
         
-        var facebookID = $user;
+        var facebookID = '<?php echo $user?>';
         // var serviceURL = "http://127.0.0.1:5003/paymentHistory/"+facebookID;
         var serviceURL = "http://127.0.0.1:5003/payment/";
-
+        var data = getData(serviceURL);
         async function getData(serviceURL) {
+            let requestParam = {
+            headers: { "content-type": "charset=UTF-8" },
+            mode: 'cors', // allow cross-origin resource sharing
+            method: 'GET',
+            }
             try {   
-                const response =
-                 await fetch(
-                   serviceURL, { method: 'GET' }
-                );
-                const data = await response.json();
+                const response = await fetch(serviceURL, requestParam);
+                items = await response.json();
+                data = items.details;
                 // var books = data.books; //the arr is in data.books of the JSON data
-            
+                console.log(data)
                 // array or array.length are falsy
                 if (!data) {
                     showError('Payment History list empty or undefined.')
                 } else {
-                    // for loop to setup all table rows with obtained book data
                     var rows = "";
+                    console.log("test2")
                     $("#paymentTable td").remove(); 
                         eachRow =
                             "<td>" + data.tripID + "</td>" +
@@ -136,14 +139,11 @@
                 }
 
             } catch (error) {
-                // Errors when calling the service; such as network error, 
-                // service offline, etc
-                showError
-              ('There is a problem retrieving payment history data, please try again later.<br />'+error);
-               
+                console.error(error);               
             } // error
         };
     </script>
+    
 
 </body>
 </html>
