@@ -50,7 +50,7 @@
         <h2 class="myH2">Your planned schedule</h2>
     
         <table id="summaryTable" class='table100 ver2' style="margin-left:auto;margin-right:auto;" border=1>
-            <tr class = 'table100 ver2'>
+            <tr class = 'table100 ver2' >
                 <th>Trip Name</th>
                 <th>Payment</th>
                 <th>View Route</th>
