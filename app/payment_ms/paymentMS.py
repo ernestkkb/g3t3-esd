@@ -22,7 +22,7 @@ CORS(app)
 class Payment(db.Model):
     __tablename__ = 'payment_process'
     userID = db.Column(db.String(100), primary_key=True)
-    tripID = db.Column(db.Integer, primary_key=True)
+    tripID = db.Column(db.String(12), primary_key=True)
     price = db.Column(db.Float(precision=2), nullable=False)
     paymentStatus = db.Column(db.String(10), nullable=False)
 
@@ -81,6 +81,7 @@ def payment():
 
     if payment.create():
         print('Payment success!')
+        print(triplist)
         status=update_trip_status(triplist[0]["sku"])
         if status[1] == 201: 
             hostname = "localhost"
@@ -142,13 +143,13 @@ def paymentHistory(userID):
     return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.filter_by(userID=userID).all()]})
 
 #Add to cart
-@app.route("/payment/<string:tripID>", methods=['POST'])
-def get_trip_payment_details(tripID):
+@app.route("/payment/<string:tripID>/<string:userID>/<string:price>/<string:paymentStatus>")
+def get_trip_payment_details(tripID,userID,price,paymentStatus):
     if (Payment.query.filter_by(tripID=tripID).first()):
         return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripID)}), 400
 
-    data = request.get_json()
-    payment = Payment(tripID, **data)
+    data = {"userID":userID, "tripID":tripID, "price":price, "paymentStatus":paymentStatus}
+    payment = Payment(**data)
 
     try:
         db.session.add(payment)

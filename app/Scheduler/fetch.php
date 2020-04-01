@@ -154,9 +154,30 @@
 
         $('#confirm').click(async() => {
             event.preventDefault();
+            var facebookID = '<?php echo $user[0];?>';
+            var price = '20';
+            var paymentStatus = "unpaid";
+            var URLtoAdd = "http://127.0.0.1:5003/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
+            addTripToDB(URLtoAdd);
+            alert(URLtoAdd);
             window.location.href = "../summary.php";
         
         });
+        async function addTripToDB(serviceURL) {
+            let requestParam = {
+                headers: { "content-type": "charset=UTF-8" },
+                mode: 'cors', // allow cross-origin resource sharing
+                method: 'GET',
+            }
+            try {
+                const response = await fetch(serviceURL, requestParam);
+                data = await response.json();
+                alert(serviceURL);
+                console.log(data);
+        }catch (error) {
+                console.error(error);
+            }
+        }
 
 </script>
 </body>
