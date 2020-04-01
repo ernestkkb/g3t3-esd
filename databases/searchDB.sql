@@ -27,4 +27,9 @@ INSERT INTO `country_city`(`country`, `city`) VALUES
 ("Canada", "Vancouver"),
 ("Canada", "Victoria"),
 ("United States", "New York"),
-("United States", "Chicago")
+("United States", "Chicago"),
+("United Kingdom", "England"),
+("United Kingdom", "Bath"),
+("Australia", "Brisbane"),
+("Australia", "Perth"),
+("Australia", "Melbourne")
