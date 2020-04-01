@@ -24,7 +24,7 @@
 
 </head>
 <body>
-
+<!-----------------------------------------------------------[Start] NAVBAR ------------------------------------------------------------------------>
 <nav class="nav">
         <div class="container">
             <div class="logo">
@@ -54,6 +54,7 @@
             }
         });
     </script>
+<!-----------------------------------------------------------[END] NAVBAR ------------------------------------------------------------------------>
 
 <?php # require "fb-init.php";?>
 
@@ -102,39 +103,6 @@
 
 </head>
 <body>
-<!-----------------------------------------------------------[Start] NAVBAR ------------------------------------------------------------------------>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<nav class="nav">
-        <div class="container">
-            <div class="logo">
-                <a href="#">Welcome back, <?php echo $user[1]; ?> </a>
-            </div>
-            <div id="mainListDiv" class="main_list">
-                <ul class="navlinks">
-                    <li><a href="homepage.php">Home</a></li>
-                    <li><a href="./notifications.php">Email</a></li>
-                    <li><a href="./payment_ms/payment.php">Payment</a></li>
-                    <li><a href="./search_ms/search.php">Start Planning</a></li>
-                    <li><a href="./calendar_ms/calendar.php">Calendar</a></li>
-                    <li><a href="summary.php">Summary</a>
-                    <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
-                    
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <script>
-        $(window).scroll(function() {
-            if ($(document).scrollTop() > 50) {
-                $('.nav').addClass('affix');
-            } else {
-                $('.nav').removeClass('affix');
-            }
-        });
-    </script>
-    <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
-<!-----------------------------------------------------------[END] NAVBAR ------------------------------------------------------------------------>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <div style="height: 1000px">
     <h2 class="myH2">Checkout</h2>
