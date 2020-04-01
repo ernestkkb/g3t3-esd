@@ -144,6 +144,8 @@ else{
     $("#toConfirm").click(function(){
         var lol = getDataAnother(toConfirmURL);
         alert("You've added your trip to your schedule! Click ok to go back to homepage");
+        window.location.replace("../summary.php");
+
     })
 
     async function getDataAnother(serviceURL) {
@@ -154,7 +156,6 @@ else{
             }
 
             try {
-                alert("trying");
                 const response = await fetch(serviceURL, requestParam);
                 data = await response.json();
                 return data
