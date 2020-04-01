@@ -29,10 +29,6 @@ USE `payment`;
 --
 -- Table structure for table `payment_process`
 --
-DROP SCHEMA IF EXISTS payment_process;
-CREATE SCHEMA payment_process;
-USE payment_process;
-
 
 DROP TABLE IF EXISTS `payment_process`;
 CREATE TABLE IF NOT EXISTS `payment_process` (
