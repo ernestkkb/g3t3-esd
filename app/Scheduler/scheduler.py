@@ -91,15 +91,29 @@ def retrieveAllTripID(tripID):
         return jsonify(detailsToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
-# @app.route("/addTrip/<string:tripID>")
-# def addTrip(tripID):
-#     details = package.query.filter_by(tripID=tripID).all()
-#     detailsToReturn = {"details" : [detail.json() for detail in details]}
-#     if detailsToReturn:
-#         for i in detailsToReturn:
-            
-#         return jsonify(detailsToReturn)
-#     return jsonify({"message": "Trip not found."}), 404
+@app.route("/addTrip/<string:tripID>/<string:userID>")
+def addTrip(tripID,userID):
+    details = package.query.filter_by(tripID=tripID).all()
+    detailsToReturn = {"details" : [detail.json() for detail in details]}
+    if detailsToReturn:
+        for i in detailsToReturn['details']:
+            i['facebookID'] = userID
+            i['paymentStatus'] = "unpaid"
+            add_POI_for_preplanned(i)
+        return jsonify(detailsToReturn,userID)
+    return jsonify({"message": "Trip not found."}), 404
+def add_POI_for_preplanned(data):
+    #data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
+
+    addnewpoi = scheduler(**data)
+
+    try:
+        db.session.add(addnewpoi) # db.session provided by SQLAlchemy. 
+        db.session.commit()
+    except:
+        return jsonify({"message": "An error occurred adding the POI."}), 500 # return JSON with HTTP status code 500 - INTERNAL SERVER ERROR if an exception occurs
+    
+    return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
 @app.route("/package/forward/<string:tripID>", methods = ['POST'])
 def forward_packageID(tripID):
@@ -173,8 +187,8 @@ def retrieveAll(facebookID):
     return jsonify({"message": "Trip not found."}), 404
 
 #add poi to db
-@app.route("/addPOI/<int:day>", methods= ['POST']) # specify HTTP methods when necessary
-def add_POI(day):
+@app.route("/addPOI", methods= ['POST']) # specify HTTP methods when necessary
+def add_POI():
     #data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     data = request.get_json()
     print(data)

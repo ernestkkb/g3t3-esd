@@ -21,7 +21,9 @@ else{
 ?>
 
 <html>
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="js/scripts.js"></script>
 <head>
     
     <link rel="stylesheet" href="../css/homepage.css">
@@ -73,18 +75,16 @@ else{
             </tr>
         </thead>
     </table>
+    <input type="submit" style="width: 300px; margin: 0 auto;" id="toConfirm" />
 
     </div>
     <div style="text-align:center">
         <form id="package" method="POST" action="../summary.php">
         <br>
         </br>
-        <input type="submit" name="submit">
         </form>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<script src="js/scripts.js"></script>
 
 <script> 
     var tripName = '<?php echo $tripName ?>';
@@ -130,13 +130,39 @@ else{
                 $('#summaryTable').append(eachRow);
 
             }
-            
+            // lastRow = "<tr> <td align = 'center' colspan = 2> <button id='toConfirm'>Confirm</button></td></tr>";
+
+            // $('#summaryTable').append(lastRow);
+
 
 
         } catch (error) {
             console.error(error);
         }
     }
+    var toConfirmURL = "http://127.0.0.1:5002/addTrip/"+tripID + "/" + '<?php echo $user[0]?>';
+    $("#toConfirm").click(function(){
+        var lol = getDataAnother(toConfirmURL);
+        alert("You've added your trip to your schedule! Click ok to go back to homepage");
+    })
+
+    async function getDataAnother(serviceURL) {
+            let requestParam = {
+                headers: {"content-type": "charset=UTF-8"},
+                mode: 'cors',
+                method: 'GET',
+            }
+
+            try {
+                alert("trying");
+                const response = await fetch(serviceURL, requestParam);
+                data = await response.json();
+                return data
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
 
 </script> 
 </body>
