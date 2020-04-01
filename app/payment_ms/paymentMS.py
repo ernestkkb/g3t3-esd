@@ -81,8 +81,8 @@ def payment():
 
     if payment.create():
         print('Payment success!')
-        print(triplist)
         status=update_trip_status(triplist[0]["sku"])
+        print(status)
         if status[1] == 201: 
             hostname = "localhost"
             port = 5672 
@@ -117,9 +117,7 @@ def execute():
     else:
         print(payment.error)
 
-    # return success
-    # return jsonify({'success' : success})
-    return render_template('payment.php',data=success)
+    return jsonify({'success' : success})
 
 #checkout trip for payment - step 3: update payment status in DB to "paid" once payment is successful  
 # @app.route("/payment/update/<string:tripID>")
@@ -130,6 +128,7 @@ def update_trip_status(tripID):
         try:
             payment.paymentStatus = 'paid'
             db.session.commit()
+            print('paid')
             return ("message: Payment status updated.",201)
         except:
              return ("message: An error occurred updating the payment status.",500)
