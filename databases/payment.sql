@@ -32,8 +32,8 @@ USE `payment`;
 
 DROP TABLE IF EXISTS `payment_process`;
 CREATE TABLE IF NOT EXISTS `payment_process` (
-  `userid` varchar(100) NOT NULL,
-  `tripID` int(4) NOT NULL,
+  `userID` varchar(100) NOT NULL,
+  `tripID` int(12) NOT NULL,
   `price` float NOT NULL,
   `paymentStatus` varchar(10) NOT NULL,
   PRIMARY KEY (`userid`,`tripID`)
