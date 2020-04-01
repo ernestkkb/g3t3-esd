@@ -94,7 +94,7 @@ if (isset($_SESSION['access_token'])) {
                     var city_option = locations_array['city'];
 
                     if (!all_countries.includes(country_options)) {
-                        $('#country').append('<option value =' + country_options + '>'+ country_options+'</option>')
+                        $('#country').append("<option value ='" + country_options + "'>"+ country_options+'</option>')
                         all_countries.push(country_options);   
                     }
                 })
