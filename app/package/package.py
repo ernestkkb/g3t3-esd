@@ -12,39 +12,68 @@ import pika
 app = Flask(__name__)
 
 #change link to own database directory
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/package_recommendation'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/package'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 CORS(app)
 
 #Change to own Database
-class Package_recommendation(db.Model):
-    __tablename__ = 'package_recommendation'
+class package(db.Model):
+    __tablename__ = 'package'
 
-    packageID = db.Column(db.Integer, primary_key=True)
-    city = db.Column(db.String(100), nullable=False)
-    placesOfInterest = db.Column(db.JSON, nullable=False)
-    price = db.Column(db.Float(precision=2), nullable=False)
+    id = db.Column(db.Integer(), primary_key=True)
+    tripName = db.Column(db.String(44))
+    placeOfInterest = db.Column(db.JSON, nullable=True)
+    day = db.Column(db.Integer())
+    tripID = db.Column(db.String(20), nullable=True)
 
-    def __init__(self, packageID, city, placesOfInterest, price):
-        self.packageID = packageID
-        self.city = city
-        self.placesOfInterest = placesOfInterest
-        self.price = price
+    def __init__(self, id, tripName, placeOfInterest, day, tripID):
+        self.id = id
+        self.tripName = tripName
+        self.placeOfInterest = placeOfInterest
+        self.day = day
+        self.tripID = tripID
 
     def json(self):
-        return {"packageID": self.packageID, "city": self.city, "placesOfInterest": self.placesOfInterest, "price": self.price}
+        return {"tripID": self.tripID, "tripName": self.tripName, "placeOfInterest": self.placeOfInterest,  "day":self.day, "id":self.id}
 
-@app.route("/package_recommendation")
+
+
+@app.route("/package")
 def get_all():
-    all_package = {"package_recomendation": [package_recommendation.json() for package_recommendation in Package_recommendation.query.all()]}
+    all_package = {"package": [package.json() for package in package.query.all()]}
     return jsonify(all_package)
 
+# @app.route("/package/<string:tripID>")
+# def find_by_tripid(tripID):
+#     trip = package.query.filter_by(tripID=tripID).all()
+#     if trip:
+#         return jsonify(trip.json())
+#     return jsonify({"message": "Trip not found."}), 404
 
-@app.route("/package_recommendation/forward")
-def forward_packageID():
-    all_package1 ={"package_recomendation": [package_recommendation.json() for package_recommendation in Package_recommendation.query.filterby(packageID=packageID).first()]}
+@app.route("/retrieveAll/<string:tripID>")
+def retrieveAll(tripID):
+    details = package.query.filter_by(tripID=tripID).all()
+    detailsToReturn = {"details" : [detail.json() for detail in details]}
+    if detailsToReturn:
+        print(jsonify(detailsToReturn))
+        return jsonify(detailsToReturn)
+    return jsonify({"message": "Trip not found."}), 404
+
+@app.route("/addTrip/<string:tripID>")
+def addTrip(tripID):
+    details = package.query.filter_by(tripID=tripID).all()
+    detailsToReturn = {"details" : [detail.json() for detail in details]}
+    if detailsToReturn:
+        for i in detailsToReturn:
+            
+        return jsonify(detailsToReturn)
+    return jsonify({"message": "Trip not found."}), 404
+
+@app.route("/package/forward/<string:tripID>", methods = ['POST'])
+def forward_packageID(tripID):
+    all_package1 ={"package": [package.json() for package in package.query.filterby(tripID=tripID).all()]}
 
     """inform Scheduler microservice"""
     # default username / password to the borker are both 'guest'
@@ -81,7 +110,7 @@ if __name__ == '__main__':
     #port=5002 - scheduler
     #port=5003 - payment
     #port=5004 - notifications
-    app.run(port=5002, debug=True) 
+    app.run(port=5001, debug=True) 
     #with app.run it will allow the system call the name without required flask
     #with __name__ == '__main__' it will start flask to listen to request
     # we specify the port to use is 5000 (which is the default port anyway) and set debug to True, 

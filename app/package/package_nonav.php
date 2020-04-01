@@ -28,22 +28,19 @@
         <div class="col-sm-4">
           <div class="card text-center">
             <div class="title">
-              <i class="fa fa-paper-plane" aria-hidden="true"></i>
-              <h2>Japan</h2>
+              <i class="fa fa-plane" aria-hidden="true"></i>
+              <h2>United States <br> New York </h2>
             </div>
             <div class="price">
-              <h4><sup>$</sup>321</h4>
+              <h4><sup>$</sup>320</h4>
             </div>
             <div class="option">
               <ul>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Osaka </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Tokyo </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Okinawa </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Japan, Hokkaido </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i>5 days</li>
               <!-- <li> <i class="fa fa-times" aria-hidden="true"></i> Japan, Hokkaido </li> -->
               </ul>
             </div>
-            <a href="#">Order Now </a>
+            <a href="package/package_view.php?tripID=OkjrD6SzQw">View</a>
           </div>
         </div>
         <!-- END Col one -->
@@ -51,42 +48,36 @@
           <div class="card text-center">
             <div class="title">
               <i class="fa fa-plane" aria-hidden="true"></i>
-              <h2>Singapore</h2>
+              <h2>Australia <br> Melbourne </h2>
             </div>
             <div class="price">
               <h4><sup>$</sup>350</h4>
             </div>
             <div class="option">
               <ul>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Merlion Park </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Gardens by the Bay </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Cloud Forest </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Singapore Zoo </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i> 5 days </li>
               <!-- <li> <i class="fa fa-times" aria-hidden="true"></i> Singapore Zoo </li> -->
               </ul>
             </div>
-            <a href="#">Order Now </a>
+            <a href="package/package_view.php?tripID=cPG0LAtqIk">View</a>
           </div>
         </div>
         <!-- END Col two -->
         <div class="col-sm-4">
           <div class="card text-center">
             <div class="title">
-              <i class="fa fa-rocket" aria-hidden="true"></i>
-              <h2>Premium</h2>
+              <i class="fa fa-plane" aria-hidden="true"></i>
+              <h2>Canada<br>Vancouver</h2>
             </div>
             <div class="price">
-              <h4><sup>$</sup>100</h4>
+              <h4><sup>$</sup>400</h4>
             </div>
             <div class="option">
               <ul>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Unlimited GB Space </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> 30 Domain Names </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Unlimited Email Address </li>
-              <li> <i class="fa fa-check" aria-hidden="true"></i> Live Support </li>
+              <li> <i class="fa fa-check" aria-hidden="true"></i>5 days</li>
               </ul>
             </div>
-            <a href="#">Order Now </a>
+            <a href="package/package_view.php?tripID=6vLq62DGv0">View</a>
           </div>
         </div>
         <!-- END Col three -->
