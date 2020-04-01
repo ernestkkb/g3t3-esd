@@ -141,8 +141,10 @@ else{
         }
     }
     var toConfirmURL = "http://127.0.0.1:5002/addTrip/"+tripID + "/" + '<?php echo $user[0]?>';
+    var toPaymentDB = "http://127.0.0.1:5003/payment/"+tripID + "/" + '<?php echo $user[0]?>' + '/20/unpaid';
     $("#toConfirm").click(function(){
         var lol = getDataAnother(toConfirmURL);
+        var lol1 = getDataAnother(toPaymentDB);
         alert("You've added your trip to your schedule! Click ok to go back to homepage");
         window.location.replace("../summary.php");
 
