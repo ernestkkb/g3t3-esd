@@ -128,7 +128,7 @@
             var address_poi = details[1];
             poi_dict['name'] = name_poi;
             poi_dict['address'] = address_poi;
-            var data = {"tripID":tripID, "tripName": tripName,"facebookID":facebookID, "placeOfInterest":poi_dict, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day, "id":id};
+            var data = {"tripID":tripID, "tripName": tripName,"facebookID":facebookID, "placeOfInterest":poi_dict, "paymentStatus":"paid", "day":day, "id":id};
             // data to send over to scheduler: name, address, day
             var addpoiURL = "http://127.0.0.1:5002/addPOI"+"/"+ day;
             await fetch(
