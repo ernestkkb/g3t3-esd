@@ -25,7 +25,7 @@ def send_email():
             msg = Message(subject="Hello",
                         sender=app.config.get("MAIL_USERNAME"),
                         recipients=[email], # replace with your email for testing
-                        body="Hi JASLYN YOU FUCKKKKKKKKKKK. JASLYN 55555")
+                        body="Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum")
             mail.send(msg)
     return data["email"]
 if __name__ == '__main__':
