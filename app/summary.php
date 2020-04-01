@@ -141,7 +141,7 @@
                     each_trip_deets = dictionaryOfData[trip_name];
                     rowspan = each_trip_deets.length;
                     //console.log(each_trip_deets);
-                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<a href='./payment_ms/paymentdisplay.php?tripID="+tripID+"&tripName="+trip_name+"'> Click Here to View Payment Details </a>" + "</td>";
+                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<a href='./payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+"'> Click Here to View Payment Details </a>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
