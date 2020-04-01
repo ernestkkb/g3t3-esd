@@ -30,25 +30,25 @@ class scheduler(db.Model):
     tripName = db.Column(db.String(44))
     facebookID = db.Column(db.String(20), nullable=True)
     placeOfInterest = db.Column(db.JSON, nullable=True)
-    startDate = db.Column(db.Date, nullable=True)
-    endDate = db.Column(db.Date, nullable=True)
+    # startDate = db.Column(db.Date, nullable=True)
+    # endDate = db.Column(db.Date, nullable=True)
     paymentStatus = db.Column(db.String(10))
     day = db.Column(db.Integer())
     tripID = db.Column(db.String(20), nullable=True)
 
-    def __init__(self, id, tripName, facebookID, placeOfInterest, startDate, endDate, paymentStatus,day, tripID):
+    def __init__(self, id, tripName, facebookID, placeOfInterest, paymentStatus,day, tripID):
         self.id = id
         self.tripName = tripName
         self.facebookID = facebookID
         self.placeOfInterest = placeOfInterest
-        self.startDate = startDate
-        self.endDate = endDate
+        # self.startDate = startDate
+        # self.endDate = endDate
         self.paymentStatus = paymentStatus
         self.day = day
         self.tripID = tripID
 
     def json(self):
-        return {"tripID": self.tripID, "tripName": self.tripName, "facebookID": self.facebookID, "placeOfInterest": self.placeOfInterest, "startDate": self.startDate, "endDate": self.endDate, "paymentStatus": self.paymentStatus, "day":self.day, "id":self.id}
+        return {"tripID": self.tripID, "tripName": self.tripName, "facebookID": self.facebookID, "placeOfInterest": self.placeOfInterest, "paymentStatus": self.paymentStatus, "day":self.day, "id":self.id}
 
 
 #retrieve all trips of one user - GET
