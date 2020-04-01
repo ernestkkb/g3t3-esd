@@ -158,9 +158,12 @@
                         names_of_place = names_by_day[day_thingy];
                         console.log(names_of_place);
                         length = names_of_place.length;
-
-                        eachRow += "<td rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_of_place)+">View Route</button> </form>" + "</td>" +
-                        "<td rowspan =" +length +">" + day_thingy + "</td>";
+                        try{
+                            eachRow += "<td rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_of_place)+">View Route</button> </form>" + "</td>" +
+                            "<td rowspan =" +length +">" + day_thingy + "</td>";
+                        }catch(err){
+                            console.log("lol");
+                        }
                         for (places of names_of_place){
                             //console.log(places);
                             eachRow += "<td>" + places + "</td></tr>";
