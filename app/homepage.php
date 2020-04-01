@@ -116,7 +116,9 @@ if (isset($_SESSION['access_token'])) {
                         locations_array.forEach(function(locations_array){
                             if (locations_array['country']==selected_country){
                                 var here = String(locations_array['city']);
+                                console.log("<option value ='" + here+ "'>" + here + '</option>');
                                 $('#city').append("<option value ='" + here+ "'>" + here + '</option>');
+                                
                             }
                         })
                 })
