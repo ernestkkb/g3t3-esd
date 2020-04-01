@@ -23,13 +23,8 @@ CREATE TABLE IF NOT EXISTS `country_city` (
 INSERT INTO `country_city`(`country`, `city`) VALUES 
 
 ("Singapore","Singapore"),
-("Malaysia","George Town"),
-("Malaysia","Kuala Lumpur"),
-("Malaysia","Klang"),
-("Malaysia","Johor Bahru"),
-("Malaysia","Melaka"),
-("Malaysia","Ipoh"),
-("France", "Paris"),
-("France", "Nice"),
-("France", "Lyon"),
-("Italy", "Venice")
+("Canada", "Toronto"),
+("Canada", "Vancouver"),
+("Canada", "Victoria"),
+("United States", "New York"),
+("United States", "Chicago")
