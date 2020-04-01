@@ -99,9 +99,9 @@
             }
         });
         
-        var facebookID = '<?php echo $user[0]?>';
-        // var serviceURL = "http://127.0.0.1:5003/paymentHistory/"+facebookID;
-        var serviceURL = "http://127.0.0.1:5003/payment";
+        // var facebookID = '<?php echo $user[0]?>';
+        var serviceURL = "http://127.0.0.1:5003/paymentHistory/1";
+        // var serviceURL = "http://127.0.0.1:5003/payment";
         var data = getData(serviceURL);
         async function getData(serviceURL) {
             let requestParam = {
@@ -112,13 +112,13 @@
             try {   
                 const response = await fetch(serviceURL, requestParam);
                 items = await response.json();
-                data = items.payment_process;
+                data = items.paymentHistory;
     
                 // var books = data.books; //the arr is in data.books of the JSON data
                 console.log(data)
                 // array or array.length are falsy
                 if (!data) {
-                    showError('Payment History list empty or undefined.')
+                    console.log('Payment History list empty or undefined.')
                 } else {
                     $("#paymentTable td").remove(); 
 
