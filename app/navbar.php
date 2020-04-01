@@ -29,5 +29,6 @@
         </div>
 </nav>
 
-<section class="home"></section> Don't Delete. This is for the background picture !
+<section class="home"></section> 
+<!-- Don't Delete. This is for the background picture ! -->
 
