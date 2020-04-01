@@ -100,22 +100,22 @@
                     //console.log(poi);
                     var tripDetails = poi.placeOfInterest;
                     var day = poi.day;
+                    var tripID= poi.tripID
                     //console.log(tripDetails);
                     var tripName = poi.tripName;
                     if(!dictionaryOfData[tripName]){
-                        dictionaryOfData[tripName] = [[tripDetails.name,day]];
+                        dictionaryOfData[tripName] = [[tripDetails.name,day,tripID]];
                     }
                     else{
-                        dictionaryOfData[tripName].push([tripDetails.name,day]);
+                        dictionaryOfData[tripName].push([tripDetails.name,day,tripID]);
                     }
                 }
-                //console.log(dictionaryOfData);
                 count = 1;
-                tripID=2; //hardcode trip ID first
-                for (const trip_name in dictionaryOfData){
+                // console.log(dictionaryOfData);
+                for (const trip_name in dictionaryOfData){ 
                     each_trip_deets = dictionaryOfData[trip_name];
+                    tripID=each_trip_deets[0][2];
                     rowspan = each_trip_deets.length;
-                    //console.log(each_trip_deets);
                     eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<a href='./payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+"'> Click Here to View Payment Details </a>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
@@ -131,7 +131,6 @@
                     for (const day_thingy in names_by_day){
                         //console.log(event);
                         names_of_place = names_by_day[day_thingy];
-                        console.log(names_of_place);
                         length = names_of_place.length;
                         try{
                             eachRow += "<td rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_of_place)+">View Route</button> </form>" + "</td>" +

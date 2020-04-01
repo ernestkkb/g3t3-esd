@@ -69,8 +69,8 @@ def payment():
         "payer": {
             "payment_method": "paypal"},
         "redirect_urls": {
-            "return_url": "http://localhost:5003/payment/execute",
-            "cancel_url": "http://localhost:5003/"},
+            "return_url": "google.com",
+            "cancel_url": "google.com"},
         "transactions": [{
             "item_list": {
                 "items": triplist},
@@ -128,7 +128,6 @@ def update_trip_status(tripID):
         try:
             payment.paymentStatus = 'paid'
             db.session.commit()
-            print('paid')
             return ("message: Payment status updated.",201)
         except:
              return ("message: An error occurred updating the payment status.",500)

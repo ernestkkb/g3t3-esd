@@ -1,6 +1,7 @@
 
-<?php  
-    require "../fb-init.php";
+<?php
+    require_once '../navbar.php';
+    require_once "../fb-init.php";
     if(isset($_SESSION['user'])){
         $user = $_SESSION['user'];
     }
@@ -16,48 +17,6 @@
         $checkout="false";
     }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="../css/homepage.css">
-    <link rel="stylesheet" href = "../css/main.css">
-
-</head>
-<body>
-<!-----------------------------------------------------------[Start] NAVBAR ------------------------------------------------------------------------>
-<nav class="nav">
-        <div class="container">
-            <div class="logo">
-                <a href="#">Welcome back, <?php echo $user[1]; ?> </a>
-            </div>
-            <div id="mainListDiv" class="main_list">
-                <ul class="navlinks">
-                    <li><a href="../homepage.php">Home</a></li>
-                    <li><a href="../notifications.php">Email</a></li>
-                    <li><a href="../payment_ms/payment.php">Payment</a></li>
-                    <li><a href="../summary.php">Summary</a>
-                    <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
-                    
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <section class="home"></section> <!--Don't Delete. This is for the background picture !-->
-
-    <script>
-        $(window).scroll(function() {
-            if ($(document).scrollTop() > 50) {
-                $('.nav').addClass('affix');
-                console.log("OK");
-            } else {
-                $('.nav').removeClass('affix');
-            }
-        });
-    </script>
-<!-----------------------------------------------------------[END] NAVBAR ------------------------------------------------------------------------>
-
-<?php # require "fb-init.php";?>
-
 <?php # if (isset($_SESSION['access_token'])): ?>
     
 <?php # else: ?>
@@ -84,12 +43,14 @@
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
 
 <!-----------------------------------------------------------[START] PAYPAL ------------------------------------------------------------------------>
+<link rel="stylesheet" href="../css/homepage.css">
+<link rel="stylesheet" href = "../css/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <style type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style type="text/css">
         .bs-example{
             margin: 20px;
         }
@@ -110,8 +71,6 @@
     <script>
                 $(document).ready(function(){
                     var checkout1 = '<?php echo $checkout; ?>';
-                    // var checkoutsuccessful = {data};
-                    // console.log(checkoutsuccessful);
                     if(checkout1==="false"){
                         $("#paypal").hide();
 
@@ -166,7 +125,7 @@
                                     })
                                 },
                                     onAuthorize: function(data) {
-                                            return paypal.request({method: 'post', url:EXECUTE_PAYMENT_URL, json: {
+                                            return paypal.request({method: 'post', url: EXECUTE_PAYMENT_URL, json: {
                                                 paymentID: data.paymentID,
                                                 payerID:   data.payerID
                                             }}).then(function(res) {
