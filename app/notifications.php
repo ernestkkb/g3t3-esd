@@ -31,9 +31,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="css/homepage.css">
-    <link rel="stylesheet" href = "css/main.css">    
-
+    <link rel="stylesheet" href="./css/homepage.css">
 </head>
 <body>
 <nav class="nav">
