@@ -23,13 +23,13 @@ CREATE TABLE IF NOT EXISTS `country_city` (
 INSERT INTO `country_city`(`country`, `city`) VALUES 
 
 ("Singapore","Singapore"),
-("Canada", "Toronto"),
-("Canada", "Vancouver"),
-("Canada", "Victoria"),
-("United States", "New York"),
-("United States", "Chicago"),
-("United Kingdom", "England"),
-("United Kingdom", "Bath"),
-("Australia", "Brisbane"),
-("Australia", "Perth"),
-("Australia", "Melbourne")
+("Canada", "Toronto, Canada"),
+("Canada", "Vancouver, Canada"),
+("Canada", "Victoria, Canada"),
+("United States", "New York, United States"),
+("United States", "Chicago, United States"),
+("United Kingdom", "London, United Kingdom"),
+("United Kingdom", "Bath, United Kingdom"),
+("Australia", "Brisbane, Australia"),
+("Australia", "Perth, Australia"),
+("Australia", "Melbourne, Australia")
