@@ -89,7 +89,7 @@ else{
 <script> 
     var tripName = '<?php echo $tripName ?>';
     var tripID = '<?php echo $tripID ?>';
-    var serviceURL = "http://127.0.0.1:5001/retrieveAll"+"/"+tripID;
+    var serviceURL = "http://127.0.0.1:5002/retrieveAllTripID"+"/"+tripID;
     var data = getData(serviceURL);
 
     async function getData(serviceURL) {

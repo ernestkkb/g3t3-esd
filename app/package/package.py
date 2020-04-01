@@ -12,7 +12,7 @@ import pika
 app = Flask(__name__)
 
 #change link to own database directory
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/package'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/scheduler'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -61,15 +61,15 @@ def retrieveAll(tripID):
         return jsonify(detailsToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
-@app.route("/addTrip/<string:tripID>")
-def addTrip(tripID):
-    details = package.query.filter_by(tripID=tripID).all()
-    detailsToReturn = {"details" : [detail.json() for detail in details]}
-    if detailsToReturn:
-        for i in detailsToReturn:
+# @app.route("/addTrip/<string:tripID>")
+# def addTrip(tripID):
+#     details = package.query.filter_by(tripID=tripID).all()
+#     detailsToReturn = {"details" : [detail.json() for detail in details]}
+#     if detailsToReturn:
+#         for i in detailsToReturn:
             
-        return jsonify(detailsToReturn)
-    return jsonify({"message": "Trip not found."}), 404
+#         return jsonify(detailsToReturn)
+#     return jsonify({"message": "Trip not found."}), 404
 
 @app.route("/package/forward/<string:tripID>", methods = ['POST'])
 def forward_packageID(tripID):
