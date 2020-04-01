@@ -148,28 +148,10 @@ def forward_packageID(tripID):
     # close the connection to the broker
     connection.close()
 
-
-#retrieve all trips of one user - GET
-@app.route("/scheduler/<string:facebookID>")
-def get_all_from_user(facebookID):
-    trips = scheduler.query.filter_by(facebookID=facebookID).first()
-    if trips:
-        return jsonify(trips.json())
-    #if facebookID is not found, return this error message 
-    return jsonify({'message': "facebook user not found."}), 404
-
-#retrieve trip by trip id - GET
-@app.route("/scheduler/<string:tripID>")
-def find_by_tripid(tripID):
-    trip = scheduler.query.filter_by(tripID=tripID).first()
-    if trip:
-        return jsonify(trip.json())
-    return jsonify({"message": "Trip not found."}), 404
-
-#retrieve trip by tripName, facebookID, day. This function is to get data for google directions
-@app.route("/scheduler/<string:tripName>/<string:facebookID>/<string:day>")
-def find_for_routing(tripName, facebookID, day):
-    trips = scheduler.query.filter_by(tripName=tripName, facebookID=facebookID, day=day).all()
+#retrieve trip by tripID, facebookID, day. This function is to get data for google directions
+@app.route("/scheduler/<string:tripID>/<string:facebookID>/<string:day>")
+def find_for_routing(tripID, facebookID, day):
+    trips = scheduler.query.filter_by(tripID=tripID, facebookID=facebookID, day=day).all()
     tripToReturn = {"trips" : [trip.json() for trip in trips]}
     if trips:
         return jsonify(tripToReturn)
