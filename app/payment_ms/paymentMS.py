@@ -51,10 +51,10 @@ def payment():
         
     # triplist= [{
     #                 "name": "Travel Package A",
-    #                 "sku": 1,
-    #                 "price": "100",
-    #                 "currency": "USD",
-    #                 "quantity": 2} ] 
+    #                 "sku": "fjf847fg",
+    #                 "price": "20",
+    #                 "currency": "SGD",
+    #                 "quantity": 1} ] 
                     
     print("payment function triggered")
     print(triplist)
@@ -76,7 +76,7 @@ def payment():
                 "items": triplist},
             "amount": {
                 "total": str(total),
-                "currency": "USD"},
+                "currency": "SGD"},
             "description": "This is the payment transaction description."}]})
 
     if payment.create():
@@ -94,14 +94,13 @@ def payment():
             channel.queue_declare(queue='payment.reply', durable=True) # make sure the queue used by the error handler exist and durable
             channel.queue_bind(exchange=exchangename, queue='payment.reply', routing_key='*.reply') # make sure the queue is bound to the exchange
             channel.basic_publish(exchange=exchangename, routing_key="payment.reply", body=replymessage,
-            properties=pika.BasicProperties(delivery_mode = 2)
-        )
+            properties=pika.BasicProperties(delivery_mode = 2))
         else:
             return jsonify({"message": "An error occurred updating the trip status."}), 500
             
     else:
         print(payment.error)
-
+    # print(payment.id) printed payment ID, it works. 
     return jsonify({'paymentID' : payment.id})
 
 
@@ -116,7 +115,6 @@ def execute():
         
     else:
         print(payment.error)
-
     return jsonify({'success' : success})
 
 #checkout trip for payment - step 3: update payment status in DB to "paid" once payment is successful  
@@ -131,6 +129,7 @@ def update_trip_status(tripID):
             return ("message: Payment status updated.",201)
         except:
              return ("message: An error occurred updating the payment status.",500)
+
 
 @app.route("/payment")
 def get_all():

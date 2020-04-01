@@ -57,8 +57,10 @@
     </style>
 <!-- Starting of the HTML BODY -->
 <!DOCTYPE html>
+
 <html>
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="../css/homepage.css">
     <link rel="stylesheet" href = "../css/main.css">
 
@@ -110,25 +112,25 @@
                                 'name': tripName,
                                 'sku':  tripID,
                                 'price': '20',
-                                'currency': "USD",
+                                'currency': "SGD",
                                 'quantity': 1}];
-                            
-                                paypal.Button.render({
+
+                                    paypal.Button.render({
+
 
                                     env: 'sandbox', // Or 'sandbox'
 
                                     commit: true, // Show a 'Pay Now' button
 
                                     payment: function() {
-                                        return paypal.request({ method: 'post', url: CREATE_PAYMENT_URL,json: triplist }).then(function(data) {
+                                        return paypal.request({ method: 'post', url: CREATE_PAYMENT_URL, json: triplist}).then(function(data) {
                                             return data.paymentID;
                                     })
                                 },
                                     onAuthorize: function(data) {
-                                            return paypal.request({method: 'post', url: EXECUTE_PAYMENT_URL, json: {
-                                                paymentID: data.paymentID,
-                                                payerID:   data.payerID
-                                            }}).then(function(res) {
+                                            var dummy={paymentID: data.paymentID, payerID: data.payerID};
+                                            return paypal.request({method: 'post', url: EXECUTE_PAYMENT_URL, json: dummy
+                                            }).then(function(res) {
                                                 console.log(res.success)
                                                 // The payment is complete!
                                                 // You can now show a confirmation message to the customer       
