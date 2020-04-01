@@ -31,7 +31,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="./css/homepage.css">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href = "css/main.css">    
+
 </head>
 <body>
 <nav class="nav">
@@ -44,8 +46,6 @@
                     <li><a href="homepage.php">Home</a></li>
                     <li><a href="./notifications.php">Email</a></li>
                     <li><a href="./payment_ms/payment.php">Payment</a></li>
-                    <li><a href="./search_ms/search.php">Start Planning</a></li>
-                    <li><a href="./calendar_ms/calendar.php">Calendar</a></li>
                     <li><a href="summary.php">Summary</a>
                     <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
                 </ul>
