@@ -30,7 +30,7 @@ body {
 
 .nav div.logo a {
     text-decoration: none;
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: 2.5rem;
 }
 
@@ -61,13 +61,13 @@ body {
 
 .nav div.main_list ul li a {
     text-decoration: none;
-    color: #fff;
+    color: rgb(0, 0, 0);
     line-height: 65px;
     font-size: 2.4rem;
 }
 
 .nav div.main_list ul li a:hover {
-    color: #00E676;
+    color: rgb(0, 107, 230);
 }
 
 
@@ -76,7 +76,7 @@ body {
 .home {
     width: 100%;
     height: 100vh;
-    background-image: url(https://images.unsplash.com/photo-1498550744921-75f79806b8a7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b0f6908fa5e81286213c7211276e6b3d&auto=format&fit=crop&w=1500&q=80);
+    background-image: url(https://wallpaperplay.com/walls/full/c/7/0/195311.jpg);
     background-position: center top;
 	background-size:cover;
 }
@@ -98,8 +98,10 @@ body {
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     .container {
         margin: 0;
+
     }
 }
+
 
 @media screen and (max-width:768px) {
     .navTrigger {
@@ -343,7 +345,7 @@ img {
 
 .affix {
     padding: 0;
-    background-color: #111;
+    background-color: rgb(255, 255, 255);
 }
 
 

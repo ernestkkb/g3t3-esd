@@ -12,6 +12,7 @@
         $tripName=$_GET['tripName'];
         $tripID=$_GET['tripID'];
         $checkout="true";
+        $_SESSION['tripID'] =$tripID;
     }else{
         $checkout="false";
     }
@@ -79,7 +80,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <style type="text/css">
+
         .bs-example{
             margin: 20px;
         }
@@ -109,18 +112,18 @@
                 });
 
     </script>
-            <table id='paypal' class="table table-dark">
+            <table id='paypal' class='table100 ver2'>
                 <thead>
-                    <tr>
-                        <th scope="#">#</th>
-                        <th scope="col">Name of Trip</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Checkout</th>
+                    <tr class="table table-dark" align="center">
+                        <th scope="#"><font color="white">#</font></th>
+                        <th scope="col"><font color="white">Name of Trip</font></th>
+                        <th scope="col"><font color="white">Price</font></th>
+                        <th scope="col"><font color="white">Quantity</font></th>
+                        <th scope="col"><font color="white">Checkout</font></th>
                     </tr>
                 </thead>
                 <tbody>  
-                    <tr>
+                    <tr align="center">
                         <th scope="row">1</th>
                         <td><?php echo $tripName ?></td>
                         <td><?php echo "$20" ?></td>
@@ -181,11 +184,11 @@
         <!-- just to make scrolling effect possible -->
         <h2 class="myH2">Your payment history</h2>
     
-        <table id="paymentTable" class="table table-dark" style="text-align: center;" border=1>
-            <tr>
-                <th>Trip ID</th>
-                <th>Price</th>
-                <th>Payment Status</th>
+        <table id="paymentTable" class='table100 ver2'   style="text-align: center;" border=1>
+            <tr class="table table-dark" align="center">
+                <th><font color="white">Trip ID</font></th>
+                <th><font color="white">Price</font></th>
+                <th><font color="white">Payment Status</font></th>
             </tr>
         </thead>
     </table>
