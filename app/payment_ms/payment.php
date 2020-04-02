@@ -161,7 +161,7 @@
                                             }).then(function(res) {
                                                 if(res.success==true){
                                                     alert("Payment Success! Thank you, we hope you will have a great holiday ahead!");
-                                                    window.location.href = "notifications.php";
+                                                    window.location.href = "../notifications.php";
                                                 }
                                                 // The payment is complete!
                                                 // You can now show a confirmation message to the customer       
