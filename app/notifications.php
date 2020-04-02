@@ -4,6 +4,8 @@
     require "fb-init.php";
     if(isset($_SESSION['user'])){
         $user = $_SESSION['user'];
+        $tripID = $_SESSION['tripID'];
+        var_dump($_SESSION);
     }
     else{
         header("Location: login.php");
@@ -78,30 +80,7 @@
             }
         });
 
-        async function postData(serviceURL, requestBody, emailAddress) {
-            var requestParam = {
-                headers: { "content-type": "charset=UTF-8; application/json;" },
-                mode: 'no-cors', // other options: no-cors, etc.
-                method: 'POST',
-                body: JSON.stringify(requestBody)
-            }
-            try {
-                alert("A copy of your itinerary has been sent to your email address at " + emailAddress);
-                const response = await fetch(serviceURL, requestParam);
-                data = await response.json();
-                console.log(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        $("#sendMailButton").click(function(){
-            var emailAddress = $('#email').val(); // e.g., 9781449474453
-            var serviceURL = "http://localhost:5004/notification/email";
-            var requestBody = {
-                email: emailAddress
-            };
-            postData(serviceURL, requestBody,emailAddress);
-        });
+        
 
     </script>
      <script>
@@ -112,6 +91,60 @@
             } else {
                 $('.nav').removeClass('affix');
             }
+        });
+
+        var facebookID = '<?php echo $user[0]?>';
+        var tripID = '<?php echo $tripID?>';
+        var serviceStartURL = "http://127.0.0.1:5002/retrieveByTripID/"+tripID+"/"+facebookID;
+        // var data = getData1(serviceURL);
+        var places_dict = {};
+        async function getData1(serviceURL) {
+            let requestParam = {
+                headers: { "content-type": "charset=UTF-8" },
+                mode: 'cors', // allow cross-origin resource sharing
+                method: 'GET',
+            }
+            try {
+                const response = await fetch(serviceURL, requestParam);
+                items = await response.json();
+                var rows = "";
+                data = items;
+                console.log(items);
+                console.log("F");
+                console.log(data);
+                return data;
+
+        }catch (error) {
+                console.error(error);
+            }
+    }
+    async function postData(serviceURL, requestBody, emailAddress) {
+            var requestParam = {
+                headers: { "content-type": "charset=UTF-8; application/json;" },
+                mode: 'no-cors', // other options: no-cors, etc.
+                method: 'POST',
+                body: JSON.stringify(requestBody)
+            }
+            try {
+                alert("A copy of your itinerary has been sent to your email address at " + emailAddress);
+                console.log(serviceURL);
+                console.log("FUCK");
+                console.log(requestParam);
+                const response = await fetch(serviceURL, requestParam);
+                window.location.href = "summary.php";
+                return true;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        $("#sendMailButton").click(function(){
+            var emailAddress = $('#email').val(); // e.g., 9781449474453
+            var serviceURL = "http://localhost:5004/notification/email/"+emailAddress;
+            console.log(serviceURL);
+
+            getData1(serviceStartURL).then(function(value){
+                postData(serviceURL,value,emailAddress);
+            });
         });
     </script>
 

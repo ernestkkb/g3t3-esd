@@ -12,6 +12,8 @@
         $tripName=$_GET['tripName'];
         $tripID=$_GET['tripID'];
         $checkout="true";
+        $_SESSION['tripID'] =$tripID;
+        var_dump($_SESSION);
     }else{
         $checkout="false";
     }

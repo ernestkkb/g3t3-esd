@@ -75,6 +75,17 @@ def retrieveAllTripID(tripID):
         return jsonify(detailsToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
+
+
+@app.route("/retrieveByTripID/<string:tripID>/<string:facebookID>")
+def retrieveByTripID(tripID,facebookID):
+    details = scheduler.query.filter_by(tripID=tripID,facebookID=facebookID).order_by(scheduler.day).all()
+    detailsToReturn = {"details" : [detail.json() for detail in details]}
+    if detailsToReturn:
+        print(jsonify(detailsToReturn))
+        return jsonify(detailsToReturn)
+    return jsonify({"message": "Trip not found."}), 404
+
 @app.route("/addTrip/<string:tripID>/<string:userID>")
 def addTrip(tripID,userID):
     details = package.query.filter_by(tripID=tripID).all()
