@@ -37,7 +37,9 @@
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- Starting of the HTML BODY -->
 
 
@@ -116,7 +118,7 @@
                     each_trip_deets = dictionaryOfData[trip_name];
                     tripID=each_trip_deets[0][2];
                     rowspan = each_trip_deets.length;
-                    eachRow = "<tr><td rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<a href='./payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+"'> Click Here to View Payment Details </a>" + "</td>";
+                    eachRow = "<tr><td align='center' rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<a href='./payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+"'> Click Here to View Payment Details </a>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
@@ -133,10 +135,10 @@
                         names_of_place = names_by_day[day_thingy];
                         length = names_of_place.length;
                         try{
-                            eachRow += "<td rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' value="+btoa(names_of_place)+">View Route</button> </form>" + "</td>" +
+                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-dark btn-lg' value="+btoa(names_of_place)+">View Route</button> </form>" + "</td>" +
                             "<td rowspan =" +length +">" + day_thingy + "</td>";
                         }catch(err){
-                            console.log("lol");
+                            console.log("error in schedule table");
                         }
                         for (places of names_of_place){
                             //console.log(places);
