@@ -7,10 +7,10 @@ from os import environ
 
 app = Flask(__name__) # initialise a Flask application
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+mysqlconnector://root@localhost:3306/searchdb'
+# app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+mysqlconnector://root@localhost:3306/searchdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Disabled as consumes memory, and not required
 
 db = SQLAlchemy(app) # initialise a connection to the db, in the variable db. Use to interact with database
