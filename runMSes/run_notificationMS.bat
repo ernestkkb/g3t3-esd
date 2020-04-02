@@ -1,3 +1,2 @@
-start
-cd ./app/notification_ms
+cd ../app/notification_ms
 python notification.py
