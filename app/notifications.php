@@ -5,7 +5,6 @@
     if(isset($_SESSION['user'])){
         $user = $_SESSION['user'];
         $tripID = $_SESSION['tripID'];
-        var_dump($_SESSION);
     }
     else{
         header("Location: login.php");
@@ -127,9 +126,6 @@
             }
             try {
                 alert("A copy of your itinerary has been sent to your email address at " + emailAddress);
-                console.log(serviceURL);
-                console.log("FUCK");
-                console.log(requestParam);
                 const response = await fetch(serviceURL, requestParam);
                 window.location.href = "summary.php";
                 return true;
