@@ -1,0 +1,1 @@
+start cd ./app python search.py

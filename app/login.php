@@ -81,7 +81,6 @@
 <body>
 <div class="login-form">
     <img src="../nicer.png" class='center'>
-    <form action="/examples/actions/confirmation.php" method="post">
         <h2 class="text-center">Sign in</h2>		
         <div class="text-center social-btn">
             <a href="<?php echo $login_url;?>" class="btn btn-primary btn-block"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>

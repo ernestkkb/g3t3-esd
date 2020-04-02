@@ -75,6 +75,7 @@
 <link rel="stylesheet" href = "../css/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -161,7 +162,7 @@
                                             }).then(function(res) {
                                                 if(res.success==true){
                                                     alert("Payment Success! Thank you, we hope you will have a great holiday ahead!");
-                                                    window.location.href = "notifications.php";
+                                                    window.location.href = "../notifications.php";
                                                 }
                                                 // The payment is complete!
                                                 // You can now show a confirmation message to the customer       

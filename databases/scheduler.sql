@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 01, 2020 at 08:26 AM
+-- Generation Time: Apr 02, 2020 at 06:56 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -21,6 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `scheduler`
 --
+DROP DATABASE IF EXISTS `scheduler`;
 CREATE DATABASE IF NOT EXISTS `scheduler` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `scheduler`;
 
@@ -74,7 +75,6 @@ INSERT INTO `package` (`id`, `tripName`, `placeOfInterest`, `day`, `tripID`) VAL
 ('NpK0EO7Wru', 'Australia, Melbourne', '{\"name\": \"Melbourne Museum\", \"address\": \"11 Nicholson St, Carlton VIC 3053, Australia\"}', 1, 'cPG0LAtqIk'),
 ('nuZYK1Wd81', 'Australia, Melbourne', '{\"name\": \"Federation Square\", \"address\": \"Swanston St & Flinders St, Melbourne VIC 3000, Australia\"}', 3, 'cPG0LAtqIk'),
 ('o7Ah1ROELa', 'United States, New York', '{\"name\": \"The High Line\", \"address\": \"New York, NY 10011, USA\"}', 3, 'OkjrD6SzQw'),
-('OAjAz6wIP2', 'United States, New York', '{\"name\": \"Governors Island National Monument\", \"address\": \"10 South St, New York, NY 10004, USA\"}', 2, 'OkjrD6SzQw'),
 ('OAZjz1FSBl', 'United States, New York', '{\"name\": \"Brooklyn Bridge\", \"address\": \"Brooklyn Bridge, New York, NY 10038, USA\"}', 2, 'OkjrD6SzQw'),
 ('pPTCW6gI72', 'United States, New York', '{\"name\": \"One World Observatory\", \"address\": \"285 Fulton St, New York, NY 10006, USA\"}', 4, 'OkjrD6SzQw'),
 ('qEO2YGj61V', 'Canada, Vancouver', '{\"name\": \"Stanley Park\", \"address\": \"Vancouver, BC V6G 1Z4, Canada\"}', 2, '6vLq62DGv0'),

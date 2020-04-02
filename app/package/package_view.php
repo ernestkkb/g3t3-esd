@@ -22,7 +22,7 @@ else{
 
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="js/scripts.js"></script>
 <head>
     
@@ -68,15 +68,17 @@ else{
         <!-- just to make scrolling effect possible -->
         
         <table id="summaryTable" class='table100 ver2' style="margin-left:auto;margin-right:auto;" border=1>
-            <tr><th colspan = 2> <?php echo $tripName?>  </th></tr>
-            <tr class = 'table100 ver2'>
-                <th>Day</th>
-                <th>Places of Interest</th>
+            <tr class="table table-dark" align="center"><th colspan = 2><font color="white"> <?php echo $tripName?>  </font></th></tr>
+            <tr class="table table-dark" align="center">
+                <th><font color="white">Day</font></th>
+                <th><font color="white">Places of Interest</font></th>
             </tr>
         </thead>
     </table>
-    <input type="submit" style="width: 300px; margin: 0 auto;" id="toConfirm" />
-
+    <br>
+    <p align="center">
+        <input type="submit" class="btn btn-primary" style="width: 300px; align:center; margin: 0 auto; " id="toConfirm" />
+    </p>
     </div>
     <div style="text-align:center">
         <form id="package" method="POST" action="../summary.php">
