@@ -9,10 +9,12 @@ import random
 import datetime
 import pika
 import paypalrestsdk
+from os import environ
 
 app = Flask(__name__)
 #change link to own database directory
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/payment'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/payment'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -165,7 +167,7 @@ if __name__ == '__main__':
     #port=5002 - scheduler
     #port=5003 - payment
     #port=5004 - notifications
-    app.run(port=5003, debug=True) 
+    app.run(host='0.0.0.0', port=5003, debug=True) 
     #receiveTripDetails() #invoke the consume function 
     #with app.run it will allow the system call the name without required flask
     #with __name__ == '__main__' it will start flask to listen to request
