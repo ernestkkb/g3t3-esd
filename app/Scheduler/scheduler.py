@@ -115,38 +115,38 @@ def add_POI_for_preplanned(data):
     
     return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
-@app.route("/package/forward/<string:tripID>", methods = ['POST'])
-def forward_packageID(tripID):
-    all_package1 ={"package": [package.json() for package in package.query.filterby(tripID=tripID).all()]}
+# @app.route("/package/forward/<string:tripID>", methods = ['POST'])
+# def forward_packageID(tripID):
+#     all_package1 ={"package": [package.json() for package in package.query.filterby(tripID=tripID).all()]}
 
-    """inform Scheduler microservice"""
-    # default username / password to the borker are both 'guest'
-    hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
-    port = 5672 # default messaging port.
-    # connect to the broker and set up a communication channel in the connection
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-        # Note: various network firewalls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
-        # If "pika.exceptions.AMQPConnectionError" happens, may try again after disconnecting the wifi and/or disabling firewalls
-    channel = connection.channel()
+#     """inform Scheduler microservice"""
+#     # default username / password to the borker are both 'guest'
+#     hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
+#     port = 5672 # default messaging port.
+#     # connect to the broker and set up a communication channel in the connection
+#     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+#         # Note: various network firewalls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
+#         # If "pika.exceptions.AMQPConnectionError" happens, may try again after disconnecting the wifi and/or disabling firewalls
+#     channel = connection.channel()
 
-    # set up the exchange if the exchange doesn't exist
-    exchangename="package_topic"
-    channel.exchange_declare(exchange=exchangename, exchange_type='topic')
+#     # set up the exchange if the exchange doesn't exist
+#     exchangename="package_topic"
+#     channel.exchange_declare(exchange=exchangename, exchange_type='topic')
 
-    # prepare the message body content
-    message = json.dumps(all_package1, default=str) # convert a JSON object to a string
+#     # prepare the message body content
+#     message = json.dumps(all_package1, default=str) # convert a JSON object to a string
 
-    channel.queue_declare(queue='package', durable=True) # make sure the queue used by the error handler exist and durable
-    channel.queue_bind(exchange=exchangename, queue='package', routing_key='*.package') # make sure the queue is bound to the exchange
-    channel.basic_publish(exchange=exchangename, routing_key="scheduler.package", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
-    )
-    # channel.basic_publish(exchange=exchangename, routing_key="notification.payment", body=message,
-    #     properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
-    # )
-    #print("Package ID sent to Scheduler & Notification microservice.")
-    # close the connection to the broker
-    connection.close()
+#     channel.queue_declare(queue='package', durable=True) # make sure the queue used by the error handler exist and durable
+#     channel.queue_bind(exchange=exchangename, queue='package', routing_key='*.package') # make sure the queue is bound to the exchange
+#     channel.basic_publish(exchange=exchangename, routing_key="scheduler.package", body=message,
+#         properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+#     )
+#     # channel.basic_publish(exchange=exchangename, routing_key="notification.payment", body=message,
+#     #     properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+#     # )
+#     #print("Package ID sent to Scheduler & Notification microservice.")
+#     # close the connection to the broker
+#     connection.close()
 
 #retrieve trip by tripID, facebookID, day. This function is to get data for google directions
 @app.route("/scheduler/<string:tripID>/<string:facebookID>/<string:day>")
