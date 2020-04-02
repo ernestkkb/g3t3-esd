@@ -4,7 +4,9 @@
     require "fb-init.php";
     if(isset($_SESSION['user'])){
         $user = $_SESSION['user'];
-        $tripID = $_SESSION['tripID'];
+        if(isset($_SESSION['tripID'])){
+            $tripID = $_SESSION['tripID'];
+        }
     }
     else{
         header("Location: login.php");
