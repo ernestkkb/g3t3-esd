@@ -40,6 +40,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <!-- Starting of the HTML BODY -->
 
 
@@ -52,12 +53,12 @@
         <h2 class="myH2">Your planned schedule</h2>
     
         <table id="summaryTable" class='table100 ver2' style="margin-left:auto;margin-right:auto;" border=1>
-            <tr class = 'table100 ver2' >
-                <th>Trip Name</th>
-                <th>Payment</th>
-                <th>View Route</th>
-                <th>Day</th>
-                <th>Places of Interest</th>
+            <tr class="table table-dark"  align="center">
+                <th><font color="white">Trip Name</font></th>
+                <th><font color="white">Payment</font></th>
+                <th><font color="white">View Route</font></th>
+                <th><font color="white">Day</font></th>
+                <th><font color="white">Places of Interest</font></th>
             </tr>
         </thead>
     </table>
@@ -118,7 +119,7 @@
                     each_trip_deets = dictionaryOfData[trip_name];
                     tripID=each_trip_deets[0][2];
                     rowspan = each_trip_deets.length;
-                    eachRow = "<tr><td align='center' rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td rowspan = " + rowspan + ">" + "<a href='./payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+"'> Click Here to View Payment Details </a>" + "</td>";
+                    eachRow = "<tr><td align='center' rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td align='center' rowspan = " + rowspan + ">" + "<a href='./payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+" '> View Payment Details </a>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
@@ -136,8 +137,8 @@
                         length = names_of_place.length;
                         console.log(names_of_place.join("splitter"));
                         try{
-                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-dark btn-lg' value="+'"'+names_of_place.join("splitter")+'"'+">View Route</button> </form>" + "</td>" +
-                            "<td rowspan =" +length +">" + day_thingy + "</td>";
+                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-primary btn-lg' value="+'"'+names_of_place.join("splitter")+'"'+">View Route</button> </form>" + "</td>" +
+                            "<td align='center' rowspan =" +length +">" + day_thingy + "</td>";
                         }catch(err){
                             console.log("error in schedule table");
                         }
