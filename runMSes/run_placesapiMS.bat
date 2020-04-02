@@ -1,3 +1,2 @@
-start
-cd ./app/Scheduler
+cd ../app/places_ms
 python placesapi.py

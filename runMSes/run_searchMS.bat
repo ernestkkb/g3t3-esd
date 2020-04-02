@@ -1,1 +1,1 @@
-start cd ./app python search.py
+cd ../app python search.py

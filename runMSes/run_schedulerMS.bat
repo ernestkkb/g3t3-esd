@@ -1,2 +1,2 @@
-start cd ./app/Scheduler
+cd ../app/scheduler_ms
 python scheduler.py
