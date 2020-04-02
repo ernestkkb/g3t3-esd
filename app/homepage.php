@@ -153,19 +153,20 @@ if (isset($_SESSION['access_token'])) {
         </div>
     </nav>
 
-    <section class="home"></section> 
-    <div style="height: 50px">
+    <section class="home" > 
+    <div style="height: 50px"> 
+        <section> 
         <!-- just to make scrolling effect possible -->
         <h2 class="myH2">Customise your schedule</h2>
         <div style="text-align:center">
         <h3 class="myH3"> Start by choosing your desired Country & City </h3>
 
-        <div style="text-align:center">
-        
+        <div style="text-align:center" >
+            
             <form id="search_bar" method="POST" action="./scheduler_ms/add_trip.php">
 
                 <font size="+2"> Country: </font> 
-                <select style="width:150px" name="country" id="country">
+                <select style="width:150px" name="country" id="country" >
                 <option selected disabled='true' >Select Country</option>
                 <!-- Values are filled from the script portion above !-->
                 </select>
@@ -179,12 +180,14 @@ if (isset($_SESSION['access_token'])) {
                 </br>
                 <input type="submit" name="submit" class="btn btn-primary">
             </form>
+            </section>
         </div>         
-        <br></br><br></br>
-        <h2 class="myH2">Or pick a package below!</h2>
+
+         
     </div>
-
-
+    </section>
+    <br></br>
+        <h2 class="myH2">Or pick a package below!</h2>
 <!-- Jquery needed -->
     <script src="js/scripts.js"></script>
 

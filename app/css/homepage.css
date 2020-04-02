@@ -7,6 +7,7 @@ body {
     font-family: "Quicksand", sans-serif;
     font-size: 62.5%;
     font-size: 10px;
+    
 }
 /*-- Inspiration taken from abdo steif -->
 /* --> https://codepen.io/abdosteif/pen/bRoyMb?editors=1100*/
@@ -78,7 +79,8 @@ body {
     height: 100vh;
     background-image: url(https://wallpaperplay.com/walls/full/c/7/0/195311.jpg);
     background-position: center top;
-	background-size:cover;
+    background-size:cover;
+    /* opacity: 0.8; */
 }
 
 .navTrigger {
@@ -91,7 +93,6 @@ body {
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
 }
-
 
 /* Media qurey section */
 
