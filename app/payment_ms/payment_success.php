@@ -1,4 +1,12 @@
-
+<?php
+    require_once "../fb-init.php";
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }
+    else{
+        header("Location: login.php");
+    }
+?>
 <!DOCTYPE html>
     <html>
     <head>
@@ -26,7 +34,7 @@
                         echo $user[1];
                         }
                     else{
-                            echo "LOL";
+                            echo "User";
                             }?> </a>
                 </div>
                 <div id="mainListDiv" class="main_list">

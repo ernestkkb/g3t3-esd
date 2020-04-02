@@ -52,7 +52,7 @@
                         echo $user[1];
                         }
                     else{
-                            echo "LOL";
+                            echo "User";
                             }?> </a>
                 </div>
                 <div id="mainListDiv" class="main_list">
@@ -160,7 +160,8 @@
                                             return paypal.request({method: 'post', url: EXECUTE_PAYMENT_URL, json: dummy
                                             }).then(function(res) {
                                                 if(res.success==true){
-                                                    window.location.href = "payment_success.php";
+                                                    alert("Payment Success! Thank you, we hope you will have a great holiday ahead!");
+                                                    window.location.href = "notifications.php";
                                                 }
                                                 // The payment is complete!
                                                 // You can now show a confirmation message to the customer       
