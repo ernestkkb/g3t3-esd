@@ -24,7 +24,7 @@ if (isset($_POST['country']) && isset($_POST['city'])) {
     <meta name="viewport" content="width=device-width">
 
     <title>Add Trip</title>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="">
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -67,7 +67,7 @@ if (isset($_POST['country']) && isset($_POST['city'])) {
             City<br>
             <input name="city" type="text" id="city" value='<?php echo $_POST['city']; ?>' readonly style = "width:100%"/></br>
             <br>
-            <input type="submit" name="submit" value="Find Places of Interest"/>
+            <input type="submit" name="submit" class="btn btn-primary" value="Find Places of Interest"/>
     </form>
     
 </body>

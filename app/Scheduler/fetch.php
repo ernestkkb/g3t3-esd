@@ -32,7 +32,7 @@
 <body>
     <p id="display">Display POI</p>
     <p>Trip Name: <?php echo $_POST['tripName'] ?></p>
-    <br><br>
+    
     <table id="POITable" class='table table-striped' border='1'>
         <thead class='thead-dark'>
             <tr>
@@ -45,9 +45,9 @@
         </thead>
     </table>
     <form method='GET' id='POIform'>
-            POI S.N.:<input type ='text' name='poino' id = 'poino'/>
+            POI S.N.:  <input type ='text' name='poino' id = 'poino'/>
             <br>
-            DAY CHOSEN:<input type ='text' name='day' id = 'day'/>
+            DAY CHOSEN:  <input type ='text' name='day' id = 'day'/>
             <br>
             <button name='add' value='Add' id='add' class="btn btn-primary">Add POI</button>
             <br>
