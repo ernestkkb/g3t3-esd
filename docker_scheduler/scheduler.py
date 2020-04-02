@@ -4,7 +4,7 @@ from sqlalchemy import update
 from flask_cors import CORS
 import json
 import sys
-import os
+from os import environ
 import random
 import datetime
 import pika
@@ -12,10 +12,14 @@ import requests
 
 
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
+
+
 #change link to own database directory
 # our database is called scheduler and table is scheduler
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/scheduler'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/scheduler'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -75,17 +79,6 @@ def retrieveAllTripID(tripID):
         return jsonify(detailsToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
-
-
-@app.route("/retrieveByTripID/<string:tripID>/<string:facebookID>")
-def retrieveByTripID(tripID,facebookID):
-    details = scheduler.query.filter_by(tripID=tripID,facebookID=facebookID).order_by(scheduler.day).all()
-    detailsToReturn = {"details" : [detail.json() for detail in details]}
-    if detailsToReturn:
-        print(jsonify(detailsToReturn))
-        return jsonify(detailsToReturn)
-    return jsonify({"message": "Trip not found."}), 404
-
 @app.route("/addTrip/<string:tripID>/<string:userID>")
 def addTrip(tripID,userID):
     details = package.query.filter_by(tripID=tripID).all()
@@ -138,49 +131,5 @@ def add_POI():
     
     return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
-
-@app.route('/makepayment', methods=['POST'])
-def forward_trip():
-    if request.is_json:
-        triplist = request.get_json()
-    else:
-        triplist = request.get_data()
-        replymessage = json.dumps({"message": "Order should be in JSON", "data": triplist}, default=str)
-        return replymessage, 400 # Bad Request
-
-    # triplist=[{
-    #     "name": tripName,
-    #     "sku": "Trip ID: " + tripID,
-    #     "price": 20,
-    #     "currency": "SGD",
-    #     "quantity": 1}]
-
-    """inform Payment microservice"""
-    # default username / password to the broker are both 'guest'
-    hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
-    port = 5672 # default messaging port.
-    # connect to the broker and set up a communication channel in the connection
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-        # Note: various network firewalls, filters, gateways (e.g., SMU VPN on wifi), may hinder the connections;
-        # If "pika.exceptions.AMQPConnectionError" happens, may try again after disconnecting the wifi and/or disabling firewalls
-    channel = connection.channel()
-
-    # set up the exchange if the exchange doesn't exist
-    exchangename="exchange_topic"
-    channel.exchange_declare(exchange=exchangename, exchange_type='topic')
-
-    # prepare the message body content
-    message = json.dumps(triplist, default=str) # convert a JSON object to a string
-
-    channel.queue_declare(queue='scheduler', durable=True) # make sure the queue used by the error handler exist and durable
-    channel.queue_bind(exchange=exchangename, queue='scheduler', routing_key='*.scheduler') # make sure the queue is bound to the exchange
-    channel.basic_publish(exchange=exchangename, routing_key="payment.scheduler", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
-    )
-    print("Trip details sent to Payment microservice.")
-    # close the connection to the broker
-    connection.close()
-    return ""
-
 if __name__ == '__main__':
-    app.run(port=5002, debug=True) 
+    app.run(host='0.0.0.0', port=5002, debug=True) 

@@ -162,7 +162,7 @@ if (isset($_SESSION['access_token'])) {
 
         <div style="text-align:center">
         
-            <form id="search_bar" method="POST" action="./Scheduler/add_trip.php">
+            <form id="search_bar" method="POST" action="./scheduler_ms/add_trip.php">
 
                 <font size="+2"> Country: </font> 
                 <select style="width:150px" name="country" id="country">

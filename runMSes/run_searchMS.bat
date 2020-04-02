@@ -1,0 +1,1 @@
+cd ../app python search.py

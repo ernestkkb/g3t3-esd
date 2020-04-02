@@ -137,7 +137,7 @@
                         length = names_of_place.length;
                         console.log(names_of_place.join("splitter"));
                         try{
-                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-primary btn-lg' value="+'"'+names_of_place.join("splitter")+'"'+">View Route</button> </form>" + "</td>" +
+                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='scheduler_ms/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-primary btn-lg' value="+'"'+names_of_place.join("splitter")+'"'+">View Route</button> </form>" + "</td>" +
                             "<td align='center' rowspan =" +length +">" + day_thingy + "</td>";
                         }catch(err){
                             console.log("error in schedule table");
