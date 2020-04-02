@@ -4,21 +4,18 @@ from sqlalchemy import update
 from flask_cors import CORS
 import json
 import sys
-from os import environ
+import os
 import random
 import datetime
 import pika
 import requests
+from os import environ
 
 
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
-
-
 #change link to own database directory
 # our database is called scheduler and table is scheduler
-
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/scheduler'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -79,6 +76,17 @@ def retrieveAllTripID(tripID):
         return jsonify(detailsToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
+
+
+@app.route("/retrieveByTripID/<string:tripID>/<string:facebookID>")
+def retrieveByTripID(tripID,facebookID):
+    details = scheduler.query.filter_by(tripID=tripID,facebookID=facebookID).order_by(scheduler.day).all()
+    detailsToReturn = {"details" : [detail.json() for detail in details]}
+    if detailsToReturn:
+        print(jsonify(detailsToReturn))
+        return jsonify(detailsToReturn)
+    return jsonify({"message": "Trip not found."}), 404
+
 @app.route("/addTrip/<string:tripID>/<string:userID>")
 def addTrip(tripID,userID):
     details = package.query.filter_by(tripID=tripID).all()
@@ -132,4 +140,4 @@ def add_POI():
     return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002, debug=True) 
+    app.run(host='0.0.0.0',port=5002, debug=True) 

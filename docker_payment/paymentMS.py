@@ -86,7 +86,7 @@ def payment():
         status=update_trip_status(triplist[0]["sku"])
         print(status)
         if status[1] == 201: 
-            hostname = "localhost"
+            hostname = "host.docker.internal"
             port = 5672 
             connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
             channel = connection.channel()
