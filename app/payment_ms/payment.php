@@ -112,18 +112,18 @@
                 });
 
     </script>
-            <table id='paypal' class="table table-dark">
+            <table id='paypal' class='table100 ver2'>
                 <thead>
-                    <tr>
-                        <th scope="#">#</th>
-                        <th scope="col">Name of Trip</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Checkout</th>
+                    <tr class="table table-dark" align="center">
+                        <th scope="#"><font color="white">#</font></th>
+                        <th scope="col"><font color="white">Name of Trip</font></th>
+                        <th scope="col"><font color="white">Price</font></th>
+                        <th scope="col"><font color="white">Quantity</font></th>
+                        <th scope="col"><font color="white">Checkout</font></th>
                     </tr>
                 </thead>
                 <tbody>  
-                    <tr>
+                    <tr align="center">
                         <th scope="row">1</th>
                         <td><?php echo $tripName ?></td>
                         <td><?php echo "$20" ?></td>
@@ -184,11 +184,11 @@
         <!-- just to make scrolling effect possible -->
         <h2 class="myH2">Your payment history</h2>
     
-        <table id="paymentTable" class="table table-dark" style="text-align: center;" border=1>
-            <tr>
-                <th>Trip ID</th>
-                <th>Price</th>
-                <th>Payment Status</th>
+        <table id="paymentTable" class='table100 ver2'   style="text-align: center;" border=1>
+            <tr class="table table-dark" align="center">
+                <th><font color="white">Trip ID</font></th>
+                <th><font color="white">Price</font></th>
+                <th><font color="white">Payment Status</font></th>
             </tr>
         </thead>
     </table>
