@@ -109,11 +109,9 @@ def execute():
     success = False
     items = request.get_json()
     print(items)
-    print("FK")
     paymentID = items['paymentID']
     payment = paypalrestsdk.Payment.find(paymentID)
     payerID = items['payerID']
-    print('letsgo')
     if payment.execute({"payer_id" : payerID}):
         print('Execute success!')
         success = True

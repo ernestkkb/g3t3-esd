@@ -1,6 +1,5 @@
 
 <?php
-    require_once '../navbar.php';
     require_once "../fb-init.php";
     if(isset($_SESSION['user'])){
         $user = $_SESSION['user'];
@@ -42,6 +41,35 @@
 
 <!-- Up until here. If validation is unsuccessful, redirected to logout page, session destroyed and redirected to login page !-->
 
+<!-----------------------------------------------------------[START] NAVBAR ------------------------------------------------------------------------>
+<nav class="nav">
+            <div class="container">
+                <div class="logo">
+                    <a href="#">Welcome back, <?php if(isset($user['last_name'])){
+                        echo $user['last_name'];
+                    }
+                    elseif(isset($user[1])){
+                        echo $user[1];
+                        }
+                    else{
+                            echo "LOL";
+                            }?> </a>
+                </div>
+                <div id="mainListDiv" class="main_list">
+                    <ul class="navlinks">
+                        <li><a href="../homepage.php">Home</a></li>
+                        <li><a href="../notifications.php">Email</a></li>
+                        <li><a href="./payment.php">Payment</a></li>
+                        <li><a href="../summary.php">Summary</a>
+                        <li><a href="../logout.php">Logout</a> <!-- Logout and destroy the session -->
+                    </ul>
+                </div>
+            </div>
+    </nav>
+    <section class="home"></section> 
+    <!-- Don't Delete. This is for the background picture ! -->
+
+<!-----------------------------------------------------------[END] NAVBAR ------------------------------------------------------------------------>
 <!-----------------------------------------------------------[START] PAYPAL ------------------------------------------------------------------------>
 <link rel="stylesheet" href="../css/homepage.css">
 <link rel="stylesheet" href = "../css/main.css">
@@ -131,7 +159,9 @@
                                             var dummy={paymentID: data.paymentID, payerID: data.payerID};
                                             return paypal.request({method: 'post', url: EXECUTE_PAYMENT_URL, json: dummy
                                             }).then(function(res) {
-                                                console.log(res.success)
+                                                if(res.success==true){
+                                                    window.location.href = "payment_success.php";
+                                                }
                                                 // The payment is complete!
                                                 // You can now show a confirmation message to the customer       
                                             });
