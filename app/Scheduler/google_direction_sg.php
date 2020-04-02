@@ -74,8 +74,8 @@
     <select id="start">
     </select>
     <script>
-    var dataPOST = '<?php $things =base64_decode($_POST['data']); echo $things?>';
-    var data1 = dataPOST.split(",")
+    var data1 = "<?php $things =$_POST['data']; $here =$things; echo $here;?>";
+    data1 = data1.split(",");
     //var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
     $(document).ready(function(){
       for (let i = 0; i < data1.length; i++) {
@@ -94,10 +94,8 @@
 
     <script>
     //var data2 = ["Siloso Rd, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
-    console.log(data2);
-    var dataPOST = '<?php $things =base64_decode($_POST['data']); echo $things?>';
-    var data2 = dataPOST.split(",")
-    console.log(data2);
+    var data2 = "<?php $things =$_POST['data']; $here =$things; echo $here;?>";
+    data2 = data2.split(",");
     $(document).ready(function(){
       for (let i = 0; i < data2.length; i++) {
       var one_data = data2[i];
@@ -113,8 +111,9 @@
     </select>
     <script>
     //var datas = ["Downtown, Singapore", "2 Cox Terrace, Singapore 179622", "8 Sentosa Gateway, Singapore 098269"];
-    var dataPOST = '<?php $things =base64_decode($_POST['data']); echo $things?>';
-    var data3 = dataPOST.split(",")
+    var data3 = "<?php $things =$_POST['data']; $here =$things; echo $here;?>";
+    data3 = data3.split(",");
+    console.log(data3);
     $(document).ready(function(){
       for (let i = 0; i < data3.length; i++) {
       var one_data = data3[i];

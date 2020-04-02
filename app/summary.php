@@ -134,8 +134,9 @@
                         //console.log(event);
                         names_of_place = names_by_day[day_thingy];
                         length = names_of_place.length;
+                        console.log(names_of_place.toString());
                         try{
-                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-dark btn-lg' value="+btoa(names_of_place)+">View Route</button> </form>" + "</td>" +
+                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='Scheduler/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-dark btn-lg' value="+'"'+names_of_place.toString()+'"'+">View Route</button> </form>" + "</td>" +
                             "<td rowspan =" +length +">" + day_thingy + "</td>";
                         }catch(err){
                             console.log("error in schedule table");
@@ -145,6 +146,7 @@
                             eachRow += "<td>" + places + "</td></tr>";
                             
                         }
+                        console.log(eachRow);
                         
                     }
                     
