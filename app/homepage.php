@@ -153,11 +153,11 @@ if (isset($_SESSION['access_token'])) {
         </div>
     </nav>
 
-    <section class="home" > 
+    <section class="home1" > 
     <div style="height: 50px"> 
         <section> 
         <!-- just to make scrolling effect possible -->
-        <h2 class="myH2">Customise your schedule</h2>
+        <h2 class="myH2" >Customise your schedule</h2>
         <div style="text-align:center">
         <h3 class="myH3"> Start by choosing your desired Country & City </h3>
 
