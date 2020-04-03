@@ -163,7 +163,6 @@
             var paymentStatus = "unpaid";
             var URLtoAdd = "http://127.0.0.1:5003/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
             addTripToDB(URLtoAdd);
-            alert(URLtoAdd);
             window.location.href = "../summary.php";
         
         });
@@ -176,7 +175,6 @@
             try {
                 const response = await fetch(serviceURL, requestParam);
                 data = await response.json();
-                alert(serviceURL);
                 console.log(data);
         }catch (error) {
                 console.error(error);
