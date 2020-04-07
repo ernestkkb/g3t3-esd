@@ -119,7 +119,7 @@
                     each_trip_deets = dictionaryOfData[trip_name];
                     tripID=each_trip_deets[0][2];
                     rowspan = each_trip_deets.length;
-                    eachRow = "<tr><td align='center' rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td align='center' rowspan = " + rowspan + ">" + "<a href='./payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+" '> View Payment Details </a>" + "</td>";
+                    eachRow = "<tr><td align='center' rowspan = " + rowspan + ">" + trip_name + "</td>" + "<td align='center' rowspan = " + rowspan + ">" + "<a href='https://g3t3-ui.herokuapp.com/app/payment_ms/payment.php?tripID="+tripID+"&tripName="+trip_name+" '> View Payment Details </a>" + "</td>";
                     names_by_day = {};
                     for (const event of each_trip_deets){
                         if (!names_by_day[event[1]]){
@@ -137,7 +137,7 @@
                         length = names_of_place.length;
                         console.log(names_of_place.join("splitter"));
                         try{
-                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='scheduler_ms/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-primary btn-lg' value="+'"'+names_of_place.join("splitter")+'"'+">View Route</button> </form>" + "</td>" +
+                            eachRow += "<td align='center' rowspan =" +length + ">" + "<form action='https://g3t3-ui.herokuapp.com/app/scheduler_ms/google_direction_sg.php' method='post'> <button type='submit' name='data' class='btn btn-primary btn-lg' value="+'"'+names_of_place.join("splitter")+'"'+">View Route</button> </form>" + "</td>" +
                             "<td align='center' rowspan =" +length +">" + day_thingy + "</td>";
                         }catch(err){
                             console.log("error in schedule table");
