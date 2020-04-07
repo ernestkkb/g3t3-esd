@@ -45,8 +45,8 @@
                 <script src='https://www.paypalobjects.com/api/checkout.js'></script>
                             <script>
                                 
-                                var CREATE_PAYMENT_URL  = 'http://127.0.0.1:5003/makepayment';
-                                var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:5003/execute';
+                                var CREATE_PAYMENT_URL  = 'https://g3t3-payment.herokuapp.com/makepayment';
+                                var EXECUTE_PAYMENT_URL = 'https://g3t3-payment.herokuapp.com/execute';
 
                                 var tripName= "<?php echo $tripName ?>";
                                 var tripID= "<?php echo $tripID ?>";

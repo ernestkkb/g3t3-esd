@@ -66,7 +66,7 @@ if (isset($_SESSION['access_token'])) {
         }
 
         $(document).ready(function() {
-            var serviceURL = "http://127.0.0.1:5000/locations";
+            var serviceURL = "https://g3t3-search.herokuapp.com/locations";
             var locations = getData(serviceURL);
 
             locations.then((data) => { // Necessary for async programming

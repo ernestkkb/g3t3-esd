@@ -14,7 +14,7 @@ import pika
 import paypalrestsdk
 import requests
 
-paymentURL = "http://localhost:5003/makepayment"
+paymentURL = "https://g3t3-payment.herokuapp.com/makepayment"
 #checkout trip for payment - step 1: consume trip details from scheduler MS 
 hostname = "localhost" # default host
 port = 5672 # default port

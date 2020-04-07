@@ -91,7 +91,7 @@ else{
 <script> 
     var tripName = '<?php echo $tripName ?>';
     var tripID = '<?php echo $tripID ?>';
-    var serviceURL = "http://127.0.0.1:5002/retrieveAllTripID"+"/"+tripID;
+    var serviceURL = "https://g3t3-scheduler.herokuapp.com/retrieveAllTripID"+"/"+tripID;
     var data = getData(serviceURL);
 
     async function getData(serviceURL) {
@@ -142,8 +142,8 @@ else{
             console.error(error);
         }
     }
-    var toConfirmURL = "http://127.0.0.1:5002/addTrip/"+tripID + "/" + '<?php echo $user[0]?>';
-    var toPaymentDB = "http://127.0.0.1:5003/payment/"+tripID + "/" + '<?php echo $user[0]?>' + '/20/unpaid';
+    var toConfirmURL = "https://g3t3-scheduler.herokuapp.com/addTrip/"+tripID + "/" + '<?php echo $user[0]?>';
+    var toPaymentDB = "https://g3t3-payment.herokuapp.com/payment/"+tripID + "/" + '<?php echo $user[0]?>' + '/20/unpaid';
     $("#toConfirm").click(function(){
         var lol = getDataAnother(toConfirmURL);
         var lol1 = getDataAnother(toPaymentDB);

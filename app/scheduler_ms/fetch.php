@@ -79,7 +79,7 @@
 
         var city = '<?php echo $_POST['city'] ?>';
         var tripName = '<?php echo $_POST['tripName'] ?>';
-        var serviceURL = "http://127.0.0.1:5008/city"+"/"+city;
+        var serviceURL = "https://g3t3-placesapi.herokuapp.com/city"+"/"+city;
         var tripID = makeid(10);
         var data = getData(serviceURL);
         var places_dict = {};
@@ -134,7 +134,7 @@
             poi_dict['address'] = address_poi;
             var data = {"tripID":tripID, "tripName": tripName,"facebookID":facebookID, "placeOfInterest":poi_dict, "paymentStatus":"paid", "day":day, "id":id};
             // data to send over to scheduler: name, address, day
-            var addpoiURL = "http://127.0.0.1:5002/addPOI";
+            var addpoiURL = "https://g3t3-scheduler.herokuapp.com/addPOI";
             await fetch(
                 addpoiURL, {
                 method: 'POST',
@@ -161,7 +161,7 @@
             var facebookID = '<?php echo $user[0];?>';
             var price = '20';
             var paymentStatus = "unpaid";
-            var URLtoAdd = "http://127.0.0.1:5003/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
+            var URLtoAdd = "https://g3t3-payment.herokuapp.com/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
             addTripToDB(URLtoAdd);
             window.location.href = "../summary.php";
         

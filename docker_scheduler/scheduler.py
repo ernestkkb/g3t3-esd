@@ -9,13 +9,15 @@ import random
 import datetime
 import pika
 import requests
+import psycopg2
 from os import environ
 
 
 app = Flask(__name__)
 #change link to own database directory
 # our database is called scheduler and table is scheduler
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
+# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
+app.config['SQLALCHEMY_DATABASE_URI']="postgres://icootzgddbwwoz:d855a7dde5783ae534775fe61e19a798ee02e89f5165e2daec37c821afc0751f@ec2-34-204-22-76.compute-1.amazonaws.com:5432/d8nsl50eu81ssv"
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/scheduler'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -140,4 +142,5 @@ def add_POI():
     return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5002, debug=True) 
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0',port=port, debug=False) 

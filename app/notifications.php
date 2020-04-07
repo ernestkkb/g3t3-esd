@@ -96,7 +96,7 @@
 
         var facebookID = '<?php echo $user[0]?>';
         var tripID = '<?php echo $tripID?>';
-        var serviceStartURL = "http://127.0.0.1:5002/retrieveByTripID/"+tripID+"/"+facebookID;
+        var serviceStartURL = "https://g3t3-notification.herokuapp.com/retrieveByTripID/"+tripID+"/"+facebookID;
         // var data = getData1(serviceURL);
         var places_dict = {};
         async function getData1(serviceURL) {
@@ -137,7 +137,7 @@
         }
         $("#sendMailButton").click(function(){
             var emailAddress = $('#email').val(); // e.g., 9781449474453
-            var serviceURL = "http://localhost:5004/notification/email/"+emailAddress;
+            var serviceURL = "https://g3t3-notification.herokuapp.com/notification/email/"+emailAddress;
             console.log(serviceURL);
 
             getData1(serviceStartURL).then(function(value){

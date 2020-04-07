@@ -80,7 +80,7 @@
         });
         
         var facebookID = '<?php echo $user[0]?>';
-        var serviceURL = "http://127.0.0.1:5002/retrieveAll/"+facebookID;
+        var serviceURL = "https://g3t3-scheduler.herokuapp.com/retrieveAll/"+facebookID;
         var data = getData(serviceURL);
         var places_dict = {};
 

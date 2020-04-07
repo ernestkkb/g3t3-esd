@@ -4,6 +4,9 @@ import requests
 import urllib
 import urllib.request
 import json
+import os 
+from os import environ
+import psycopg2
 app = Flask(__name__)
 CORS(app)
 
@@ -77,7 +80,8 @@ def photos_url(API_KEY, photo_reference, maxwidth):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='5008', debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
 
 
 

@@ -2,6 +2,8 @@ from flask import Flask,request
 from flask_mail import Mail, Message
 import os,sys
 import json
+import psycopg2
+from os import environ
 app = Flask(__name__)
 
 mail_settings = {
@@ -43,5 +45,6 @@ def send_email(emailAddress):
             mail.send(msg)
     return "YAY"
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5004, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
 
