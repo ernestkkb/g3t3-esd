@@ -55,7 +55,7 @@ class scheduler(db.Model):
     day = db.Column(db.Integer())
     tripid = db.Column(db.String(20), nullable=True)
 
-    def __init__(self, id, tripName, facebookID, placeOfInterest, paymentStatus,day, tripID):
+    def __init__(self, id, tripname, facebookid, placeofinterest, paymentstatus,day, tripid):
         self.id = id
         self.tripname = tripname
         self.facebookid = facebookid

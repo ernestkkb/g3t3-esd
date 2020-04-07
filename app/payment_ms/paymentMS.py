@@ -21,19 +21,19 @@ CORS(app)
 #Change to own Database
 class Payment(db.Model):
     __tablename__ = 'payment_process'
-    userID = db.Column(db.String(100), primary_key=True)
-    tripID = db.Column(db.String(12), primary_key=True)
+    userid = db.Column(db.String(100), primary_key=True)
+    tripid = db.Column(db.String(12), primary_key=True)
     price = db.Column(db.Float(precision=2), nullable=False)
-    paymentStatus = db.Column(db.String(10), nullable=False)
+    paymentstatus = db.Column(db.String(10), nullable=False)
 
     def __init__(self, userID, tripID, price, paymentStatus):
-        self.userID = userID
-        self.tripID = tripID
+        self.userid = userid
+        self.tripid = tripid
         self.price = price
-        self.paymentStatus = paymentStatus
+        self.paymentstatus = paymentstatus
 
     def json(self):
-        return {"userID": self.userID, "tripID": self.tripID, "price": self.price, "paymentStatus": self.paymentStatus}
+        return {"userID": self.userid, "tripID": self.tripid, "price": self.price, "paymentStatus": self.paymentstatus}
 
 
 paypalrestsdk.configure({
