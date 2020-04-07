@@ -50,7 +50,7 @@ if (isset($accessToken)) {
   // access token from $_SESSION['access_token']
 } elseif ($helper->getError()) {
   // The user denied the request
-  header("Location:https://g3t3-ui.herokuapp.com/login.php");
+  header("Location:https://g3t3-ui.herokuapp.com/app/login.php");
   exit;
 }
 

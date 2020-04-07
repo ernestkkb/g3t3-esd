@@ -4,7 +4,7 @@
         $user = $_SESSION['user'];
     }
     else{
-        header("Location: ./login.php");
+        header("Location: https://g3t3-ui.herokuapp.com/app/login.php");
     }
 ?>
 
@@ -55,7 +55,7 @@ if (isset($_POST['country']) && isset($_POST['city'])) {
     crossorigin="anonymous"></script>
 </head>
 <body>
-    <form method="POST" action="fetch.php">
+    <form method="POST" action="https://g3t3-ui.herokuapp.com/app/scheduler_ms/fetch.php">
             Trip Name<br>
             <input name="tripName" type="text" id="tripName" value ="" style = "width:100%"/><br>
             <!-- Start Date<br>

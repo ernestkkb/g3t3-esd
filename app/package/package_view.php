@@ -6,7 +6,7 @@ if(isset($_SESSION['user'])){
 
 }
 else{
-    header("Location: ./login.php");
+    header("Location: https://g3t3-ui.herokuapp.com/app/login.php");
 }
 $tripID = $_GET['tripID'];
 if ($tripID == 'OkjrD6SzQw'){
@@ -39,11 +39,11 @@ else{
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
-                    <li><a href="../homepage.php">Home</a></li>
-                    <li><a href="../notifications.php">Email</a></li>
-                    <li><a href="../payment_ms/payment.php">Payment</a></li>
-                    <li><a href="../summary.php">Summary</a>
-                    <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
+                    <li><a href="https://g3t3-ui.herokuapp.com/app/homepage.php">Home</a></li>
+                    <li><a href="https://g3t3-ui.herokuapp.com/app/notifications.php">Email</a></li>
+                    <li><a href="https://g3t3-ui.herokuapp.com/app/payment_ms/payment.php">Payment</a></li>
+                    <li><a href="https://g3t3-ui.herokuapp.com/app/summary.php">Summary</a>
+                    <li><a href="https://g3t3-ui.herokuapp.com/app/logout.php">Logout</a> <!-- Logout and destroy the session -->
                     
                 </ul>
             </div>
@@ -81,7 +81,7 @@ else{
     </p>
     </div>
     <div style="text-align:center">
-        <form id="package" method="POST" action="../summary.php">
+        <form id="package" method="POST" action="https://g3t3-ui.herokuapp.com/app/summary.php">
         <br>
         </br>
         </form>
@@ -148,7 +148,7 @@ else{
         var lol = getDataAnother(toConfirmURL);
         var lol1 = getDataAnother(toPaymentDB);
         alert("You've added your trip to your schedule! Click ok to go back to homepage");
-        window.location.replace("../summary.php");
+        window.location.replace("https://g3t3-ui.herokuapp.com/app/summary.php");
 
     })
 

@@ -27,47 +27,47 @@ class package(db.Model):
     __tablename__ = 'package'
 
     id = db.Column(db.Integer(), primary_key=True)
-    tripName = db.Column(db.String(44))
-    placeOfInterest = db.Column(db.JSON, nullable=True)
+    tripname = db.Column(db.String(44))
+    placeofinterest = db.Column(db.JSON, nullable=True)
     day = db.Column(db.Integer())
-    tripID = db.Column(db.String(20), nullable=True)
+    tripid = db.Column(db.String(20), nullable=True)
 
     def __init__(self, id, tripName, placeOfInterest, day, tripID):
         self.id = id
-        self.tripName = tripName
-        self.placeOfInterest = placeOfInterest
+        self.tripname = tripname
+        self.placeofinterest = placeofinterest
         self.day = day
-        self.tripID = tripID
+        self.tripid = tripid
 
     def json(self):
-        return {"tripID": self.tripID, "tripName": self.tripName, "placeOfInterest": self.placeOfInterest,  "day":self.day, "id":self.id}
+        return {"tripID": self.tripid, "tripName": self.tripname, "placeOfInterest": self.placeofinterest,  "day":self.day, "id":self.id}
 
 class scheduler(db.Model):
     __tablename__ = 'scheduler'
 
     id = db.Column(db.Integer(), primary_key=True)
-    tripName = db.Column(db.String(44))
-    facebookID = db.Column(db.String(20), nullable=True)
-    placeOfInterest = db.Column(db.JSON, nullable=True)
+    tripname = db.Column(db.String(44))
+    facebookid = db.Column(db.String(20), nullable=True)
+    placeofinterest = db.Column(db.JSON, nullable=True)
     # startDate = db.Column(db.Date, nullable=True)
     # endDate = db.Column(db.Date, nullable=True)
-    paymentStatus = db.Column(db.String(10))
+    paymentstatus = db.Column(db.String(10))
     day = db.Column(db.Integer())
-    tripID = db.Column(db.String(20), nullable=True)
+    tripid = db.Column(db.String(20), nullable=True)
 
     def __init__(self, id, tripName, facebookID, placeOfInterest, paymentStatus,day, tripID):
         self.id = id
-        self.tripName = tripName
-        self.facebookID = facebookID
-        self.placeOfInterest = placeOfInterest
+        self.tripname = tripname
+        self.facebookid = facebookid
+        self.placeofinterest = placeofinterest
         # self.startDate = startDate
         # self.endDate = endDate
-        self.paymentStatus = paymentStatus
+        self.paymentstatus = paymentstatus
         self.day = day
-        self.tripID = tripID
+        self.tripid = tripid
 
     def json(self):
-        return {"tripID": self.tripID, "tripName": self.tripName, "facebookID": self.facebookID, "placeOfInterest": self.placeOfInterest, "paymentStatus": self.paymentStatus, "day":self.day, "id":self.id}
+        return {"tripID": self.tripid, "tripName": self.tripname, "facebookID": self.facebookid, "placeOfInterest": self.placeofinterest, "paymentStatus": self.paymentstatus, "day":self.day, "id":self.id}
 
 @app.route("/retrieveAllTripID/<string:tripID>")
 def retrieveAllTripID(tripID):

@@ -5,7 +5,7 @@
     
     }
     else{
-        header("Location: ./login.php");
+        header("Location: https://g3t3-ui.herokuapp.com/app/login.php");
     }
 ?>
 <!DOCTYPE html>
@@ -163,7 +163,7 @@
             var paymentStatus = "unpaid";
             var URLtoAdd = "https://g3t3-payment.herokuapp.com/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
             addTripToDB(URLtoAdd);
-            window.location.href = "../summary.php";
+            window.location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
         
         });
         async function addTripToDB(serviceURL) {
