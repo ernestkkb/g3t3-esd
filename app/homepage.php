@@ -5,7 +5,7 @@
         $user = $_SESSION['user'];
     }
     else{
-        header("Location: login.php");
+        header("Location: https://g3t3-ui.herokuapp.com/login.php");
     }
 ?>
 
@@ -36,7 +36,7 @@ if (isset($_SESSION['access_token'])) {
 
     } catch (Exception $e) {
       echo $e->getTraceAsString();
-      header("Location: ./logout.php");
+      header("Location: https://g3t3-ui.herokuapp.com//logout.php");
     }
   }
 ?>
@@ -143,11 +143,11 @@ if (isset($_SESSION['access_token'])) {
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
-                    <li><a href="homepage.php">Home</a></li>
-                    <li><a href="./notifications.php">Email</a></li>
-                    <li><a href="./payment_ms/payment.php">Payment</a></li>
-                    <li><a href="summary.php">Summary</a>
-                    <li><a href="./logout.php">Logout</a> <!-- Logout and destroy the session -->
+                    <li><a href="https://g3t3-ui.herokuapp.com/homepage.php">Home</a></li>
+                    <li><a href="https://g3t3-ui.herokuapp.com/notifications.php">Email</a></li>
+                    <li><a href="https://g3t3-ui.herokuapp.com/payment_ms/payment.php">Payment</a></li>
+                    <li><a href="https://g3t3-ui.herokuapp.com/summary.php">Summary</a>
+                    <li><a href="https://g3t3-ui.herokuapp.com/logout.php">Logout</a> <!-- Logout and destroy the session -->
                 </ul>
             </div>
         </div>
@@ -163,7 +163,7 @@ if (isset($_SESSION['access_token'])) {
 
         <div style="text-align:center" >
             
-            <form id="search_bar" method="POST" action="./scheduler_ms/add_trip.php">
+            <form id="search_bar" method="POST" action="https://g3t3-ui.herokuapp.com/scheduler_ms/add_trip.php">
 
                 <font size="+2"> Country: </font> 
                 <select style="width:150px" name="country" id="country" >
