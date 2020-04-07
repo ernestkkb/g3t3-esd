@@ -24,7 +24,7 @@ if (isset($_GET['state'])) {
   $helper->getPersistentDataHandler()->set('state', $_GET['state']);
 }
 
-$login_url = $helper->getLoginUrl("http://localhost/g3t3/app/login.php");
+$login_url = $helper->getLoginUrl("https://g3t3-ui.herokuapp.com/app/login.php");
 
 # Uncomment this if you want to see the login_url
 // print_r($login_url);
@@ -44,13 +44,13 @@ try {
 if (isset($accessToken)) {
   // Logged in!
   $_SESSION['access_token'] = (string) $accessToken;
-  header("Location:./homepage.php");
+  header("Location:https://g3t3-ui.herokuapp.com/app/homepage.php");
 
   // Now you can redirect to another page and use the
   // access token from $_SESSION['access_token']
 } elseif ($helper->getError()) {
   // The user denied the request
-  header("Location:./login.php");
+  header("Location:https://g3t3-ui.herokuapp.com/login.php");
   exit;
 }
 
