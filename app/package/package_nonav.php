@@ -4,7 +4,7 @@
         $user = $_SESSION['user'];
     }
     else{
-        header("Location: login.php");
+        header("Location: https://g3t3-ui.herokuapp.com/app/login.php");
     }
 ?>
 <html>
@@ -40,7 +40,7 @@
               <!-- <li> <i class="fa fa-times" aria-hidden="true"></i> Japan, Hokkaido </li> -->
               </ul>
             </div>
-            <a href="package/package_view.php?tripID=OkjrD6SzQw">View</a>
+            <a href="https://g3t3-ui.herokuapp.com/app/package/package_view.php?tripID=OkjrD6SzQw">View</a>
           </div>
         </div>
         <!-- END Col one -->
@@ -59,7 +59,7 @@
               <!-- <li> <i class="fa fa-times" aria-hidden="true"></i> Singapore Zoo </li> -->
               </ul>
             </div>
-            <a href="package/package_view.php?tripID=cPG0LAtqIk">View</a>
+            <a href="https://g3t3-ui.herokuapp.com/app/package/package_view.php?tripID=cPG0LAtqIk">View</a>
           </div>
         </div>
         <!-- END Col two -->
@@ -77,7 +77,7 @@
               <li> <i class="fa fa-check" aria-hidden="true"></i>5 days</li>
               </ul>
             </div>
-            <a href="package/package_view.php?tripID=6vLq62DGv0">View</a>
+            <a href="https://g3t3-ui.herokuapp.com/app/package/package_view.php?tripID=6vLq62DGv0">View</a>
           </div>
         </div>
         <!-- END Col three -->
