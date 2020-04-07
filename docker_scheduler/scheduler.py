@@ -32,7 +32,7 @@ class package(db.Model):
     day = db.Column(db.Integer())
     tripid = db.Column(db.String(20), nullable=True)
 
-    def __init__(self, id, tripName, placeOfInterest, day, tripID):
+    def __init__(self, id, tripname, placeofinterest, day, tripid):
         self.id = id
         self.tripname = tripname
         self.placeofinterest = placeofinterest
