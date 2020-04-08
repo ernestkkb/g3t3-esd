@@ -25,19 +25,19 @@ CORS(app)
 #Change to own Database
 class Payment(db.Model):
     __tablename__ = 'payment_process'
-    userID = db.Column(db.String(100), primary_key=True)
-    tripID = db.Column(db.String(12), primary_key=True)
+    userid = db.Column(db.String(100), primary_key=True)
+    tripid = db.Column(db.String(12), primary_key=True)
     price = db.Column(db.Float(precision=2), nullable=False)
-    paymentStatus = db.Column(db.String(10), nullable=False)
+    paymentstatus = db.Column(db.String(10), nullable=False)
 
-    def __init__(self, userID, tripID, price, paymentStatus):
-        self.userID = userID
-        self.tripID = tripID
+    def __init__(self, userid, tripid, price, paymentstatus):
+        self.userid = userid
+        self.tripid = tripid
         self.price = price
-        self.paymentStatus = paymentStatus
+        self.paymentstatus = paymentstatus
 
     def json(self):
-        return {"userID": self.userID, "tripID": self.tripID, "price": self.price, "paymentStatus": self.paymentStatus}
+        return {"userID": self.userid, "tripID": self.tripid, "price": self.price, "paymentStatus": self.paymentstatus}
 
 
 paypalrestsdk.configure({
@@ -126,9 +126,9 @@ def execute():
 
 #checkout trip for payment - step 3: update payment status in DB to "paid" once payment is successful  
 # @app.route("/payment/update/<string:tripID>")
-def update_trip_status(tripID):
+def update_trip_status(tripid):
     print("update_trip_status function triggered")
-    payment = Payment.query.filter_by(tripID=tripID).first()
+    payment = Payment.query.filter_by(tripid=tripid).first()
     if payment:
         try:
             payment.paymentStatus = 'paid'
@@ -142,17 +142,17 @@ def update_trip_status(tripID):
 def get_all():
     return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
 
-@app.route("/paymentHistory/<string:userID>")
-def paymentHistory(userID):
-    return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.filter_by(userID=userID).all()]})
+@app.route("/paymentHistory/<string:userid>")
+def paymentHistory(userid):
+    return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.filter_by(userid=userid).all()]})
 
 #Add to cart
-@app.route("/payment/<string:tripID>/<string:userID>/<string:price>/<string:paymentStatus>")
-def get_trip_payment_details(tripID,userID,price,paymentStatus):
-    if (Payment.query.filter_by(tripID=tripID).first()):
-        return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripID)}), 400
+@app.route("/payment/<string:tripid>/<string:userid>/<string:price>/<string:paymentstatus>")
+def get_trip_payment_details(tripid,userid,price,paymentstatus):
+    if (Payment.query.filter_by(tripid=tripid).first()):
+        return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripid)}), 400
 
-    data = {"userID":userID, "tripID":tripID, "price":price, "paymentStatus":paymentStatus}
+    data = {"userID":userid, "tripID":tripid, "price":price, "paymentStatus":paymentstatus}
     payment = Payment(**data)
 
     try:

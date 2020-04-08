@@ -32,7 +32,7 @@ class package(db.Model):
     day = db.Column(db.Integer())
     tripid = db.Column(db.String(20), nullable=True)
 
-    def __init__(self, id, tripName, placeOfInterest, day, tripID):
+    def __init__(self, id, tripname, placeofinterest, day, tripid):
         self.id = id
         self.tripname = tripname
         self.placeofinterest = placeofinterest
@@ -55,7 +55,7 @@ class scheduler(db.Model):
     day = db.Column(db.Integer())
     tripid = db.Column(db.String(20), nullable=True)
 
-    def __init__(self, id, tripName, facebookID, placeOfInterest, paymentStatus,day, tripID):
+    def __init__(self, id, tripname, facebookid, placeofinterest, paymentstatus,day, tripid):
         self.id = id
         self.tripname = tripname
         self.facebookid = facebookid
@@ -69,9 +69,9 @@ class scheduler(db.Model):
     def json(self):
         return {"tripID": self.tripid, "tripName": self.tripname, "facebookID": self.facebookid, "placeOfInterest": self.placeofinterest, "paymentStatus": self.paymentstatus, "day":self.day, "id":self.id}
 
-@app.route("/retrieveAllTripID/<string:tripID>")
-def retrieveAllTripID(tripID):
-    details = package.query.filter_by(tripID=tripID).all()
+@app.route("/retrieveAllTripID/<string:tripid>")
+def retrieveAllTripID(tripid):
+    details = package.query.filter_by(tripid=tripid).all()
     detailsToReturn = {"details" : [detail.json() for detail in details]}
     if detailsToReturn:
         print(jsonify(detailsToReturn))
@@ -80,18 +80,18 @@ def retrieveAllTripID(tripID):
 
 
 
-@app.route("/retrieveByTripID/<string:tripID>/<string:facebookID>")
-def retrieveByTripID(tripID,facebookID):
-    details = scheduler.query.filter_by(tripID=tripID,facebookID=facebookID).order_by(scheduler.day).all()
+@app.route("/retrieveByTripID/<string:tripid>/<string:facebookid>")
+def retrieveByTripID(tripid,facebookid):
+    details = scheduler.query.filter_by(tripid=tripid,facebookid=facebookid).order_by(scheduler.day).all()
     detailsToReturn = {"details" : [detail.json() for detail in details]}
     if detailsToReturn:
         print(jsonify(detailsToReturn))
         return jsonify(detailsToReturn)
     return jsonify({"message": "Trip not found."}), 404
 
-@app.route("/addTrip/<string:tripID>/<string:userID>")
-def addTrip(tripID,userID):
-    details = package.query.filter_by(tripID=tripID).all()
+@app.route("/addTrip/<string:tripid>/<string:userid>")
+def addTrip(tripid,userid):
+    details = package.query.filter_by(tripid=tripid).all()
     detailsToReturn = {"details" : [detail.json() for detail in details]}
     if detailsToReturn:
         for i in detailsToReturn['details']:
@@ -114,9 +114,9 @@ def add_POI_for_preplanned(data):
     
     return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
-@app.route("/retrieveAll/<string:facebookID>")
-def retrieveAll(facebookID):
-    details = scheduler.query.filter_by(facebookID=facebookID).all()
+@app.route("/retrieveAll/<string:facebookid>")
+def retrieveAll(facebookid):
+    details = scheduler.query.filter_by(facebookid=facebookid).all()
     print(details)
     detailsToReturn = {"details" : [detail.json() for detail in details]}
     print(detailsToReturn)
