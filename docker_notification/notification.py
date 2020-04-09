@@ -10,8 +10,8 @@ import pika
 app = Flask(__name__)
 
 mail_settings = {
-    "MAIL_SERVER": 'smtp.live.com',
-    "MAIL_PORT": 465,
+    "MAIL_SERVER": 'smtp.office365.com',
+    "MAIL_PORT": 587,
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": True,
     "MAIL_USERNAME": 'g3t3_travel@outlook.com',
