@@ -131,7 +131,7 @@ def add_POI():
     #data = {"id":"5", "tripName": "testing","facebookID":"1", "placeOfInterest":{}, "startDate": "2020-03-12", "endDate":"2020-03-15","paymentStatus":"paid", "day":day} # details of book must be sent in body of the request in JSON format. get_json() retrieves the data from the request received.
     data = request.get_json()
     print(data)
-    addnewpoi = scheduler(**data)
+    addnewpoi = scheduler(data.id,data.tripname,data.facebookid,data.placeofinterest,data.paymentstatus,data.day,data.tripid)
 
     try:
         db.session.add(addnewpoi) # db.session provided by SQLAlchemy. 
