@@ -17,24 +17,25 @@ mail_settings = {
     "MAIL_USERNAME": 'dtan342@gmail.com',
     "MAIL_PASSWORD": 'Constiislyf3#'
 }
+################################################################### AMQP CODE ################################################################################
+# url_str = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost//')
+# url = urlparse(url_str)
+# params = pika.ConnectionParameters(host=url.hostname, virtual_host=url.path[1:],
+# credentials=pika.PlainCredentials(url.username, url.password))
 
-url_str = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost//')
-url = urlparse(url_str)
-params = pika.ConnectionParameters(host=url.hostname, virtual_host=url.path[1:],
-credentials=pika.PlainCredentials(url.username, url.password))
+# connection = pika.BlockingConnection(params)
+# channel = connection.channel()
+# exchangename="exchange_topic"
+# channel.exchange_declare(exchange=exchangename, exchange_type='topic')
+# channelqueue = channel.queue_declare(queue='notification', durable=True) 
+# queue_name = channelqueue.method.queue
+# channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.payment') 
+# channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+# channel.start_consuming()
 
-connection = pika.BlockingConnection(params)
-channel = connection.channel()
-exchangename="exchange_topic"
-channel.exchange_declare(exchange=exchangename, exchange_type='topic')
-channelqueue = channel.queue_declare(queue='notification', durable=True) 
-queue_name = channelqueue.method.queue
-channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.payment') 
-channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
-channel.start_consuming()
-
-def callback(channel, method, properties, body): 
-    print(body)
+# def callback(channel, method, properties, body): 
+#     print(body)
+################################################################### AMQP CODE ################################################################################
 
 @app.route("/notification/email/<string:emailAddress>",methods=["POST"])
 def send_email(emailAddress):

@@ -96,7 +96,7 @@
 
         var facebookID = '<?php echo $user[0]?>';
         var tripID = '<?php echo $tripID?>';
-        var serviceStartURL = "https://g3t3-notification.herokuapp.com/retrieveByTripID/"+tripID+"/"+facebookID;
+        var serviceStartURL = "https://g3t3-scheduler.herokuapp.com/retrieveByTripID/"+tripID+"/"+facebookID;
         // var data = getData1(serviceURL);
         var places_dict = {};
         async function getData1(serviceURL) {
