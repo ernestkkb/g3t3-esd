@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 CORS(app)
 
 #Change to own Database
-class Payment(db.Model):
+class payment(db.Model):
     __tablename__ = 'payment_process'
     userid = db.Column(db.String(100), primary_key=True)
     tripid = db.Column(db.String(12), primary_key=True)
@@ -153,15 +153,15 @@ def get_trip_payment_details(tripid,userid,price,paymentstatus):
         return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripid)}), 400
 
     data = {"userID":userid, "tripID":tripid, "price":price, "paymentStatus":paymentstatus}
-    payment = Payment(**data)
+    payment1 = payment(**data)
 
     try:
-        db.session.add(payment)
+        db.session.add(payment1)
         db.session.commit()
     except:
         return jsonify({"message": "An error occurred creating the trip payment."}), 500
 
-    return jsonify(payment.json()), 201
+    return jsonify(payment1.json()), 201
 
 if __name__ == '__main__':
     #port=5000 - location search
