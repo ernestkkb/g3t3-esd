@@ -95,10 +95,10 @@ def addTrip(tripid,userid):
     detailsToReturn = {"details" : [detail.json() for detail in details]}
     if detailsToReturn:
         for i in detailsToReturn['details']:
-            i['facebookID'] = userID
+            i['facebookID'] = userid
             i['paymentStatus'] = "unpaid"
             add_POI_for_preplanned(i)
-        return jsonify(detailsToReturn,userID)
+        return jsonify(detailsToReturn,userid)
     return jsonify({"message": "Trip not found."}), 404
     
 def add_POI_for_preplanned(data):
