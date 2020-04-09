@@ -223,10 +223,9 @@
                 if (!data) {
                     console.log('Payment History list empty or undefined.')
                 } else {
-                    if (data.length>1){
-                        $("#paymentTable td").remove();
-                    } 
+                    
                     for (const poi of data){
+                        // $("#paymentTable td").remove();
                         var rows = "";
                             eachRow =
                                 "<td>" + poi.tripID + "</td>" +

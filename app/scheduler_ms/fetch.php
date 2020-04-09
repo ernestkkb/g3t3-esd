@@ -164,6 +164,7 @@
             var price = '20';
             var paymentStatus = "unpaid";
             var URLtoAdd = "https://g3t3-payment.herokuapp.com/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
+            console.log(URLtoAdd);
             addTripToDB(URLtoAdd);
             window.location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
         
