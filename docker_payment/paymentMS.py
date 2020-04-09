@@ -165,6 +165,16 @@ def get_trip_payment_details(tripid,userid,price,paymentstatus):
 
     return jsonify(payment.json()), 201
 
+@app.route("/deleteAll")
+def deleteAll():
+    try:
+        db.session.query(Payment).delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
+
+        return jsonify({"message": "An error occurred deleting the rows"}), 500
+    return jsonify({"message": "rows deleted"}), 500
 if __name__ == '__main__':
     #port=5000 - location search
     #port=5001 - package reccomendation 

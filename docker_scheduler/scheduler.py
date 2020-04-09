@@ -141,6 +141,17 @@ def add_POI():
     
     return jsonify(addnewpoi.json()), 201 # if no errors, return JSON representation of book with HTTP status cde 201 - CREATED
 
+@app.route("/deleteAll")
+def deleteAll():
+    try:
+        db.session.query(scheduler).delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
+
+        return jsonify({"message": "An error occurred deleting the rows"}), 500
+    return jsonify({"message": "rows deleted"}), 500
+    
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0',port=port, debug=False) 
