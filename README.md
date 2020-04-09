@@ -28,25 +28,36 @@ Our Solution: One-stop online travel platform where users can plan their travel 
 6. Notification Page
 7. Payment Page
 
-## Microservices and file location
-1. Location search for countries/cities 
-2. Scheduler
-3. Payment
-4. Notifications 
-5. Places
+## Microservices
+1. Location search for countries/cities @g3t3-esd\app\search_ms\search.py
+2. Scheduler @g3t3-esd\app\scheduler_ms\scheduler.py
+3. Payment @g3t3-esd\app\payment_ms\paymentMS.py and paymentAMQP.py
+4. Notifications@ g3t3-esd\app\notification_ms\notification.py
+5. Places @g3t3-esd\app\places_ms\placesapi.py
 
 ![tech_overview](./images_for_md/tech_overview.jpg)
 
 ## User Scenarios 
-1. login + add package
-2. customise trip + view trips
-3. route planning 
-4. payment + notification
+1. Login & Adding Package Recommendations
+    * The user will login to our application via Facebook. The UI communicates with Facebook Graph API to allow users to access our application. The user can then select the premade packages shown on the UI. The UI communicates with the Scheduler Microservice to show the details of the package and allow users to add the package into their trips. 
+  
+2. Customising Trips & Viewing all Trips
+   * Users can customise their trips by choosing a desired city, tripname, number of days via UI which communicates with Location Search Microservice. This returns a list of places of interest from the Places Microservice (Google Places API) which shows the users the details of each POI. The UI then communicates with Scheduler Microservice when the user adds the desired places of interest to the trip. When the user confirms the trip, the UI will show a page where he/she can view all his/her trips. The UI sends the user's facebook ID to the Scheduler Microservice to view all confirmed trips with its details, a view route and payment option. 
+  
+3. Route planning
+   * Users can decide the sequence of places for each day of any trip and the UI communicates with Google Directions API to show the time taken and mapped route to travel from one place of interest to another based on the selection.
+  
+4. Payment & Notification
+   * The UI communicates with Payment Microservice to view payment details. Payment is then done via PayPal API. Once payment is successful, the user can then receive the itinerary by submitting their emails. The UI communicates with the Notifications Microservice which communicates with Scheduler Microservice to do this. 
+   
+
+   
 
 ## Running our application
-* Simply follow this link [HerokuLink](https://g3t3-ui.herokuapp.com)
+* Our application has been dockerised. It is composed and deployed on Heroku Cloud
+* To use our application, simply follow this link [HerokuLink](https://g3t3-ui.herokuapp.com) 
 
-**The following Python modules are used within our project**
+**Python Modules used**
 * flask
 * flask_mail
 * flask_cors
@@ -54,6 +65,8 @@ Our Solution: One-stop online travel platform where users can plan their travel 
 * flask_sqlalchemy
 * pika
 * paypalrestsdk
+  
+_Other dependencies not listed above may have been downloaded by the respective modules_
 
 ## Beyond the Labs
 
