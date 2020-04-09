@@ -153,7 +153,7 @@ def get_trip_payment_details(tripid,userid,price,paymentstatus):
         return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripid)}), 400
 
     data = {"userID":userid, "tripID":tripid, "price":price, "paymentStatus":paymentstatus}
-    payment1 = payment(**data)
+    payment1 = payment(userid,tripid,price,paymentstatus)
 
     try:
         db.session.add(payment1)
