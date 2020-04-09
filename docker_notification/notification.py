@@ -12,8 +12,8 @@ app = Flask(__name__)
 mail_settings = {
     "MAIL_SERVER": 'smtp.mail.yahoo.com',
     "MAIL_PORT": 465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
+    "MAIL_USE_TLS": True,
+    "MAIL_USE_SSL": False,
     "MAIL_USERNAME": 'g3t3_travel@yahoo.com',
     "MAIL_PASSWORD": 'onestoptravelplan0602'
 }
