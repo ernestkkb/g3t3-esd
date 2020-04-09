@@ -47,7 +47,7 @@ paypalrestsdk.configure({
 
 #checkout trip for payment - step 2: invoke paypal API with tripdetails 
 @app.route('/makepayment', methods=['POST'])
-def payment():
+def payment1():
     if request.is_json:
         triplist = request.get_json()
     else:
@@ -128,7 +128,7 @@ def execute():
 # @app.route("/payment/update/<string:tripID>")
 def update_trip_status(tripid):
     print("update_trip_status function triggered")
-    payment = Payment.query.filter_by(tripid=tripid).first()
+    payment = payment.query.filter_by(tripid=tripid).first()
     if payment:
         try:
             payment.paymentStatus = 'paid'
@@ -140,16 +140,16 @@ def update_trip_status(tripid):
 
 @app.route("/payment")
 def get_all():
-    return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
+    return jsonify({"payment_process": [payment_process.json() for payment_process in payment.query.all()]})
 
 @app.route("/paymentHistory/<string:userid>")
 def paymentHistory(userid):
-    return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.filter_by(userid=userid).all()]})
+    return jsonify({"paymentHistory": [payment_process.json() for payment_process in payment.query.filter_by(userid=userid).all()]})
 
 #Add to cart
 @app.route("/payment/<string:tripid>/<string:userid>/<string:price>/<string:paymentstatus>")
 def get_trip_payment_details(tripid,userid,price,paymentstatus):
-    if (Payment.query.filter_by(tripid=tripid).first()):
+    if (payment.query.filter_by(tripid=tripid).first()):
         return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripid)}), 400
 
     data = {"userID":userid, "tripID":tripid, "price":price, "paymentStatus":paymentstatus}
