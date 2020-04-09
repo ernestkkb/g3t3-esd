@@ -10,11 +10,11 @@ import pika
 app = Flask(__name__)
 
 mail_settings = {
-    "MAIL_SERVER": 'smtp.office365.com',
-    "MAIL_PORT": 587,
+    "MAIL_SERVER": 'smtp.mail.yahoo.com',
+    "MAIL_PORT": 465,
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": 'g3t3_travel@outlook.com',
+    "MAIL_USERNAME": 'g3t3_travel@yahoo.com',
     "MAIL_PASSWORD": 'onestoptravelplan0602'
 }
 ################################################################### AMQP CODE ################################################################################
