@@ -118,10 +118,9 @@ urllib3==1.25.8
 Werkzeug==1.0.0
 ```
 ### 3. Heroku
+We used Heroku to compose and host all our docker containers on the cloud. Heroku simplifies the usage of our application as it does all the heavy lifting for the user in terms of downloading dependencies, starting up individual microservices and establishing connections to the database of our application.
 
-# ERNEST HELP HERE
-
-
+![use_of_docker](./images_for_md/heroku_dashboard.jpg)
 
 
 

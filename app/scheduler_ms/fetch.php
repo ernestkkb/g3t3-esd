@@ -79,6 +79,7 @@
 
         var city = '<?php echo $_POST['city'] ?>';
         var tripName = '<?php echo $_POST['tripName'] ?>';
+        console.log(tripName);
         var serviceURL = "https://g3t3-placesapi.herokuapp.com/city"+"/"+city;
         var tripID = makeid(10);
         var data = getData(serviceURL);
@@ -94,7 +95,7 @@
                 const response = await fetch(serviceURL, requestParam);
                 data = await response.json();
                 var rows = "";
-                console.log(data)
+                //console.log(data)
                 rowcounts = data.length;
                 counter = 1;
                 for (const poi of data){
@@ -133,6 +134,7 @@
             poi_dict['name'] = name_poi;
             poi_dict['address'] = address_poi;
             var data = {"tripID":tripID, "tripName": tripName,"facebookID":facebookID, "placeOfInterest":poi_dict, "paymentStatus":"paid", "day":day, "id":id};
+            console.log(data);
             // data to send over to scheduler: name, address, day
             var addpoiURL = "https://g3t3-scheduler.herokuapp.com/addPOI";
             await fetch(
