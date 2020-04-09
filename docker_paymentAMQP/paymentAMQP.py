@@ -13,15 +13,17 @@ import datetime
 import pika
 import paypalrestsdk
 import requests
+import urllib.parse
+from urllib.parse import urlparse
+
+url_str = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost//')
+url = urlparse(url_str)
+params = pika.ConnectionParameters(host=url.hostname, virtual_host=url.path[1:],
+credentials=pika.PlainCredentials(url.username, url.password))
 
 paymentURL = "https://g3t3-payment.herokuapp.com/makepayment"
-#checkout trip for payment - step 1: consume trip details from scheduler MS 
-hostname = "https://g3t3-payment.herokuapp.com/" # default host
-port = 5672 # default port
-# connect to the broker and set up a communication channel in the connection
-connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+connection = pika.BlockingConnection(params)
 channel = connection.channel()
-
 # set up the exchange if the exchange doesn't exist
 exchangename="exchange_topic"
 channel.exchange_declare(exchange=exchangename, exchange_type='topic')
@@ -66,7 +68,7 @@ def reply_callback(channel, method, properties, body): # required signature for 
 
 def forward_tripID(tripID):
     print("forward_tripID function triggered")
-    """inform Scheduler & Notification microservice"""
+    """inform Notification microservice"""
     # default username / password to the borker are both 'guest'
     # hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
     # port = 5672 # default messaging port.

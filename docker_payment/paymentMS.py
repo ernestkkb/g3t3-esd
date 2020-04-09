@@ -11,6 +11,7 @@ import pika
 import paypalrestsdk
 import psycopg2
 from os import environ
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 #change link to own database directory
@@ -88,9 +89,11 @@ def payment():
         status=update_trip_status(triplist[0]["sku"])
         print(status)
         if status[1] == 201: 
-            hostname = "host.docker.internal"
-            port = 5672 
-            connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+            url_str = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost//')
+            url = urlparse(url_str)
+            params = pika.ConnectionParameters(host=url.hostname, virtual_host=url.path[1:],
+            credentials=pika.PlainCredentials(url.username, url.password))
+            connection = pika.BlockingConnection(params)
             channel = connection.channel()
             replymessage = json.dumps({"ID":triplist[0]['sku'] }, default=str)
             exchangename="exchange_topic"
