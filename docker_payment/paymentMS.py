@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 CORS(app)
 
 #Change to own Database
-class payment(db.Model):
+class Payment(db.Model):
     __tablename__ = 'payment_process'
     userid = db.Column(db.String(100), primary_key=True)
     tripid = db.Column(db.String(12), primary_key=True)
@@ -47,7 +47,7 @@ paypalrestsdk.configure({
 
 #checkout trip for payment - step 2: invoke paypal API with tripdetails 
 @app.route('/makepayment', methods=['POST'])
-def payment1():
+def payment():
     if request.is_json:
         triplist = request.get_json()
     else:
@@ -128,7 +128,7 @@ def execute():
 # @app.route("/payment/update/<string:tripID>")
 def update_trip_status(tripid):
     print("update_trip_status function triggered")
-    payment = payment.query.filter_by(tripid=tripid).first()
+    payment = Payment.query.filter_by(tripid=tripid).first()
     if payment:
         try:
             payment.paymentStatus = 'paid'
@@ -140,28 +140,27 @@ def update_trip_status(tripid):
 
 @app.route("/payment")
 def get_all():
-    return jsonify({"payment_process": [payment_process.json() for payment_process in payment.query.all()]})
+    return jsonify({"payment_process": [payment_process.json() for payment_process in Payment.query.all()]})
 
 @app.route("/paymentHistory/<string:userid>")
 def paymentHistory(userid):
-    return jsonify({"paymentHistory": [payment_process.json() for payment_process in payment.query.filter_by(userid=userid).all()]})
+    return jsonify({"paymentHistory": [payment_process.json() for payment_process in Payment.query.filter_by(userid=userid).all()]})
 
 #Add to cart
 @app.route("/payment/<string:tripid>/<string:userid>/<string:price>/<string:paymentstatus>")
 def get_trip_payment_details(tripid,userid,price,paymentstatus):
-    if (payment.query.filter_by(tripid=tripid).first()):
+    if (Payment.query.filter_by(tripid=tripid).first()):
         return jsonify({"message": "A trip with Trip ID '{}' already exists.".format(tripid)}), 400
 
-    data = {"userID":userid, "tripID":tripid, "price":price, "paymentStatus":paymentstatus}
-    payment1 = payment(userid,tripid,price,paymentstatus)
+    payment = Payment(userid,tripid,price,paymentstatus)
 
     try:
-        db.session.add(payment1)
+        db.session.add(payment)
         db.session.commit()
     except:
         return jsonify({"message": "An error occurred creating the trip payment."}), 500
 
-    return jsonify(payment1.json()), 201
+    return jsonify(payment.json()), 201
 
 if __name__ == '__main__':
     #port=5000 - location search
