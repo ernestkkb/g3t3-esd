@@ -10,12 +10,12 @@ import pika
 app = Flask(__name__)
 
 mail_settings = {
-    "MAIL_SERVER": 'smtp.gmail.com',
+    "MAIL_SERVER": 'smtp.live.com',
     "MAIL_PORT": 465,
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": 'dtan342@gmail.com',
-    "MAIL_PASSWORD": 'Constiislyf3#'
+    "MAIL_USERNAME": 'g3t3_travel@outlook.com',
+    "MAIL_PASSWORD": 'onestoptravelplan0602'
 }
 ################################################################### AMQP CODE ################################################################################
 # url_str = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost//')
