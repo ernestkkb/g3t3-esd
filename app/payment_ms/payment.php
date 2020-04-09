@@ -222,8 +222,10 @@
                 // array or array.length are falsy
                 if (!data) {
                     console.log('Payment History list empty or undefined.')
-                } else { 
-                    $("#paymentTable td").remove();
+                } else {
+                    if (data.length>1){
+                        $("#paymentTable td").remove();
+                    } 
                     for (const poi of data){
                         var rows = "";
                             eachRow =
