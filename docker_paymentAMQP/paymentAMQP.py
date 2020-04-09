@@ -14,9 +14,9 @@ import pika
 import paypalrestsdk
 import requests
 
-paymentURL = "http://host.docker.internal:5003/makepayment"
+paymentURL = "https://g3t3-payment.herokuapp.com/makepayment"
 #checkout trip for payment - step 1: consume trip details from scheduler MS 
-hostname = "host.docker.internal" # default host
+hostname = "https://g3t3-payment.herokuapp.com/" # default host
 port = 5672 # default port
 # connect to the broker and set up a communication channel in the connection
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
