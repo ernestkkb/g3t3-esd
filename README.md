@@ -23,7 +23,7 @@ Our Solution: One-stop online travel platform where users can plan their travel 
 1. Login page
 2. Homepage (Search & Premade
 3. Packages)
-4. POI page 
+4. Places Of Interest (POI) page 
 5. Summary page for user’s trips
 6. Notification Page
 7. Payment Page
@@ -120,10 +120,23 @@ Werkzeug==1.0.0
 ### 3. Heroku
 We used Heroku to compose and host all our docker containers on the cloud. Heroku simplifies the usage of our application as it does all the heavy lifting for the user in terms of downloading dependencies, starting up individual microservices and establishing connections to the database of our application.
 
-![use_of_docker](./images_for_md/heroku_dashboard.jpg)
+**Different applications hosted on heroku:** 
+
+![heroku_dashboard](./images_for_md/heroku_dashboard.jpg)
+
+To leverage on the tools and services provided by Heroku which is a Platform as a service, we uploaded our docker images which are built from our microservices to form 6 standalone applications on Heroku. Out of the 6 applications, payment microservice, scheduler microservice and search microservice are attached to Heroku’s postgresql database separately. In addition, as we are implementing AMQP as an open standard protocol, we leveraged on the AMQPcloud provided by Heroku to facilitate messaging based communication between our microservices. Furthermore, AMQPcloud provides a RabbitMQ manager to help us visually track the number of messages in each queue at one time.
 
 
 
 
 
 
+**Postgresql DB attached to different applications/Microservices:**
+![use_of_docker](./images_for_md/heroku_posgresdb.jpg)
+
+
+**Postgresql Database via command line:**
+![use_of_docker](./images_for_md/heroku_posgrescmi.jpg)
+
+**RabbitMQ Manager by Heroku**
+![heroku_rabbitMQ](./images_for_md/heroku_rabbitMQ.jpg)
