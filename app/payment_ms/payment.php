@@ -223,6 +223,7 @@
                 if (!data) {
                     console.log('Payment History list empty or undefined.')
                 } else { 
+                    $("#paymentTable td").remove();
                     var rows = "";
                     for (const poi of data){
                             eachRow =
