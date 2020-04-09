@@ -1,7 +1,7 @@
 # g3t3-esd One-Stop Travel Planner
+![use_of_docker](./images_for_md/front_cover.jpg)
 
-## [Github Repository](https://github.com/ernestkkb/g3t3-esd.git)
-
+## Click [here](https://github.com/ernestkkb/g3t3-esd.git) to view our Github repository
 
 | Student     | Email          |
 | -------- | -------------- |
@@ -12,12 +12,12 @@
 | Tan JiaLe Brennan | brennan.tan.2018@sis.smu.edu.sg |
 | Sim Theen Cheng | tcsim.2018@sis.smu.edu.sg |
 
-
 ## About 
 Problem: Existing travel planners are not comprehensive & customisable enough
 
 Our Solution: One-stop online travel platform where users can plan their travel route according to their preferences
 
+![app_flow](./images_for_md/app_flow.jpg)
 
 ## Main Screens
 1. Login page
@@ -28,26 +28,32 @@ Our Solution: One-stop online travel platform where users can plan their travel 
 6. Notification Page
 7. Payment Page
 
-## Microservices
+## Microservices and file location
 1. Location search for countries/cities 
 2. Scheduler
 3. Payment
-4. Notifications
+4. Notifications 
 5. Places
 
-**To run all the microservices, do ensure that the following modules are installed in your system**
-```
+![tech_overview](./images_for_md/tech_overview.jpg)
 
+## User Scenarios 
+1. login + add package
+2. customise trip + view trips
+3. route planning 
+4. payment + notification
 
+## Running our application
+* Simply follow this link [HerokuLink](https://g3t3-ui.herokuapp.com)
 
-
-
-```
-
-
-
-
-
+**The following Python modules are used within our project**
+* flask
+* flask_mail
+* flask_cors
+* requests
+* flask_sqlalchemy
+* pika
+* paypalrestsdk
 
 ## Beyond the Labs
 
@@ -58,12 +64,12 @@ Our Solution: One-stop online travel platform where users can plan their travel 
 * Paypal API
 
 
-
-
-
-
 ### 2. Docker
-requirements.txt for docker
+![use_of_docker](./images_for_md/use_of_docker.jpg)
+
+* Docker was used to containerise the microservices with the relevant 
+
+Shared requirements.txt across containers
 ```
 blinker==1.4
 certifi==2019.11.28
@@ -98,9 +104,9 @@ SQLAlchemy==1.3.14
 urllib3==1.25.8
 Werkzeug==1.0.0
 ```
-
 ### 3. Heroku
 
+# ERNEST HELP HERE
 
 
 
