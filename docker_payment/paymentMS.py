@@ -134,7 +134,7 @@ def update_trip_status(tripid):
     payment = Payment.query.filter_by(tripid=tripid).first()
     if payment:
         try:
-            payment.paymentStatus = 'paid'
+            payment.paymentstatus = 'paid'
             db.session.commit()
             return ("message: Payment status updated.",201)
         except:
