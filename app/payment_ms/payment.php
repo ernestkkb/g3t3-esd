@@ -218,7 +218,7 @@
                 data = items.paymentHistory;
     
                 // var books = data.books; //the arr is in data.books of the JSON data
-                // console.log(data)
+                console.log(data)
                 // array or array.length are falsy
                 if (!data) {
                     console.log('Payment History list empty or undefined.')
