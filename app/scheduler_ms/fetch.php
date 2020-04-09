@@ -133,7 +133,7 @@
             var address_poi = details[1];
             poi_dict['name'] = name_poi;
             poi_dict['address'] = address_poi;
-            var data = {"tripID":tripID, "tripName": tripName,"facebookID":facebookID, "placeOfInterest":poi_dict, "paymentStatus":"paid", "day":day, "id":id};
+            var data = {"tripID":tripID, "tripName": tripName,"facebookID":facebookID, "placeOfInterest":poi_dict, "paymentStatus":"unpaid", "day":day, "id":id};
             console.log(data);
             // data to send over to scheduler: name, address, day
             var addpoiURL = "https://g3t3-scheduler.herokuapp.com/addPOI";
