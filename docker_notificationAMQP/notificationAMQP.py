@@ -40,13 +40,5 @@ def callback(channel, method, properties, body): # required signature for the ca
     print("Trip payment is successful for Trip: " + json.loads(body))
     print() # print a new line feed
 
-    updateschedulerDBURL = "https://g3t3-scheduler.herokuapp.com/update/"+body
-    try: 
-        r=requests.get(updateschedulerDBURL)
-    except requests.exceptions.RequestException as e:
-        print(e)
-    print(r.status_code)
-    print(r.text)
-
 if __name__ == '__main__':
     receiveTripDetails2() #invoke the consume function 
