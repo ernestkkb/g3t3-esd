@@ -42,7 +42,7 @@ PayPal
 5. Places 
    * g3t3-esd\app\places_ms\placesapi.py
 
-![tech_overview](./images_for_md/tech_overview.jpg)
+![tech_overview](https://github.com/ernestkkb/g3t3-esd/blob/master/images_for_md/tech_overview.JPG)
 
 ## Running the User Scenarios / UAT
 1. Login & Adding Package Recommendations
