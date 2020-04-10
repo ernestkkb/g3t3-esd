@@ -1,11 +1,8 @@
 # One-Stop Travel Planner by G3T3
 
-
-
 Existing travel planners today are not comprehensive and customisable enough. Our solution is a one-stop online travel platform where users can plan their travel routes according to their preferences.
 
 ## Getting Started
-
 To get a copy of the project up and running on your local machine for development and testing purposes, download the .zip file provided
 
 ### Prerequisites
@@ -17,7 +14,6 @@ To get a copy of the project up and running on your local machine for developmen
 
 Reason: Our application has been containerised using Docker and is composed and deployed on Heroku Cloud. To test our application, simply follow this link [HerokuLink](https://g3t3-ui.herokuapp.com) 
 
-
 ***Note: You may use the following dummy account for testing purposes***
 ```
 PayPal
@@ -27,12 +23,11 @@ PayPal
 
 ## Main Screens
 1. Login page
-2. Homepage (Search & Premade
-3. Packages)
-4. Places Of Interest (POI) page 
-5. Summary page for user’s trips
-6. Notification Page
-7. Payment Page
+2. Homepage (Search & Premade Packages)
+3. Places Of Interest (POI) page 
+4. Summary page for user’s trips
+5. Notification Page
+6. Payment Page
 
 ## Microservices
 1. Location search for countries/cities
@@ -145,8 +140,6 @@ PayPal
      * Wait to receive the email (~ 1 to 2 minutes)
      * Check your Junk Email
      * Confirm that a confirmation email has been sent to you
-
-
 
 ## Project Directory Structure
 *Note: Only the most critical files to our application are explicitly show. The Python files implementing the microservices have been marked with 3 asterisks \*\*\**
