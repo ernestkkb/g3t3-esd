@@ -175,10 +175,8 @@ PayPal
  ┃ ┃ ┣ 📜scheduler.py ***
  ┃ ┃ ┗ 📜serviceWorker.js
  ┃ ┣ 📂search_ms
- ┃ ┃ ┣ 📜googlemaps_sample.php
  ┃ ┃ ┣ 📜search.php
  ┃ ┃ ┣ 📜search.py ***
- ┃ ┃ ┗ 📜test_data.json
  ┃ ┣ 📂vendor
  ┃ ┃ ┣ 📂composer
  ┃ ┃ ┣ 📂facebook
