@@ -1,23 +1,29 @@
-# g3t3-esd One-Stop Travel Planner
-![use_of_docker](./images_for_md/front_cover.jpg)
+# One-Stop Travel Planner by G3T3
 
-## Click [here](https://github.com/ernestkkb/g3t3-esd.git) to view our Github repository
 
-| Student     | Email          |
-| -------- | -------------- |
-| Khoo Khim Boon Ernest | ernest.khoo.2018@sis.smu.edu.sg	 |
-| Jaslyn Toh Lixuan | jaslyntoh.2018@sis.smu.edu.sg	 |
-| Chua Wilson | wilson.chua.2018@sis.smu.edu.sg |
-| Tan Chin Hoong | chtan.2018@sis.smu.edu.sg |
-| Tan JiaLe Brennan | brennan.tan.2018@sis.smu.edu.sg |
-| Sim Theen Cheng | tcsim.2018@sis.smu.edu.sg |
 
-## About 
-Problem: Existing travel planners are not comprehensive & customisable enough
+Existing travel planners today are not comprehensive and customisable enough. Our solution is a one-stop online travel platform where users can plan their travel routes according to their preferences.
 
-Our Solution: One-stop online travel platform where users can plan their travel route according to their preferences
+## Getting Started
 
-![app_flow](./images_for_md/app_flow.jpg)
+To get a copy of the project up and running on your local machine for development and testing purposes, download the .zip file provided
+
+### Prerequisites
+
+- An internet connection
+- A Facebook Account
+- A PayPal Account
+- Allow notifications for pages visited
+
+Reason: Our application has been containerised using Docker and is composed and deployed on Heroku Cloud. To test our application, simply follow this link [HerokuLink](https://g3t3-ui.herokuapp.com) 
+
+
+***Note: You may use the following dummy account for testing purposes***
+```
+PayPal
+- Username: sb-tkny31173509@personal.example.com
+- Password: 9-&aVnbs
+```
 
 ## Main Screens
 1. Login page
@@ -29,35 +35,198 @@ Our Solution: One-stop online travel platform where users can plan their travel 
 7. Payment Page
 
 ## Microservices
-1. Location search for countries/cities @g3t3-esd\app\search_ms\search.py
-2. Scheduler @g3t3-esd\app\scheduler_ms\scheduler.py
-3. Payment @g3t3-esd\app\payment_ms\paymentMS.py and paymentAMQP.py
-4. Notifications@ g3t3-esd\app\notification_ms\notification.py
-5. Places @g3t3-esd\app\places_ms\placesapi.py
+1. Location search for countries/cities
+   * g3t3-esd\app\search_ms\search.py
+2. Scheduler
+   * g3t3-esd\app\scheduler_ms\scheduler.py
+3. Payment 
+   * g3t3-esd\app\payment_ms\paymentMS.py
+   * g3t3-esd\app\payment_ms\paymentAMQP.py
+4. Notifications 
+   * g3t3-esd\app\notification_ms\notification.py
+5. Places 
+   * g3t3-esd\app\places_ms\placesapi.py
 
 ![tech_overview](./images_for_md/tech_overview.jpg)
 
-## User Scenarios 
+## Running the User Scenarios / UAT
 1. Login & Adding Package Recommendations
-    * The user will login to our application via Facebook. The UI communicates with Facebook Graph API to allow users to access our application. The user can then select the premade packages shown on the UI. The UI communicates with the Scheduler Microservice to show the details of the package and allow users to add the package into their trips. 
+   - Login
+     - Visit https://g3t3-ui.herokuapp.com/ 
+     - Click on "Sign in with Facebook" button
+     - Click on "Continue as {your_name} " button
+     - Click on "Sign in with Facebook" button
+
+   - Adding Package Recommendations
+     - Scroll to the bottom of the page
+     - Click "View" button on "Australia Melbourne" package
+     - Click on "Submit" button
+     - Click on "OK" alert button at the top of the page
+     - Check that the package has been added at the bottom of the page
   
 2. Customising Trips & Viewing all Trips
-   * Users can customise their trips by choosing a desired city, tripname, number of days via UI which communicates with Location Search Microservice. This returns a list of places of interest from the Places Microservice (Google Places API) which shows the users the details of each POI. The UI then communicates with Scheduler Microservice when the user adds the desired places of interest to the trip. When the user confirms the trip, the UI will show a page where he/she can view all his/her trips. The UI sends the user's facebook ID to the Scheduler Microservice to view all confirmed trips with its details, a view route and payment option. 
+
+   * Customising Trips
+     * Click on Home in the navigation bar
+     * Click on "Country" drop-down list
+     * Select "Canada"
+     * Click on "City" drop-down list
+     * Select "Toronto, Canada"
+     * Click on "Submit" button
+     * Fill in the "Trip Name" text-box with "Test"
+     * Fill in the "Number of days" text-box with "3"
+     * Confirm that the City text-box is "Toronto, Canada"
+     * Click on "Find Places of Interest" button
+     * Wait for the page to load
+     * Confirm that the table is populated
+       * POI S.Ns
+       * Respective Names
+       * Respective Addresss
+       * Respective Photos
+       * Respective Ratings
+     * Scroll to the bottom of the page
+     * Fill in "POI S.N." text-box with "20"
+     * Fill in "DAY CHOSEN" text-box with "1"
+     * Click on "Add POI" button
+       * Confirm that a notification "POI Added" appears on your screen (for Windows on the bottom-right)
+       * You may add more POI's to the respective days
+     * Click on "Add Trip" Button
+       * Confirm a notification "Trip Added" appears on your screen (for Windows on the bottom-right)
+     * Click on "Take me to my trips" button
   
+   * Viewing all Trips 
+     * Confirm that all trips added are shown upon clicking on the "Take me to my trips" button
+
 3. Route planning
-   * Users can decide the sequence of places for each day of any trip and the UI communicates with Google Directions API to show the time taken and mapped route to travel from one place of interest to another based on the selection.
-  
+   * *Prerequiste - Step 1 of this UAT*
+   * Assuming that Step 1 was done
+   * Click on "View Route" for Day 1 of the "Australia, Melbourne" trip
+   * Click on "Start" drop-down list
+   * Select "Melbourne Meuseum"
+   * Click on "End" drop-down list
+   * Select "Queen Victoria Market" 
+   * Click on "Submit" button
+   * Confirm in the text-box under "Submit" button is populated with addresses of POIs
+     * Route Segment: 1 11 Nicholson St, Carlton VIC 3053, Australia to 11 Nicholson St, Carlton VIC 3053, Australia 1 m
+     * Route Segment: 2 11 Nicholson St, Carlton VIC 3053, Australia to Royal Botanic Gardens Victoria - Melbourne Gardens, Birdwood Ave, South Yarra VIC 3141, Australia 3.7 km
+     * Route Segment: 3 Royal Botanic Gardens Victoria - Melbourne Gardens, Birdwood Ave, South Yarra VIC 3141, Australia to Queen Victoria Market, Melbourne VIC 3000, Australia 5.1 km
+    * Confirm on the left, the Google Maps has been populated with the addresses
+      * Marker B corresponds to 11 Nicholson St, Carlton VIC 3053, Australia
+      * Marker C corresponds to Royal Botanic Gardens Victoria - Melbourne Gardens, Birdwood Ave, South Yarra VIC 3141, Australia
+      * Marker D corresponds to Queen Victoria Market, Melbourne VIC 3000, Australia
+   * To exit the page, go back a webpage
+
 4. Payment & Notification
-   * The UI communicates with Payment Microservice to view payment details. Payment is then done via PayPal API. Once payment is successful, the user can then receive the itinerary by submitting their emails. The UI communicates with the Notifications Microservice which communicates with Scheduler Microservice to do this. 
-   
+   * *Prerequiste - Step 1 of this UAT*
 
-   
+   * Payment
+     * Click on "View Payment Details"
+     * Confirm that "Checkout" table is populated
+       * \# : 1
+       * Name of Trip : Australia Melbourne
+       * Price : $20
+       * Quantity : 1
+       * Checkout : Paypal button present
+     * Click on "PayPal Checkout" button
+     * Confirm that PayPal pop-up appears
+     * Log in to PayPal using the dummy account provided
+       * Username: sb-tkny31173509@personal.example.com
+       * Password: 9-&aVnbs
+     * Click on "Log In" button
+     * Confirm that the price is correct
+       * $20.00 SGD == $15.12 USD
+     * Select "Balance" radio button.
+     * Click on "Pay Now" button
+   * Notification
+     * Scroll to the bottom of the page
+     * Fill in the "Email Address" text-box with your own email address
+     * Click on "Submit" button
+     * Click on "OK" alert button at the top of the page
+     * Wait to receive the email (~ 1 to 2 minutes)
+     * Check your Junk Email
+     * Confirm that a confirmation email has been sent to you
 
-## Running our application
-* Our application has been dockerised. It is composed and deployed on Heroku Cloud
-* To use our application, simply follow this link [HerokuLink](https://g3t3-ui.herokuapp.com) 
 
-**Python Modules used**
+
+## Project Directory Structure
+*Note: Only the most critical files to our application are explicitly show. The Python files implementing the microservices have been marked with 3 asterisks \*\*\**
+```bash
+📦g3t3-esd
+ ┣ 📂.git
+ ┣ 📂.idea
+ ┣ 📂app
+ ┃ ┣ 📂css
+ ┃ ┣ 📂js
+ ┃ ┃ ┗ 📜homepage.js
+ ┃ ┣ 📂notification_ms
+ ┃ ┃ ┗ 📜notification.py ***
+ ┃ ┣ 📂package
+ ┃ ┃ ┣ 📜package_nonav.php
+ ┃ ┃ ┗ 📜package_view.php
+ ┃ ┣ 📂payment_ms
+ ┃ ┃ ┣ 📂css
+ ┃ ┃ ┣ 📂js
+ ┃ ┃ ┃ ┗ 📜payment.js
+ ┃ ┃ ┣ 📜payment.php
+ ┃ ┃ ┣ 📜paymentAMQP.py ***
+ ┃ ┃ ┣ 📜paymentdisplay.php
+ ┃ ┃ ┗ 📜paymentMS.py ***
+ ┃ ┣ 📂places_ms
+ ┃ ┃ ┗ 📜placesapi.py ***
+ ┃ ┣ 📂scheduler_ms
+ ┃ ┃ ┣ 📜add_trip.php
+ ┃ ┃ ┣ 📜fetch.php
+ ┃ ┃ ┣ 📜google_direction_sg.php
+ ┃ ┃ ┣ 📜Logo_small.png
+ ┃ ┃ ┣ 📜push.js
+ ┃ ┃ ┣ 📜scheduler.py ***
+ ┃ ┃ ┗ 📜serviceWorker.js
+ ┃ ┣ 📂search_ms
+ ┃ ┃ ┣ 📜googlemaps_sample.php
+ ┃ ┃ ┣ 📜search.php
+ ┃ ┃ ┣ 📜search.py ***
+ ┃ ┃ ┗ 📜test_data.json
+ ┃ ┣ 📂vendor
+ ┃ ┃ ┣ 📂composer
+ ┃ ┃ ┣ 📂facebook
+ ┣ 📂databases
+ ┃ ┣ 📜payment.sql
+ ┃ ┣ 📜scheduler.sql
+ ┃ ┣ 📜searchDB.sql
+ ┃ ┗ 📜searchpage_city_country.xlsx
+ ┣ 📂docker_notification
+ ┃ ┣ 📜dockerfile
+ ┃ ┣ 📜notification.py
+ ┃ ┗ 📜requirements.txt
+ ┣ 📂docker_payment
+ ┃ ┣ 📜Dockerfile
+ ┃ ┣ 📜paymentMS.py
+ ┃ ┗ 📜requirements.txt
+ ┣ 📂docker_paymentAMQP
+ ┃ ┣ 📜docker-compose-PROD-build.bat
+ ┃ ┣ 📜docker-compose-PROD-start.bat
+ ┃ ┣ 📜docker-compose-PROD-stop.bat
+ ┃ ┣ 📜docker-compose.yml
+ ┃ ┣ 📜Dockerfile
+ ┃ ┣ 📜paymentAMQP.py
+ ┃ ┗ 📜requirements.txt
+ ┣ 📂docker_placesapi
+ ┃ ┣ 📜dockerfile
+ ┃ ┣ 📜placesapi.py
+ ┃ ┗ 📜requirements.txt
+ ┣ 📂docker_scheduler
+ ┃ ┣ 📜dockerfile
+ ┃ ┣ 📜requirements.txt
+ ┃ ┗ 📜scheduler.py
+ ┣ 📂docker_search
+ ┃ ┣ 📜dockerfile
+ ┃ ┣ 📜requirements.txt
+ ┃ ┗ 📜search.py
+ ┣ 📂images_for_md
+ ┣ 📜index.php
+ ┗ 📜README.md
+```
+## Essential Python Modules
 * flask
 * flask_mail
 * flask_cors
@@ -66,77 +235,50 @@ Our Solution: One-stop online travel platform where users can plan their travel 
 * pika
 * paypalrestsdk
   
-_Other dependencies not listed above may have been downloaded by the respective modules_
+*Other dependencies not listed above may have been downloaded by the respective modules*
 
-## Beyond the Labs
+## Built With
+* Website
+  * HTML 
+  * CSS - Beautifier
+  * JavaScript - Dynamic website
+  * Ajax - Asynchronous communication
+  * Php - Http Protocol
+* Server
+  * AWS Cloud used by Heroku
+* Database
+  * MySQL
+  * Posgres in Heroku
+* Data
+  * JSON
+* Messaging-based communication
+  * RabbitMQ
+* Invocation-based communication
+  * HTTP Protocol (POST/GET)
+  * Function calls
+* Containeriser 
+  * Docker
+* Composer
+  * Heroku
+* Documentation
+  * Markdown
+* 3rd Party APIs
+  * Google Places API
+  * Google Directions API
+  * Facebook Graph API
+  * PayPal API
+  * SendGrip API
 
-### 1. Implementation of 3rd Party APIs
-* Facebook Graph API
-* Google Places API
-* Google Directions API
-* Paypal API
+## Authors
+| Student     | Email          |
+| -------- | -------------- |
+| Khoo Khim Boon Ernest | ernest.khoo.2018@sis.smu.edu.sg	 |
+| Jaslyn Toh Lixuan | jaslyntoh.2018@sis.smu.edu.sg	 |
+| Chua Wilson | wilson.chua.2018@sis.smu.edu.sg |
+| Tan Chin Hoong | chtan.2018@sis.smu.edu.sg |
+| Tan JiaLe Brennan | brennan.tan.2018@sis.smu.edu.sg |
+| Sim Theen Cheng | tcsim.2018@sis.smu.edu.sg |
 
-
-### 2. Docker
-![use_of_docker](./images_for_md/use_of_docker.jpg)
-
-* Docker was used to containerise the microservices with the relevant 
-
-Shared requirements.txt across containers
-```
-blinker==1.4
-certifi==2019.11.28
-cffi==1.14.0
-chardet==3.0.4
-click==7.1.1
-cryptography==2.8
-dnspython==1.16.0
-Flask==1.1.1
-Flask-Cors==3.0.8
-Flask-Mail==0.9.1
-Flask-SQLAlchemy==2.4.1
-idna==2.9
-itsdangerous==1.1.0
-Jinja2==2.11.1
-joblib==0.14.1
-MarkupSafe==1.1.1
-mysql-connector-python==8.0.19
-numpy==1.18.2
-paypalrestsdk==1.13.1
-pika==1.1.0
-protobuf==3.6.1
-psycopg2==2.8.5
-pycparser==2.20
-pyOpenSSL==19.1.0
-requests==2.23.0
-scikit-learn==0.22.2.post1
-scipy==1.4.1
-six==1.14.0
-sklearn==0.0
-SQLAlchemy==1.3.14
-urllib3==1.25.8
-Werkzeug==1.0.0
-```
-### 3. Heroku
-We used Heroku to compose and host all our docker containers on the cloud. Heroku simplifies the usage of our application as it does all the heavy lifting for the user in terms of downloading dependencies, starting up individual microservices and establishing connections to the database of our application.
-
-**Different applications hosted on heroku:** 
-
-![heroku_dashboard](./images_for_md/heroku_dashboard.jpg)
-
-To leverage on the tools and services provided by Heroku which is a Platform as a service, we uploaded our docker images which are built from our microservices to form 6 standalone applications on Heroku. Out of the 6 applications, payment microservice, scheduler microservice and search microservice are attached to Heroku’s postgresql database separately. In addition, as we are implementing AMQP as an open standard protocol, we leveraged on the AMQPcloud provided by Heroku to facilitate messaging based communication between our microservices. Furthermore, AMQPcloud provides a RabbitMQ manager to help us visually track the number of messages in each queue at one time.
-
-
-
-
-
-
-**Postgresql DB attached to different applications/Microservices:**
-![use_of_docker](./images_for_md/heroku_posgresdb.jpg)
-
-
-**Postgresql Database via command line:**
-![use_of_docker](./images_for_md/heroku_posgrescmi.jpg)
-
-**RabbitMQ Manager by Heroku**
-![heroku_rabbitMQ](./images_for_md/heroku_rabbitMQ.jpg)
+## Terms of Use
+* Google APIs Terms of Service
+* Facebook Platform Policy
