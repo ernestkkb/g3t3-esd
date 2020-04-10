@@ -189,7 +189,7 @@
 </script>
         
 <p>CLICK TO VIEW ALL YOUR TRIPS!.</p>
-<button onclick="myFunction()">Take me to my trips</button>
+<button id='view' class="btn btn-primary" onclick="myFunction()">Take me to my trips</button>
 <script>
     function myFunction() {
         location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
