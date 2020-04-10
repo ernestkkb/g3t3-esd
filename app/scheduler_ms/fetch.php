@@ -197,7 +197,8 @@
 
 </script>
 <br>
-<p>Click here to view your trips!</p>
+<p></p>
+<h3>Click here to view your trips!</h3>
 <button id='view' class="btn btn-primary" onclick="myFunction()">Take me to my trips</button>
 <br>
 <script>
