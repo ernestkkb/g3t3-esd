@@ -147,7 +147,7 @@ else{
     $("#toConfirm").click(function(){
         var lol = getDataAnother(toConfirmURL);
         var lol1 = getDataAnother(toPaymentDB);
-        alert("You've added your trip to your schedule! Click ok to go back to homepage");
+        alert("You've added your trip to your schedule! Click ok to go to your summary page");
         window.location.replace("https://g3t3-ui.herokuapp.com/app/summary.php");
 
     })
