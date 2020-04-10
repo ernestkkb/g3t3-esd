@@ -10,7 +10,9 @@ unset($_SESSION['access_token']);
 var serviceURLScheduler = "https://g3t3-scheduler.herokuapp.com/deleteAll";
 var serviceURLPayment = "https://g3t3-payment.herokuapp.com/deleteAll";
 getData(serviceURLPayment).then(function(value){
-                getData(serviceURLScheduler);
+                getData(serviceURLScheduler).then(function(value){
+                    window.location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
+                });
             });
             
 async function getData(serviceURL) {
@@ -30,8 +32,3 @@ async function getData(serviceURL) {
         }
 
 </script>
-
-<?php
-
-// header("Location:https://g3t3-ui.herokuapp.com/app/login.php");
-?>
