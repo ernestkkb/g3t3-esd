@@ -182,7 +182,7 @@
     <!-----------------------------------------------------------[START] Payment Transaction History ------------------------------------------------------------------------>
     <div style="height: 1000px">
         <!-- just to make scrolling effect possible -->
-        <h2 class="myH2">Your payment history</h2>
+        <h2 class="myH2">Your payment record</h2>
     
         <table id="paymentTable" class='table100 ver2'   style="text-align: center;" border=1>
             <tr class="table table-dark" align="center">
