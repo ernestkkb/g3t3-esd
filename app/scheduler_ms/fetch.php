@@ -167,7 +167,6 @@
             console.log(URLtoAdd);
             addTripToDB(URLtoAdd);
             //window.location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
-            location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
         
         });
         async function addTripToDB(serviceURL) {
@@ -185,6 +184,16 @@
             }
         }
 
+        
+
+</script>
+        
+<p>CLICK TO VIEW ALL YOUR TRIPS!.</p>
+<button onclick="myFunction()">Take me to my trips</button>
+<script>
+    function myFunction() {
+        location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
+    }
 </script>
 </body>
 
