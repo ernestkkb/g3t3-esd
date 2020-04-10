@@ -9,8 +9,8 @@ unset($_SESSION['access_token']);
 <script>
 var serviceURLScheduler = "https://g3t3-scheduler.herokuapp.com/deleteAll";
 var serviceURLPayment = "https://g3t3-payment.herokuapp.com/deleteAll";
-getData(serviceURLScheduler).then(function(value){
-                getData(serviceURLPayment);
+getData(serviceURLPayment).then(function(value){
+                getData(serviceURLScheduler);
             });
             
 async function getData(serviceURL) {
