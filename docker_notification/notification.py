@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request, render_template, redirect, url_for, flash
 from flask_mail import Mail, Message
 import os,sys
 import json
@@ -7,26 +7,25 @@ from os import environ
 import urllib.parse
 from urllib.parse import urlparse
 import pika 
-app = Flask(__name__)
 
-mail_settings = {
-    "MAIL_SERVER": 'smtp.gmail.com',
-    "MAIL_PORT": 465,
-    "MAIL_USE_TLS": False,
-    "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": 'w4schoolteam@gmail.com',
-    "MAIL_PASSWORD": 'lkslevel5'
-}
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'top-secret!'
+app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'apikey'
+app.config['MAIL_PASSWORD'] = "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"
+app.config['MAIL_DEFAULT_SENDER'] = "w4schoolteam@gmail.com"
+mail = Mail(app)
 
 @app.route("/notification/email/<string:emailAddress>",methods=["POST"])
-def send_email(emailAddress):
+def sendemail(emailAddress):
     if request.is_json:
         content = request.get_json()
     else:
-        content = request.get_data()    
-    print(type(content.decode("utf-8")))
+        content = request.get_data()  
+
     content = json.loads(content.decode("utf-8"))
-    print(content)
     body = "Day, POIs \n"
     dictionaryOfStuff = {}
     for i in content['details']:
@@ -37,17 +36,23 @@ def send_email(emailAddress):
         dictionaryOfStuff[i] = dictionaryOfStuff[i][:-1]
     for i in dictionaryOfStuff:
         body+= str(i) +":" + dictionaryOfStuff[i] +"\n"
-    print(body)
-    app.config.update(mail_settings)
-    mail = Mail(app)
+
+    msg = Message('Thanks for travelling with us!', recipients=[emailAddress])
+    msg.body = ("G3T3 one Stop Travel Application")
+    msg.html = (body)
+    mail.send(msg)
     with app.app_context():
-            msg = Message(subject="Hello",
-                        sender=app.config.get("MAIL_USERNAME"),
-                        recipients=[emailAddress], # replace with your email for testing
-                        body=body)
-            mail.send(msg)
+        msg = Message(subject="Thank you for travelling with us!",
+                    recipients=[emailAddress], 
+                    body=body)
     return "YAY"
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
+
+
+
+
+
 

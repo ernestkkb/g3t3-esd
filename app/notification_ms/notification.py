@@ -2,6 +2,11 @@ from flask import Flask,request
 from flask_mail import Mail, Message
 import os,sys
 import json
+import psycopg2
+from os import environ
+import urllib.parse
+from urllib.parse import urlparse
+import pika 
 app = Flask(__name__)
 
 mail_settings = {
@@ -9,8 +14,8 @@ mail_settings = {
     "MAIL_PORT": 465,
     "MAIL_USE_TLS": False,
     "MAIL_USE_SSL": True,
-    "MAIL_USERNAME": 'dtan342@gmail.com',
-    "MAIL_PASSWORD": 'Constiislyf3#'
+    "MAIL_USERNAME": 'w4schoolteam@gmail.com',
+    "MAIL_PASSWORD": 'lkslevel5'
 }
 
 @app.route("/notification/email/<string:emailAddress>",methods=["POST"])
@@ -43,5 +48,6 @@ def send_email(emailAddress):
             mail.send(msg)
     return "YAY"
 if __name__ == '__main__':
-    app.run(port=5004, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
 
