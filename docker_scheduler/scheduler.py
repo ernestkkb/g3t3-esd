@@ -151,6 +151,18 @@ def deleteAll():
 
         return jsonify({"message": "An error occurred deleting the rows"}), 500
     return jsonify({"message": "rows deleted"}), 500
+
+@app.route("/update/<string:tripID>")
+def update_trip_status(tripid):
+    print("update_trip_status function triggered")
+    status = scheduler.query.filter_by(tripid=tripid).first()
+    if status:
+        try:
+            scheduler.paymentstatus = 'paid'
+            db.session.commit()
+            return ("message: Payment status updated.",201)
+        except:
+             return ("message: An error occurred updating the payment status.",500)
     
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
