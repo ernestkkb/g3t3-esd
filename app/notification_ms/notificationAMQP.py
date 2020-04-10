@@ -21,7 +21,7 @@ channel = connection.channel()
 # set up the exchange if the exchange doesn't exist
 exchangename="exchange_topic"
 channel.exchange_declare(exchange=exchangename, exchange_type='topic')
-def receiveTripDetails():
+def receiveTripDetails2():
     print("Received tripID from paymentMS")
     channelqueue = channel.queue_declare(queue='notification.payment', durable=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
         # If no need durability of the messages, no need durable queues, and can use such temp random queues.
@@ -37,4 +37,4 @@ def callback(channel, method, properties, body): # required signature for the ca
     print() # print a new line feed
 
 if __name__ == '__main__':
-    receiveTripDetails() #invoke the consume function 
+    receiveTripDetails2() #invoke the consume function 
