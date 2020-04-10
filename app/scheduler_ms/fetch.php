@@ -166,7 +166,7 @@
             var URLtoAdd = "https://g3t3-payment.herokuapp.com/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
             console.log(URLtoAdd);
             addTripToDB(URLtoAdd);
-            Push.create("POI Added!",{
+            Push.create("Trip Added!",{
             body: "You have added your Trip.",
             icon: 'Logo_small.png',
             timeout: 2000,
@@ -174,6 +174,7 @@
                 window.focus();
                 this.close();
             }
+            });
             //window.location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
         
         });
