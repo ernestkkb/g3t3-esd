@@ -166,6 +166,14 @@
             var URLtoAdd = "https://g3t3-payment.herokuapp.com/payment/"+tripID+"/"+facebookID+"/"+price+"/"+paymentStatus;
             console.log(URLtoAdd);
             addTripToDB(URLtoAdd);
+            Push.create("POI Added!",{
+            body: "You have added your Trip.",
+            icon: 'Logo_small.png',
+            timeout: 2000,
+            onClick: function () {
+                window.focus();
+                this.close();
+            }
             //window.location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
         
         });
@@ -187,9 +195,10 @@
         
 
 </script>
-        
-<p>CLICK TO VIEW ALL YOUR TRIPS!.</p>
-<button onclick="myFunction()">Take me to my trips</button>
+<br>
+<p>Click here to view your trips!</p>
+<button id='view' class="btn btn-primary" onclick="myFunction()">Take me to my trips</button>
+<br>
 <script>
     function myFunction() {
         location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
