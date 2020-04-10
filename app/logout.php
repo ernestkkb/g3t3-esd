@@ -33,5 +33,5 @@ async function getData(serviceURL) {
 
 <?php
 
-header("Location:https://g3t3-ui.herokuapp.com/app/login.php");
+// header("Location:https://g3t3-ui.herokuapp.com/app/login.php");
 ?>
