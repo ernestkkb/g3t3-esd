@@ -1,0 +1,37 @@
+version: "3"
+
+networks:
+  ernest-net:
+    driver: bridge
+
+services:
+  # RabbitMQ
+  rabbitmq:
+    container_name: rabbitmq
+    image: 'rabbitmq:3.8.3-management-alpine'
+    restart: unless-stopped
+    ports:
+      - "5672:5672" # The standard AMQP protocol port
+      - "15672:15672" # HTTP management UI
+    networks:
+      - ernest-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      
+  # Payment RabbitMQ consumer
+  payment-rabbitmq:
+    container_name: notificationAMQP-rabbitmq
+    restart: unless-stopped
+    build:
+      context: ./ # folder
+      dockerfile: Dockerfile
+    command: "python /usr/src/app/notificationAMQP.py"
+    networks:
+      - ernest-net
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq

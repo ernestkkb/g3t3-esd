@@ -10,32 +10,13 @@ import pika
 app = Flask(__name__)
 
 mail_settings = {
-    "MAIL_SERVER": 'smtp.mail.yahoo.com',
+    "MAIL_SERVER": 'smtp.gmail.com',
     "MAIL_PORT": 465,
-    "MAIL_USE_TLS": True,
-    "MAIL_USE_SSL": False,
-    "MAIL_USERNAME": 'g3t3_travel@yahoo.com',
-    "MAIL_PASSWORD": 'onestoptravelplan0602'
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": 'w4schoolteam@gmail.com',
+    "MAIL_PASSWORD": 'lkslevel5'
 }
-################################################################### AMQP CODE ################################################################################
-# url_str = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost//')
-# url = urlparse(url_str)
-# params = pika.ConnectionParameters(host=url.hostname, virtual_host=url.path[1:],
-# credentials=pika.PlainCredentials(url.username, url.password))
-
-# connection = pika.BlockingConnection(params)
-# channel = connection.channel()
-# exchangename="exchange_topic"
-# channel.exchange_declare(exchange=exchangename, exchange_type='topic')
-# channelqueue = channel.queue_declare(queue='notification', durable=True) 
-# queue_name = channelqueue.method.queue
-# channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='*.payment') 
-# channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
-# channel.start_consuming()
-
-# def callback(channel, method, properties, body): 
-#     print(body)
-################################################################### AMQP CODE ################################################################################
 
 @app.route("/notification/email/<string:emailAddress>",methods=["POST"])
 def send_email(emailAddress):
