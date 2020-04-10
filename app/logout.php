@@ -11,7 +11,7 @@ var serviceURLScheduler = "https://g3t3-scheduler.herokuapp.com/deleteAll";
 var serviceURLPayment = "https://g3t3-payment.herokuapp.com/deleteAll";
 getData(serviceURLPayment).then(function(value){
                 getData(serviceURLScheduler).then(function(value){
-                    window.location.href = "https://g3t3-ui.herokuapp.com/app/summary.php";
+                    window.location.href = "https://g3t3-ui.herokuapp.com/app/login.php";
                 });
             });
             
